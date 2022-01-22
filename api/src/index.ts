@@ -1,3 +1,4 @@
+import { PrismaClient } from "@prisma/client";
 import { ApolloServer, gql } from "apollo-server";
 
 const typeDefs = gql`
@@ -13,6 +14,8 @@ const resolvers = {
     },
   },
 };
+
+const prisma = new PrismaClient();
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
