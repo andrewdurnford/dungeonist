@@ -1,0 +1,11 @@
+schema: "./src/index.ts"
+generates:
+  src/utils/types.ts:
+    config:
+      typesPrefix: I
+      contextType: ./context#Context
+      mappers:
+        User: .prisma/client#User
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
