@@ -16,9 +16,20 @@ export type Scalars = {
   Float: number;
 };
 
+export type ILoginInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type IMutation = {
   __typename?: 'Mutation';
+  login?: Maybe<Scalars['String']>;
   signup?: Maybe<IUser>;
+};
+
+
+export type IMutationLoginArgs = {
+  input: ILoginInput;
 };
 
 
@@ -113,6 +124,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type IResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
+  LoginInput: ILoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   SignupInput: ISignupInput;
@@ -124,6 +136,7 @@ export type IResolversTypes = {
 export type IResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   ID: Scalars['ID'];
+  LoginInput: ILoginInput;
   Mutation: {};
   Query: {};
   SignupInput: ISignupInput;
@@ -132,6 +145,7 @@ export type IResolversParentTypes = {
 };
 
 export type IMutationResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Mutation'] = IResolversParentTypes['Mutation']> = {
+  login?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType, RequireFields<IMutationLoginArgs, 'input'>>;
   signup?: Resolver<Maybe<IResolversTypes['User']>, ParentType, ContextType, RequireFields<IMutationSignupArgs, 'input'>>;
 };
 

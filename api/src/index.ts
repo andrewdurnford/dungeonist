@@ -3,11 +3,13 @@ import { ApolloServer, gql } from "apollo-server-express";
 import * as bcrypt from "bcrypt";
 import * as cors from "cors";
 import * as express from "express";
+import * as jwt from "jsonwebtoken";
 import { IResolvers } from "./utils/types";
 
 const typeDefs = gql`
   type Mutation {
     signup(input: SignupInput!): User
+    login(input: LoginInput!): String
   }
 
   type Query {
@@ -15,6 +17,11 @@ const typeDefs = gql`
   }
 
   input SignupInput {
+    email: String!
+    password: String!
+  }
+
+  input LoginInput {
     email: String!
     password: String!
   }
@@ -51,6 +58,21 @@ const resolvers: IResolvers = {
 
       return user;
     },
+    login: async (_, { input: { email, password } }, ctx) => {
+      const user = await ctx.prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (!user) throw new Error(`Email or Password was incorrect`);
+
+      const match = await bcrypt.compare(password, user.password);
+
+      if (!match) throw new Error(`Email or Password was incorrect`);
+
+      const token = jwt.sign({ sub: user.id }, "secret");
+
+      return token;
+    },
   },
 };
 
@@ -65,7 +87,24 @@ app.use(
 
 const prisma = new PrismaClient();
 
-const server = new ApolloServer({ typeDefs, resolvers, context: { prisma } });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: async ({ req }) => {
+    try {
+      const header = req.headers.authorization;
+      const token = header.replace("Bearer ", "");
+      const payload = jwt.verify(token, "secret") as any;
+      const id = payload.sub;
+
+      const user = await prisma.user.findUnique({ where: { id } });
+
+      return { prisma, user };
+    } catch {
+      return { prisma };
+    }
+  },
+});
 
 server.start().then(() => server.applyMiddleware({ app }));
 
