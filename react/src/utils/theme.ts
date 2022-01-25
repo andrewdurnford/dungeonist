@@ -23,6 +23,14 @@ export const colors = {
   red500: "#EF4444",
 };
 
+export const breakpoints = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+};
+
 export const theme = {
   colors,
+  breakpoints,
 };

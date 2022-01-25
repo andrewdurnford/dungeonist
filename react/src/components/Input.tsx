@@ -22,11 +22,15 @@ const Label = styled.label<{ $required: boolean }>`
     `};
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<{ $error: boolean }>`
   display: inline-block;
   padding: 0.25em 0.5em;
   border-radius: 4px;
+  border: 1px solid
+    ${({ $error, theme }) =>
+      $error ? theme.colors.red500 : theme.colors.black};
 
+  font-family: inherit;
   font-size: inherit;
   font-family: inherit;
   line-height: inherit;
@@ -55,13 +59,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <Label htmlFor={name} $required={required}>
         {label}
       </Label>
-      {/* TODO: error */}
+      {error && <ErrorText>{error}</ErrorText>}
       <StyledInput
         id={name}
         name={name}
         type={type}
         aria-label={label}
         aria-required={required}
+        $error={!!error}
         ref={ref}
         {...props}
       />
