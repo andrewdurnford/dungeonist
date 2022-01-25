@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import Container from "../components/Container";
 
 function NotFound() {
   return (
-    <div>
+    <Container>
       <h1>404</h1>
       <Link to="/">Home</Link>
-    </div>
+    </Container>
   );
 }
 

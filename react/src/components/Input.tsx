@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import ErrorText from "./ErrorText";
 
 const Container = styled.div`
   display: flex;
@@ -39,12 +40,6 @@ const StyledInput = styled.input<{ $error: boolean }>`
   &:hover {
     cursor: text;
   }
-`;
-
-// TODO: refactor into a Text component
-const ErrorText = styled.p`
-  font-size: 12px;
-  color: ${({ theme }) => theme.colors.red500};
 `;
 
 interface InputProps extends React.ComponentPropsWithoutRef<"input"> {
