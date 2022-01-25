@@ -6,7 +6,9 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import ReactDOM from "react-dom";
+import { ThemeProvider } from "styled-components";
 import App from "./components/App";
+import { GlobalStyle, theme } from "./utils/theme";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -30,7 +32,10 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <App />
+    </ThemeProvider>
   </ApolloProvider>,
   document.getElementById("root")
 );
