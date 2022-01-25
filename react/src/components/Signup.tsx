@@ -1,14 +1,5 @@
-import { gql, useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
-
-const SIGNUP = gql`
-  mutation Signup($input: SignupInput!) {
-    signup(input: $input) {
-      id
-      email
-    }
-  }
-`;
+import { useSignupMutation } from "../utils/graphql";
 
 type SignupInput = {
   email: string;
@@ -16,7 +7,7 @@ type SignupInput = {
 };
 
 function Signup() {
-  const [signup, { loading, error }] = useMutation(SIGNUP, {
+  const [signup, { loading, error }] = useSignupMutation({
     onError: (err) => console.error(err),
   });
   const { register, handleSubmit } = useForm<SignupInput>();
