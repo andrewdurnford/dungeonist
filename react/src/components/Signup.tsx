@@ -1,10 +1,20 @@
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useSignupMutation } from "../utils/graphql";
 import Button from "./Button";
-import Container from "./Container";
 import Input from "./Input";
+import Container from "./Container";
+
+const Flex = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  > * + * {
+    margin-top: 1rem;
+  }
+`;
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -35,10 +45,10 @@ function Signup() {
   );
 
   return (
-    <div>
+    <Container>
       <h1>Signup</h1>
       <form onSubmit={onSubmit}>
-        <Container>
+        <Flex>
           <Input
             type="text"
             label="Email"
@@ -57,10 +67,10 @@ function Signup() {
           <Button type="submit" loading={loading}>
             Sign up
           </Button>
-        </Container>
+        </Flex>
       </form>
       {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
-    </div>
+    </Container>
   );
 }
 

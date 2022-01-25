@@ -1,11 +1,21 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { useLoginMutation } from "../utils/graphql";
 import Button from "./Button";
-import Container from "./Container";
 import Input from "./Input";
+import Container from "./Container";
+
+const Flex = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  > * + * {
+    margin-top: 1rem;
+  }
+`;
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -50,10 +60,10 @@ function Login() {
   );
 
   return (
-    <div>
+    <Container>
       <h1>Login</h1>
       <form onSubmit={onSubmit}>
-        <Container>
+        <Flex>
           <Input
             type="text"
             label="Email"
@@ -72,10 +82,10 @@ function Login() {
           <Button type="submit" loading={loading}>
             Log in
           </Button>
-        </Container>
+        </Flex>
       </form>
       {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
-    </div>
+    </Container>
   );
 }
 
