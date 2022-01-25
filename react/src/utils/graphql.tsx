@@ -20,10 +20,16 @@ export type LoginInput = {
   password: Scalars['String'];
 };
 
+export type LoginPayload = {
+  __typename?: 'LoginPayload';
+  token: Scalars['String'];
+  user: User;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
-  login?: Maybe<Scalars['String']>;
-  signup?: Maybe<User>;
+  login: LoginPayload;
+  signup: Scalars['Boolean'];
 };
 
 
@@ -57,14 +63,14 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'Mutation', login?: string | null | undefined };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginPayload', token: string, user: { __typename?: 'User', id: string, email: string } } };
 
 export type SignupMutationVariables = Exact<{
   input: SignupInput;
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signup?: { __typename?: 'User', id: string, email: string } | null | undefined };
+export type SignupMutation = { __typename?: 'Mutation', signup: boolean };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -74,7 +80,13 @@ export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: st
 
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
-  login(input: $input)
+  login(input: $input) {
+    token
+    user {
+      id
+      email
+    }
+  }
 }
     `;
 export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
@@ -105,10 +117,7 @@ export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const SignupDocument = gql`
     mutation Signup($input: SignupInput!) {
-  signup(input: $input) {
-    id
-    email
-  }
+  signup(input: $input)
 }
     `;
 export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMutationVariables>;

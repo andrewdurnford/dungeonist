@@ -1,6 +1,3 @@
 mutation Signup($input: SignupInput!) {
-  signup(input: $input) {
-    id
-    email
-  }
+  signup(input: $input)
 }

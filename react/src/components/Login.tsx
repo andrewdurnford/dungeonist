@@ -11,11 +11,19 @@ function Login() {
   const navigate = useNavigate();
   const [signup, { loading, error }] = useLoginMutation({
     onError: (err) => console.error(err),
-    onCompleted: ({ login }) => {
-      localStorage.setItem("token", String(login));
+    onCompleted: ({ login: { token } }) => {
+      localStorage.setItem("token", token);
       navigate("/");
     },
-    // TODO: update user cache
+    update(cache, { data }) {
+      cache.modify({
+        fields: {
+          me() {
+            return data?.login.user;
+          },
+        },
+      });
+    },
   });
   const { register, handleSubmit } = useForm<LoginInput>();
   const onSubmit = handleSubmit(({ email, password }) =>

@@ -1,6 +1,6 @@
 type Mutation {
-  signup(input: SignupInput!): User
-  login(input: LoginInput!): String
+  signup(input: SignupInput!): Boolean!
+  login(input: LoginInput!): LoginPayload!
 }
 
 type Query {
@@ -15,6 +15,11 @@ input SignupInput {
 input LoginInput {
   email: String!
   password: String!
+}
+
+type LoginPayload {
+  token: String!
+  user: User!
 }
 
 type User {
