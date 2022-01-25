@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useSignupMutation } from "../utils/graphql";
+import Button from "./Button";
 
 type SignupInput = {
   email: string;
@@ -23,7 +24,9 @@ function Signup() {
         <input type="text" id="email" {...register("email")} />
         <label htmlFor="password">Password</label>
         <input type="password" id="password" {...register("password")} />
-        <button type="submit">Signup</button>
+        <Button type="submit" loading={loading}>
+          Sign up
+        </Button>
       </form>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>Error: {error.message}</p>}

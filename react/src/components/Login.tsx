@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../utils/graphql";
+import Button from "./Button";
 
 type LoginInput = {
   email: string;
@@ -38,9 +39,10 @@ function Login() {
         <input type="text" id="email" {...register("email")} />
         <label htmlFor="password">Password</label>
         <input type="password" id="password" {...register("password")} />
-        <button type="submit">Signup</button>
+        <Button type="submit" loading={loading}>
+          Log in
+        </Button>
       </form>
-      {loading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>Error: {error.message}</p>}
     </div>
   );

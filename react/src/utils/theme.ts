@@ -16,6 +16,10 @@ export const GlobalStyle = createGlobalStyle`
 export const colors = {
   black: "#000000",
   white: "#FFFFFF",
+  gray200: "#E5E7EB",
+  blue400: "#60A5FA",
+  blue500: "#3B82F6",
+  blue600: "#2563EB",
 };
 
 export const theme = {

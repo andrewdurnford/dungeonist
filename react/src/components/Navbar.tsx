@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useMeQuery } from "../utils/graphql";
+import Button from "./Button";
 
 function Navbar() {
   const { data, loading, refetch } = useMeQuery();
@@ -24,7 +25,7 @@ function Navbar() {
                 refetch();
               }}
             >
-              Logout
+              Log out
             </li>
           </>
         ) : (
@@ -33,10 +34,12 @@ function Navbar() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/login">Login</Link>
+              <Link to="/login">Log in</Link>
             </li>
             <li>
-              <Link to="/signup">Signup</Link>
+              <Button as={Link} to="/signup" variant="secondary">
+                Sign up
+              </Button>
             </li>
           </>
         )}
