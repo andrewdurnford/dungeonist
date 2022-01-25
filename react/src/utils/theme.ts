@@ -20,6 +20,7 @@ export const colors = {
   blue400: "#60A5FA",
   blue500: "#3B82F6",
   blue600: "#2563EB",
+  red500: "#EF4444",
 };
 
 export const theme = {
