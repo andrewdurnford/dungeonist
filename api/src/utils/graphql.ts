@@ -39,7 +39,7 @@ export type IMutationSignupArgs = {
 
 export type IQuery = {
   __typename?: 'Query';
-  users: Array<IUser>;
+  me?: Maybe<IUser>;
 };
 
 export type ISignupInput = {
@@ -150,7 +150,7 @@ export type IMutationResolvers<ContextType = Context, ParentType extends IResolv
 };
 
 export type IQueryResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Query'] = IResolversParentTypes['Query']> = {
-  users?: Resolver<Array<IResolversTypes['User']>, ParentType, ContextType>;
+  me?: Resolver<Maybe<IResolversTypes['User']>, ParentType, ContextType>;
 };
 
 export type IUserResolvers<ContextType = Context, ParentType extends IResolversParentTypes['User'] = IResolversParentTypes['User']> = {
@@ -180,7 +180,7 @@ type Mutation {
 }
 
 type Query {
-  users: [User!]!
+  me: User
 }
 
 input SignupInput {

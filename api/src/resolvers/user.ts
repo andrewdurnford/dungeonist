@@ -4,8 +4,8 @@ import { IResolvers } from "../utils/graphql";
 
 export const resolvers: IResolvers = {
   Query: {
-    users: async (_, {}, ctx) => {
-      return await ctx.prisma.user.findMany();
+    me: async (_, {}, ctx) => {
+      return ctx.user || null;
     },
   },
 
