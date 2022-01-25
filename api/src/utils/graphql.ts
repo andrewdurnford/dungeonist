@@ -165,3 +165,31 @@ export type IResolvers<ContextType = Context> = {
   User?: IUserResolvers<ContextType>;
 };
 
+
+import gql from "graphql-tag";
+
+export const typeDefs = gql`
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  login(input: LoginInput!): String
+  signup(input: SignupInput!): User
+}
+
+type Query {
+  users: [User!]!
+}
+
+input SignupInput {
+  email: String!
+  password: String!
+}
+
+type User {
+  email: String!
+  id: ID!
+}
+`;
