@@ -1,17 +1,30 @@
 type Mutation {
-  signup(input: SignupInput!): Boolean!
-  login(input: LoginInput!): LoginPayload!
   createCharacter(input: CreateCharacterInput!): CreateCharacterPayload!
+  login(input: LoginInput!): LoginPayload!
+  signup(input: SignupInput!): Boolean!
 }
 
 type Query {
-  me: User
+  ability(id: ID!): Ability
+  abilities: [Ability!]!
+  alignment(id: ID!): Alignment
+  alignments: [Alignment!]!
+  character(id: ID!): Character
   characters: [Character!]!
+  # TODO: deprecate in favour of `user`
+  me: User
+  skill(id: ID!): Skill
+  skills: [Skill!]!
 }
 
-input SignupInput {
-  email: String!
-  password: String!
+### Inputs
+
+input CreateCharacterInput {
+  name: String
+  """
+  range 1-20, default 1
+  """
+  level: Int
 }
 
 input LoginInput {
@@ -19,22 +32,95 @@ input LoginInput {
   password: String!
 }
 
-type LoginPayload {
-  token: String!
-  user: User!
+input SignupInput {
+  email: String!
+  password: String!
 }
 
-input CreateCharacterInput {
-  name: String
-}
+### Payloads
 
 type CreateCharacterPayload {
   character: Character!
 }
 
+type LoginPayload {
+  token: String!
+  user: User!
+}
+
+### Types
+
+type Ability {
+  id: ID!
+  name: String!
+  description: String!
+  skills: [Skill!]!
+}
+
+type Alignment {
+  id: ID!
+  name: String!
+  description: String!
+}
+
 type Character {
   id: ID!
   name: String!
+  """
+  Range of 1 - 20
+  """
+  level: Int!
+  """
+  Range of 0 - 355000
+  """
+  experience: Int!
+  inspiration: Int!
+  alignment: Alignment
+  personality: Personality
+  abilities: [CharacterAbility!]!
+  skills: [CharacterSkill!]!
+}
+
+type CharacterAbility {
+  id: ID!
+  """
+  flattened from ability.name
+  """
+  name: String!
+  """
+  related via skill.abilityId -> characterAbility.abilityId
+  """
+  skills: [CharacterSkill!]!
+  score: Int!
+  modifier: Int!
+}
+
+type CharacterSkill {
+  id: ID!
+  """
+  flattened from skill.name
+  """
+  name: String!
+  """
+  related via skill.abilityId -> characterAbility.abilityId
+  """
+  ability: CharacterAbility!
+  modifier: Int!
+  isProficient: Boolean!
+}
+
+type Personality {
+  id: ID!
+  traits: String
+  ideals: String
+  bonds: String
+  flaws: String
+}
+
+type Skill {
+  id: ID!
+  name: String!
+  ability: Ability!
 }
 
 type User {

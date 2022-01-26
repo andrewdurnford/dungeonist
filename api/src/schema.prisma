@@ -10,6 +10,80 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Ability {
+  id                 String             @id
+  name               String
+  skills             Skill[]
+  characterAbilities CharacterAbility[]
+}
+
+model Alignment {
+  id          String      @id
+  name        String
+  description String
+  characters  Character[]
+}
+
+model Character {
+  id            String             @id @default(uuid())
+  name          String             @default("Untitled")
+  level         Int                @default(1) // range 1-20
+  experience    Int                @default(0) // range 0-355000
+  inspiration   Int                @default(0)
+  alignmentId   String?
+  personalityId String?            @unique
+  userId        String?
+  alignment     Alignment?         @relation(fields: [alignmentId], references: [id])
+  personality   Personality?       @relation(fields: [personalityId], references: [id])
+  user          User?              @relation(fields: [userId], references: [id])
+  abilities     CharacterAbility[]
+  skills        CharacterSkill[]
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+}
+
+model CharacterAbility {
+  id          String    @id @default(uuid())
+  characterId String
+  abilityId   String
+  score       Int       @default(10) // range 1-30
+  character   Character @relation(fields: [characterId], references: [id])
+  ability     Ability   @relation(fields: [abilityId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([characterId, abilityId])
+}
+
+model CharacterSkill {
+  id          String    @id @default(uuid())
+  characterId String
+  skillId     String
+  character   Character @relation(fields: [characterId], references: [id])
+  Skill       Skill     @relation(fields: [skillId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([characterId, skillId])
+}
+
+model Personality {
+  id        String     @id @default(uuid())
+  traits    String?
+  ideals    String?
+  bonds     String?
+  flaws     String?
+  character Character?
+}
+
+model Skill {
+  id              String           @id
+  name            String
+  abilityId       String
+  ability         Ability          @relation(fields: [abilityId], references: [id])
+  characterSkills CharacterSkill[]
+}
+
 model User {
   id         String      @id @default(uuid())
   email      String      @unique
@@ -17,11 +91,4 @@ model User {
   characters Character[]
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
-}
-
-model Character {
-  id     String  @id @default(uuid())
-  name   String  @default("Untitled")
-  userId String?
-  user   User?   @relation(fields: [userId], references: [id])
 }
