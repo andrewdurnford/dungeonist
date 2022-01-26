@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../hooks/useAuth";
 import { useMeQuery } from "../utils/graphql";
@@ -54,6 +54,7 @@ const LinkButton = styled(Button).attrs({ variant: "secondary" })`
 `;
 
 function Navbar() {
+  const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const { data, loading } = useMeQuery();
 
@@ -77,7 +78,14 @@ function Navbar() {
                 <A to="/user">Settings</A>
               </li>
               <li>
-                <LinkButton onClick={logout}>Log out</LinkButton>
+                <LinkButton
+                  onClick={() => {
+                    logout();
+                    navigate("/");
+                  }}
+                >
+                  Log out
+                </LinkButton>
               </li>
             </List>
           </>

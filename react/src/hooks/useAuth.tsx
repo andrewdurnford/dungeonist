@@ -35,7 +35,7 @@ export function AuthProvider({ children }: Props) {
     () => ({
       user,
       token,
-      isLoggedIn: !!user,
+      isLoggedIn: !!token,
       login,
       logout,
     }),
