@@ -17,6 +17,21 @@ export type Scalars = {
   Float: number;
 };
 
+export type ICharacter = {
+  __typename?: 'Character';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type ICreateCharacterInput = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type ICreateCharacterPayload = {
+  __typename?: 'CreateCharacterPayload';
+  character: ICharacter;
+};
+
 export type ILoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -30,8 +45,14 @@ export type ILoginPayload = {
 
 export type IMutation = {
   __typename?: 'Mutation';
+  createCharacter: ICreateCharacterPayload;
   login: ILoginPayload;
   signup: Scalars['Boolean'];
+};
+
+
+export type IMutationCreateCharacterArgs = {
+  input: ICreateCharacterInput;
 };
 
 
@@ -46,6 +67,7 @@ export type IMutationSignupArgs = {
 
 export type IQuery = {
   __typename?: 'Query';
+  characters: Array<ICharacter>;
   me?: Maybe<IUser>;
 };
 
@@ -130,6 +152,9 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type IResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Character: ResolverTypeWrapper<ICharacter>;
+  CreateCharacterInput: ICreateCharacterInput;
+  CreateCharacterPayload: ResolverTypeWrapper<ICreateCharacterPayload>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   LoginInput: ILoginInput;
   LoginPayload: ResolverTypeWrapper<Omit<ILoginPayload, 'user'> & { user: IResolversTypes['User'] }>;
@@ -143,6 +168,9 @@ export type IResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type IResolversParentTypes = {
   Boolean: Scalars['Boolean'];
+  Character: ICharacter;
+  CreateCharacterInput: ICreateCharacterInput;
+  CreateCharacterPayload: ICreateCharacterPayload;
   ID: Scalars['ID'];
   LoginInput: ILoginInput;
   LoginPayload: Omit<ILoginPayload, 'user'> & { user: IResolversParentTypes['User'] };
@@ -153,6 +181,17 @@ export type IResolversParentTypes = {
   User: User;
 };
 
+export type ICharacterResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Character'] = IResolversParentTypes['Character']> = {
+  id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ICreateCharacterPayloadResolvers<ContextType = Context, ParentType extends IResolversParentTypes['CreateCharacterPayload'] = IResolversParentTypes['CreateCharacterPayload']> = {
+  character?: Resolver<IResolversTypes['Character'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ILoginPayloadResolvers<ContextType = Context, ParentType extends IResolversParentTypes['LoginPayload'] = IResolversParentTypes['LoginPayload']> = {
   token?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<IResolversTypes['User'], ParentType, ContextType>;
@@ -160,11 +199,13 @@ export type ILoginPayloadResolvers<ContextType = Context, ParentType extends IRe
 };
 
 export type IMutationResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Mutation'] = IResolversParentTypes['Mutation']> = {
+  createCharacter?: Resolver<IResolversTypes['CreateCharacterPayload'], ParentType, ContextType, RequireFields<IMutationCreateCharacterArgs, 'input'>>;
   login?: Resolver<IResolversTypes['LoginPayload'], ParentType, ContextType, RequireFields<IMutationLoginArgs, 'input'>>;
   signup?: Resolver<IResolversTypes['Boolean'], ParentType, ContextType, RequireFields<IMutationSignupArgs, 'input'>>;
 };
 
 export type IQueryResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Query'] = IResolversParentTypes['Query']> = {
+  characters?: Resolver<Array<IResolversTypes['Character']>, ParentType, ContextType>;
   me?: Resolver<Maybe<IResolversTypes['User']>, ParentType, ContextType>;
 };
 
@@ -175,6 +216,8 @@ export type IUserResolvers<ContextType = Context, ParentType extends IResolversP
 };
 
 export type IResolvers<ContextType = Context> = {
+  Character?: ICharacterResolvers<ContextType>;
+  CreateCharacterPayload?: ICreateCharacterPayloadResolvers<ContextType>;
   LoginPayload?: ILoginPayloadResolvers<ContextType>;
   Mutation?: IMutationResolvers<ContextType>;
   Query?: IQueryResolvers<ContextType>;
@@ -185,6 +228,19 @@ export type IResolvers<ContextType = Context> = {
 import gql from "graphql-tag";
 
 export const typeDefs = gql`
+type Character {
+  id: ID!
+  name: String!
+}
+
+input CreateCharacterInput {
+  name: String
+}
+
+type CreateCharacterPayload {
+  character: Character!
+}
+
 input LoginInput {
   email: String!
   password: String!
@@ -196,11 +252,13 @@ type LoginPayload {
 }
 
 type Mutation {
+  createCharacter(input: CreateCharacterInput!): CreateCharacterPayload!
   login(input: LoginInput!): LoginPayload!
   signup(input: SignupInput!): Boolean!
 }
 
 type Query {
+  characters: [Character!]!
   me: User
 }
 

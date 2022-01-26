@@ -15,6 +15,21 @@ export type Scalars = {
   Float: number;
 };
 
+export type Character = {
+  __typename?: 'Character';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type CreateCharacterInput = {
+  name?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateCharacterPayload = {
+  __typename?: 'CreateCharacterPayload';
+  character: Character;
+};
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -28,8 +43,14 @@ export type LoginPayload = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCharacter: CreateCharacterPayload;
   login: LoginPayload;
   signup: Scalars['Boolean'];
+};
+
+
+export type MutationCreateCharacterArgs = {
+  input: CreateCharacterInput;
 };
 
 
@@ -44,6 +65,7 @@ export type MutationSignupArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  characters: Array<Character>;
   me?: Maybe<User>;
 };
 
@@ -57,6 +79,13 @@ export type User = {
   email: Scalars['String'];
   id: Scalars['ID'];
 };
+
+export type CreateCharacterMutationVariables = Exact<{
+  input: CreateCharacterInput;
+}>;
+
+
+export type CreateCharacterMutation = { __typename?: 'Mutation', createCharacter: { __typename?: 'CreateCharacterPayload', character: { __typename?: 'Character', id: string, name: string } } };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
@@ -72,12 +101,53 @@ export type SignupMutationVariables = Exact<{
 
 export type SignupMutation = { __typename?: 'Mutation', signup: boolean };
 
+export type CharactersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CharactersQuery = { __typename?: 'Query', characters: Array<{ __typename?: 'Character', id: string, name: string }> };
+
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string } | null | undefined };
 
 
+export const CreateCharacterDocument = gql`
+    mutation CreateCharacter($input: CreateCharacterInput!) {
+  createCharacter(input: $input) {
+    character {
+      id
+      name
+    }
+  }
+}
+    `;
+export type CreateCharacterMutationFn = Apollo.MutationFunction<CreateCharacterMutation, CreateCharacterMutationVariables>;
+
+/**
+ * __useCreateCharacterMutation__
+ *
+ * To run a mutation, you first call `useCreateCharacterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCharacterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCharacterMutation, { data, loading, error }] = useCreateCharacterMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCharacterMutation(baseOptions?: Apollo.MutationHookOptions<CreateCharacterMutation, CreateCharacterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCharacterMutation, CreateCharacterMutationVariables>(CreateCharacterDocument, options);
+      }
+export type CreateCharacterMutationHookResult = ReturnType<typeof useCreateCharacterMutation>;
+export type CreateCharacterMutationResult = Apollo.MutationResult<CreateCharacterMutation>;
+export type CreateCharacterMutationOptions = Apollo.BaseMutationOptions<CreateCharacterMutation, CreateCharacterMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
@@ -146,6 +216,41 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const CharactersDocument = gql`
+    query Characters {
+  characters {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useCharactersQuery__
+ *
+ * To run a query within a React component, call `useCharactersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCharactersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCharactersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCharactersQuery(baseOptions?: Apollo.QueryHookOptions<CharactersQuery, CharactersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CharactersQuery, CharactersQueryVariables>(CharactersDocument, options);
+      }
+export function useCharactersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CharactersQuery, CharactersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CharactersQuery, CharactersQueryVariables>(CharactersDocument, options);
+        }
+export type CharactersQueryHookResult = ReturnType<typeof useCharactersQuery>;
+export type CharactersLazyQueryHookResult = ReturnType<typeof useCharactersLazyQuery>;
+export type CharactersQueryResult = Apollo.QueryResult<CharactersQuery, CharactersQueryVariables>;
 export const MeDocument = gql`
     query Me {
   me {
