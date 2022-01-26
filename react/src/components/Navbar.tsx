@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import { useMeQuery } from "../utils/graphql";
 import Button from "./Button";
 
 function Navbar() {
-  const { data, loading, refetch } = useMeQuery();
+  const { isLoggedIn, logout } = useAuth();
+  const { data, loading } = useMeQuery();
 
   if (loading) return <p>Loading...</p>;
-
-  const isLoggedIn = !!data?.me;
 
   return (
     <nav>
@@ -18,14 +18,10 @@ function Navbar() {
             <li>
               <Link to="/">Home</Link>
             </li>
-            <li
-              onClick={() => {
-                localStorage.removeItem("token");
-                // TODO: Update to clear user context
-                refetch();
-              }}
-            >
-              Log out
+            <li>
+              <Button variant="secondary" onClick={logout}>
+                Log out
+              </Button>
             </li>
           </>
         ) : (

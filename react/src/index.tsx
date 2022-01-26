@@ -8,6 +8,7 @@ import { setContext } from "@apollo/client/link/context";
 import ReactDOM from "react-dom";
 import { ThemeProvider } from "styled-components";
 import App from "./components/App";
+import { AuthProvider } from "./hooks/useAuth";
 import { GlobalStyle, theme } from "./utils/theme";
 
 const httpLink = createHttpLink({
@@ -20,7 +21,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : undefined,
+      ...(token && { authorization: `Bearer ${token}` }),
     },
   };
 });
@@ -32,10 +33,12 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <App />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
+    </AuthProvider>
   </ApolloProvider>,
   document.getElementById("root")
 );

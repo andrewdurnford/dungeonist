@@ -2,15 +2,17 @@ import { useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import ErrorText from "../components/ErrorText";
 import LoginForm from "../forms/LoginForm";
+import useAuth from "../hooks/useAuth";
 import { useLoginMutation } from "../utils/graphql";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [signup, { loading, error }] = useLoginMutation({
     onError: (err) => console.error(err),
-    onCompleted: ({ login: { token } }) => {
-      localStorage.setItem("token", token);
+    onCompleted: ({ login: data }) => {
+      login(data);
       navigate("/");
     },
     update(cache, { data }) {
