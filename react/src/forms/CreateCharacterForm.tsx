@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import Flex from "../components/Flex";
+import Container from "../components/Container";
 
 const schema = Yup.object().shape({
   name: Yup.string(),
@@ -30,7 +30,7 @@ function CreateCharacterForm({ loading, onSubmit }: CreateCharacterFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex>
+      <Container>
         <Input
           type="text"
           label="Name"
@@ -41,7 +41,7 @@ function CreateCharacterForm({ loading, onSubmit }: CreateCharacterFormProps) {
         <Button type="submit" loading={loading}>
           Create
         </Button>
-      </Flex>
+      </Container>
     </form>
   );
 }

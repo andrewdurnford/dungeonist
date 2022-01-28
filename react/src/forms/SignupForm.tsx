@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import Flex from "../components/Flex";
+import Container from "../components/Container";
 
 const schema = Yup.object().shape({
   email: Yup.string()
@@ -34,7 +34,7 @@ function SignupForm({ loading, onSubmit }: SignupFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex>
+      <Container>
         <Input
           type="text"
           label="Email"
@@ -53,7 +53,7 @@ function SignupForm({ loading, onSubmit }: SignupFormProps) {
         <Button type="submit" loading={loading}>
           Sign up
         </Button>
-      </Flex>
+      </Container>
     </form>
   );
 }

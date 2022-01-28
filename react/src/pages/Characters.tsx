@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import styled from "styled-components";
-import Container from "../components/Container";
+import { PageContainer } from "../components/Container";
 import ErrorText from "../components/ErrorText";
 import CreateCharacterForm from "../forms/CreateCharacterForm";
 import {
@@ -43,7 +43,7 @@ function Characters() {
     return <ErrorText>Error: {error && error.message}</ErrorText>;
 
   return (
-    <Container>
+    <PageContainer>
       <h1>Characters</h1>
       <CreateCharacterForm
         loading={createLoading}
@@ -58,7 +58,7 @@ function Characters() {
           <li key={id}>{name}</li>
         ))}
       </List>
-    </Container>
+    </PageContainer>
   );
 }
 

@@ -1,10 +1,10 @@
-import Container from "../components/Container";
+import { PageContainer } from "../components/Container";
 
 function Home() {
   return (
-    <Container>
+    <PageContainer>
       <h1>Hello World</h1>
-    </Container>
+    </PageContainer>
   );
 }
 
