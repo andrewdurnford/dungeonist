@@ -4,6 +4,7 @@ query Character($id: ID!) {
     name
     level
     experience
+    background
     personality {
       traits
       ideals

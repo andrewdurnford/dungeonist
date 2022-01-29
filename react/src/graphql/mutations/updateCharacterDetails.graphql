@@ -4,6 +4,7 @@ mutation UpdateCharacterDetails($input: UpdateCharacterDetailsInput!) {
     name
     level
     experience
+    background
     personality {
       traits
       ideals

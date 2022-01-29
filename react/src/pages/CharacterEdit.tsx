@@ -47,18 +47,28 @@ function CharacterEdit() {
       <UpdateCharacterDetailsForm
         name={character.name}
         level={character.level}
+        background={character.background ?? ""}
         traits={character.personality?.traits ?? ""}
         ideals={character.personality?.ideals ?? ""}
         bonds={character.personality?.bonds ?? ""}
         flaws={character.personality?.flaws ?? ""}
         loading={updateLoading}
-        onSubmit={({ name, level, traits, ideals, bonds, flaws }) => {
+        onSubmit={({
+          name,
+          level,
+          background,
+          traits,
+          ideals,
+          bonds,
+          flaws,
+        }) => {
           updateCharacterDetails({
             variables: {
               input: {
                 id: String(characterId),
                 name: name || undefined,
                 level: level || undefined,
+                background: background || undefined,
                 traits: traits || undefined,
                 ideals: ideals || undefined,
                 bonds: bonds || undefined,

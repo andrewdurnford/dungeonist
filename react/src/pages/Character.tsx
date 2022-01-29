@@ -41,8 +41,17 @@ function Character() {
       <Link to={`/characters/${characterId}/edit`}>Edit</Link>
       <h1>{character.name}</h1>
       <List>
-        <li>Level {character.level}</li>
-        <li>Experience {character.experience}</li>
+        <li>
+          <strong>Level:</strong> {character.level}
+        </li>
+        <li>
+          <strong>Experience:</strong> {character.experience}
+        </li>
+        {character.background && (
+          <li>
+            <strong>Background:</strong> {character.background}
+          </li>
+        )}
       </List>
       <CharacterAbilities abilities={character.abilities} />
       <CharacterSkills skills={character.skills} />

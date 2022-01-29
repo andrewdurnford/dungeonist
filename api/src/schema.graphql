@@ -35,6 +35,7 @@ input UpdateCharacterDetailsInput {
   range 1-20, default 1
   """
   level: Int
+  background: String
   traits: String
   ideals: String
   bonds: String
@@ -89,6 +90,7 @@ type Character {
   """
   experience: Int!
   inspiration: Int!
+  background: String
   alignment: Alignment
   personality: Personality
   abilities: [CharacterAbility!]!

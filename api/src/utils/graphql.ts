@@ -36,6 +36,7 @@ export type ICharacter = {
   __typename?: 'Character';
   abilities: Array<ICharacterAbility>;
   alignment?: Maybe<IAlignment>;
+  background?: Maybe<Scalars['String']>;
   /** Range of 0 - 355000 */
   experience: Scalars['Int'];
   id: Scalars['ID'];
@@ -173,6 +174,7 @@ export type ISkill = {
 };
 
 export type IUpdateCharacterDetailsInput = {
+  background?: InputMaybe<Scalars['String']>;
   bonds?: InputMaybe<Scalars['String']>;
   flaws?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
@@ -322,6 +324,7 @@ export type IAlignmentResolvers<ContextType = Context, ParentType extends IResol
 export type ICharacterResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Character'] = IResolversParentTypes['Character']> = {
   abilities?: Resolver<Array<IResolversTypes['CharacterAbility']>, ParentType, ContextType>;
   alignment?: Resolver<Maybe<IResolversTypes['Alignment']>, ParentType, ContextType>;
+  background?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   experience?: Resolver<IResolversTypes['Int'], ParentType, ContextType>;
   id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
   inspiration?: Resolver<IResolversTypes['Int'], ParentType, ContextType>;
@@ -436,6 +439,7 @@ type Alignment {
 type Character {
   abilities: [CharacterAbility!]!
   alignment: Alignment
+  background: String
 
   """Range of 0 - 355000"""
   experience: Int!
@@ -530,6 +534,7 @@ type Skill {
 }
 
 input UpdateCharacterDetailsInput {
+  background: String
   bonds: String
   flaws: String
   id: ID!

@@ -27,6 +27,7 @@ const schema = Yup.object().shape({
 type UpdateCharacterDetailsInput = {
   name?: string;
   level?: number;
+  background?: string;
   traits?: string;
   ideals?: string;
   bonds?: string;
@@ -41,6 +42,7 @@ interface UpdateCharacterDetailsFormProps extends UpdateCharacterDetailsInput {
 function UpdateCharacterDetailsForm({
   name,
   level,
+  background,
   traits,
   ideals,
   bonds,
@@ -57,6 +59,7 @@ function UpdateCharacterDetailsForm({
     defaultValues: {
       name,
       level,
+      background,
       traits,
       ideals,
       bonds,
@@ -80,6 +83,13 @@ function UpdateCharacterDetailsForm({
           label="Level"
           error={errors.level?.message}
           {...register("level", { valueAsNumber: true })}
+        />
+        <Input
+          type="text"
+          label="Background"
+          placeholder="Acolyte"
+          error={errors.background?.message}
+          {...register("background")}
         />
         <TextArea
           label="Personality traits"

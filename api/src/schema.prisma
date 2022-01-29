@@ -30,6 +30,7 @@ model Character {
   level       Int                @default(1) // range 1-20
   experience  Int                @default(0) // range 0-355000
   inspiration Int                @default(0)
+  background  String?
   traits      String?
   ideals      String?
   bonds       String?
