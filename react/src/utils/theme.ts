@@ -16,10 +16,12 @@ export const GlobalStyle = createGlobalStyle`
 export const colors = {
   black: "#000000",
   white: "#FFFFFF",
-  gray200: "#E5E7EB",
   blue400: "#60A5FA",
   blue500: "#3B82F6",
   blue600: "#2563EB",
+  gray200: "#E5E7EB",
+  gray600: "#4B5563",
+  gray700: "#374151",
   red500: "#EF4444",
 };
 

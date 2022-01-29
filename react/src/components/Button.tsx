@@ -6,7 +6,11 @@ const StyledButton = styled.button<{ $variant: Variant }>`
   display: inline-block;
   border-radius: 4px;
   text-decoration: none;
-  padding: 0.25em 0.5em;
+  /* 
+    'box-sizing: border-box' does not work with buttons,
+    so the border must be subtracted from the padding.
+  */
+  padding: calc(0.25em - 1px) 0.5em;
 
   font-size: inherit;
   font-weight: inherit;
@@ -56,7 +60,7 @@ function Button({
       disabled={loading || disabled}
       {...props}
     >
-      {children && <div>{loading ? "Loading..." : children}</div>}
+      {children && loading ? <div>"Loading..."</div> : children}
     </StyledButton>
   );
 }

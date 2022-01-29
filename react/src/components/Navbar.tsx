@@ -9,47 +9,64 @@ const Nav = styled.nav`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  background-color: ${({ theme }) => theme.colors.black};
+  padding: 1rem 0;
+  background-color: ${({ theme }) => theme.colors.gray700};
 `;
 
 const Container = styled.div`
-  max-width: 1024px;
   flex: 1;
+  max-width: 768px;
+  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
 `;
 
-const List = styled.ul`
+const NavList = styled.ul`
   display: flex;
   flex-direction: row;
   align-items: center;
   list-style-type: none;
 
-  > * + * {
-    margin-left: 1rem;
-  }
+  /* TODO: refactor to use flex gap fallback on safari */
+  gap: 1rem;
 `;
 
-const A = styled(Link)`
+const NavLink = styled(Link)`
+  display: inline-block;
+
   color: ${({ theme }) => theme.colors.white};
   text-decoration: none;
+  border-radius: 4px;
+  padding: 0.25rem 0;
+
+  font-size: 16px;
+  line-height: 1.5;
 
   &:hover {
     text-decoration: underline;
+    color: ${({ theme }) => theme.colors.gray200};
+    border-color: ${({ theme }) => theme.colors.gray200};
   }
 `;
 
-const LinkButton = styled(Button).attrs({ variant: "secondary" })`
+const NavButton = styled(Button).attrs({ variant: "secondary" })`
+  /* Override color to white */
   color: ${({ theme }) => theme.colors.white};
   border: 1px solid ${({ theme }) => theme.colors.white};
-  /* TODO: css should not be reset */
-  text-decoration: none;
-  padding: 0.25em 0.5em;
+
+  /* TODO: css should not be overriden by 'as={Link}' */
+  display: inline-block;
   border-radius: 4px;
+  text-decoration: none;
+  padding: calc(0.25em - 1px) 0.5em;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
 
   &:hover {
     text-decoration: underline;
+    color: ${({ theme }) => theme.colors.gray200};
+    border-color: ${({ theme }) => theme.colors.gray200};
   }
 `;
 
@@ -65,50 +82,36 @@ function Navbar() {
       <Container>
         {isLoggedIn ? (
           <>
-            <List>
+            <NavLink to="/">Dungeonist</NavLink>
+            <NavList>
               <li>
-                <A to="/">Home</A>
+                <NavLink to="/characters">Characters</NavLink>
               </li>
               <li>
-                <A to="/characters">Characters</A>
-              </li>
-            </List>
-            <List>
-              <li>
-                <A to="/user">Settings</A>
-              </li>
-              <li>
-                <LinkButton
+                <NavButton
                   onClick={() => {
                     logout();
                     navigate("/");
                   }}
                 >
                   Log out
-                </LinkButton>
+                </NavButton>
               </li>
-            </List>
+            </NavList>
           </>
         ) : (
           <>
-            <List>
+            <NavLink to="/">Dungeonist</NavLink>
+            <NavList>
               <li>
-                <A to="/">Home</A>
+                <NavLink to="/login">Log in</NavLink>
               </li>
               <li>
-                <A to="/about"></A>
-              </li>
-            </List>
-            <List>
-              <li>
-                <A to="/login">Log in</A>
-              </li>
-              <li>
-                <LinkButton as={Link} to="/signup">
+                <NavButton as={Link} to="/signup">
                   Sign up
-                </LinkButton>
+                </NavButton>
               </li>
-            </List>
+            </NavList>
           </>
         )}
       </Container>
