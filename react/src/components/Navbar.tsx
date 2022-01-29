@@ -65,6 +65,7 @@ const NavButton = styled(Button).attrs({ variant: "secondary" })`
 
   &:hover {
     text-decoration: underline;
+    background: none;
     color: ${({ theme }) => theme.colors.gray200};
     border-color: ${({ theme }) => theme.colors.gray200};
   }
