@@ -30,7 +30,7 @@ const Label = styled.label<{ $required: boolean }>`
 
 const StyledInput = styled.input<{ $error: boolean }>`
   display: inline-block;
-  padding: 0.25em 0.5em;
+  padding: 3px 8px;
   border-radius: 4px;
   border: 1px solid
     ${({ $error, theme }) =>

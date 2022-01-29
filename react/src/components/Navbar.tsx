@@ -58,7 +58,7 @@ const NavButton = styled(Button).attrs({ variant: "secondary" })`
   display: inline-block;
   border-radius: 4px;
   text-decoration: none;
-  padding: calc(0.25em - 1px) 0.5em;
+  padding: 3px 8px;
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;

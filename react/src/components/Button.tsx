@@ -6,11 +6,7 @@ const StyledButton = styled.button<{ $variant: Variant }>`
   display: inline-block;
   border-radius: 4px;
   text-decoration: none;
-  /* 
-    'box-sizing: border-box' does not work with buttons,
-    so the border must be subtracted from the padding.
-  */
-  padding: calc(0.25em - 1px) 0.5em;
+  padding: 3px 8em;
 
   font-size: inherit;
   font-weight: inherit;
