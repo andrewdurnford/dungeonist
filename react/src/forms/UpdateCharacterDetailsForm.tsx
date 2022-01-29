@@ -38,6 +38,7 @@ type UpdateCharacterDetailsInput = {
 
 interface UpdateCharacterDetailsFormProps extends UpdateCharacterDetailsInput {
   loading?: boolean;
+  onCancel: () => void;
   onSubmit: (data: UpdateCharacterDetailsInput) => void;
 }
 
@@ -51,6 +52,7 @@ function UpdateCharacterDetailsForm({
   bonds,
   flaws,
   loading,
+  onCancel,
   onSubmit,
 }: UpdateCharacterDetailsFormProps) {
   const {
@@ -142,7 +144,10 @@ function UpdateCharacterDetailsForm({
           <Button type="submit" loading={loading}>
             Update
           </Button>
-          <Button variant="secondary">Cancel</Button>
+          {/* TODO: this should be a Link */}
+          <Button variant="secondary" onClick={onCancel}>
+            Cancel
+          </Button>
         </HorizontalContainer>
       </Container>
     </form>

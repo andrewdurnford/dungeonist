@@ -54,6 +54,7 @@ function CharacterEdit() {
         bonds={character.bonds ?? ""}
         flaws={character.flaws ?? ""}
         loading={updateLoading}
+        onCancel={() => navigate(`/characters/${characterId}`)}
         onSubmit={({
           name,
           level,
