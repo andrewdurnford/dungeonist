@@ -5,6 +5,11 @@ query Character($id: ID!) {
     level
     experience
     background
+    alignment {
+      id
+      name
+    }
+    # TODO: flatten personality into character
     personality {
       traits
       ideals

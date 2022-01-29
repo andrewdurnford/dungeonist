@@ -4,6 +4,10 @@ mutation UpdateCharacterDetails($input: UpdateCharacterDetailsInput!) {
     name
     level
     experience
+    alignment {
+      id
+      name
+    }
     background
     personality {
       traits

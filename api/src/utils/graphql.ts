@@ -174,6 +174,7 @@ export type ISkill = {
 };
 
 export type IUpdateCharacterDetailsInput = {
+  alignmentId?: InputMaybe<Scalars['ID']>;
   background?: InputMaybe<Scalars['String']>;
   bonds?: InputMaybe<Scalars['String']>;
   flaws?: InputMaybe<Scalars['String']>;
@@ -534,6 +535,7 @@ type Skill {
 }
 
 input UpdateCharacterDetailsInput {
+  alignmentId: ID
   background: String
   bonds: String
   flaws: String

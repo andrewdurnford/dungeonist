@@ -47,6 +47,11 @@ function Character() {
         <li>
           <strong>Experience:</strong> {character.experience}
         </li>
+        {character.alignment && (
+          <li>
+            <strong>Alignment:</strong> {character.alignment.name}
+          </li>
+        )}
         {character.background && (
           <li>
             <strong>Background:</strong> {character.background}

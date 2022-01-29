@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import Container from "../components/Container";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
+import Select from "../components/Select";
 
 const HorizontalContainer = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const schema = Yup.object().shape({
 type UpdateCharacterDetailsInput = {
   name?: string;
   level?: number;
+  alignmentId?: string;
   background?: string;
   traits?: string;
   ideals?: string;
@@ -42,6 +44,7 @@ interface UpdateCharacterDetailsFormProps extends UpdateCharacterDetailsInput {
 function UpdateCharacterDetailsForm({
   name,
   level,
+  alignmentId,
   background,
   traits,
   ideals,
@@ -59,6 +62,7 @@ function UpdateCharacterDetailsForm({
     defaultValues: {
       name,
       level,
+      alignmentId,
       background,
       traits,
       ideals,
@@ -84,6 +88,29 @@ function UpdateCharacterDetailsForm({
           error={errors.level?.message}
           {...register("level", { valueAsNumber: true })}
         />
+        <Select
+          label="Alignment"
+          error={errors.alignmentId?.message}
+          defaultChecked={false}
+          {...register("alignmentId")}
+        >
+          {/* 
+            TODO: remove empty option without showing the first
+            alignment as selected (even though it isn't) when
+            default value is ""
+          */}
+          <option value="" selected disabled></option>
+          {/* TODO: query this from the api */}
+          <option value="1">Lawful Good</option>
+          <option value="2">Neutral Good</option>
+          <option value="3">Chaotic Good</option>
+          <option value="4">Lawful Neutral</option>
+          <option value="5">Neutral</option>
+          <option value="6">Chaotic Neutral</option>
+          <option value="7">Lawful Evil</option>
+          <option value="8">Neutral Evil</option>
+          <option value="9">Chaotic Evil</option>
+        </Select>
         <Input
           type="text"
           label="Background"

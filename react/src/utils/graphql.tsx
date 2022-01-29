@@ -172,6 +172,7 @@ export type Skill = {
 };
 
 export type UpdateCharacterDetailsInput = {
+  alignmentId?: InputMaybe<Scalars['ID']>;
   background?: InputMaybe<Scalars['String']>;
   bonds?: InputMaybe<Scalars['String']>;
   flaws?: InputMaybe<Scalars['String']>;
@@ -215,14 +216,14 @@ export type UpdateCharacterDetailsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCharacterDetailsMutation = { __typename?: 'Mutation', updateCharacterDetails: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, personality?: { __typename?: 'Personality', traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined } | null | undefined } };
+export type UpdateCharacterDetailsMutation = { __typename?: 'Mutation', updateCharacterDetails: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, personality?: { __typename?: 'Personality', traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined } | null | undefined } };
 
 export type CharacterQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, personality?: { __typename?: 'Personality', traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } | null | undefined };
+export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, personality?: { __typename?: 'Personality', traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } | null | undefined };
 
 export type CharactersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -346,6 +347,10 @@ export const UpdateCharacterDetailsDocument = gql`
     name
     level
     experience
+    alignment {
+      id
+      name
+    }
     background
     personality {
       traits
@@ -390,6 +395,10 @@ export const CharacterDocument = gql`
     level
     experience
     background
+    alignment {
+      id
+      name
+    }
     personality {
       traits
       ideals
