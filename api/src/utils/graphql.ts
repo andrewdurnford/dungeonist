@@ -37,15 +37,18 @@ export type ICharacter = {
   abilities: Array<ICharacterAbility>;
   alignment?: Maybe<IAlignment>;
   background?: Maybe<Scalars['String']>;
+  bonds?: Maybe<Scalars['String']>;
   /** Range of 0 - 355000 */
   experience: Scalars['Int'];
+  flaws?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  ideals?: Maybe<Scalars['String']>;
   inspiration: Scalars['Int'];
   /** Range of 1 - 20 */
   level: Scalars['Int'];
   name: Scalars['String'];
-  personality?: Maybe<IPersonality>;
   skills: Array<ICharacterSkill>;
+  traits?: Maybe<Scalars['String']>;
 };
 
 export type ICharacterAbility = {
@@ -118,14 +121,6 @@ export type IMutationSignupArgs = {
 
 export type IMutationUpdateCharacterDetailsArgs = {
   input: IUpdateCharacterDetailsInput;
-};
-
-export type IPersonality = {
-  __typename?: 'Personality';
-  bonds?: Maybe<Scalars['String']>;
-  flaws?: Maybe<Scalars['String']>;
-  ideals?: Maybe<Scalars['String']>;
-  traits?: Maybe<Scalars['String']>;
 };
 
 export type IQuery = {
@@ -274,7 +269,6 @@ export type IResolversTypes = {
   LoginInput: ILoginInput;
   LoginPayload: ResolverTypeWrapper<Omit<ILoginPayload, 'user'> & { user: IResolversTypes['User'] }>;
   Mutation: ResolverTypeWrapper<{}>;
-  Personality: ResolverTypeWrapper<IPersonality>;
   Query: ResolverTypeWrapper<{}>;
   SignupInput: ISignupInput;
   Skill: ResolverTypeWrapper<Skill>;
@@ -298,7 +292,6 @@ export type IResolversParentTypes = {
   LoginInput: ILoginInput;
   LoginPayload: Omit<ILoginPayload, 'user'> & { user: IResolversParentTypes['User'] };
   Mutation: {};
-  Personality: IPersonality;
   Query: {};
   SignupInput: ISignupInput;
   Skill: Skill;
@@ -326,13 +319,16 @@ export type ICharacterResolvers<ContextType = Context, ParentType extends IResol
   abilities?: Resolver<Array<IResolversTypes['CharacterAbility']>, ParentType, ContextType>;
   alignment?: Resolver<Maybe<IResolversTypes['Alignment']>, ParentType, ContextType>;
   background?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
+  bonds?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   experience?: Resolver<IResolversTypes['Int'], ParentType, ContextType>;
+  flaws?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
+  ideals?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   inspiration?: Resolver<IResolversTypes['Int'], ParentType, ContextType>;
   level?: Resolver<IResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
-  personality?: Resolver<Maybe<IResolversTypes['Personality']>, ParentType, ContextType>;
   skills?: Resolver<Array<IResolversTypes['CharacterSkill']>, ParentType, ContextType>;
+  traits?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -372,14 +368,6 @@ export type IMutationResolvers<ContextType = Context, ParentType extends IResolv
   updateCharacterDetails?: Resolver<IResolversTypes['Character'], ParentType, ContextType, RequireFields<IMutationUpdateCharacterDetailsArgs, 'input'>>;
 };
 
-export type IPersonalityResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Personality'] = IResolversParentTypes['Personality']> = {
-  bonds?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
-  flaws?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
-  ideals?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
-  traits?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type IQueryResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Query'] = IResolversParentTypes['Query']> = {
   abilities?: Resolver<Array<IResolversTypes['Ability']>, ParentType, ContextType>;
   ability?: Resolver<Maybe<IResolversTypes['Ability']>, ParentType, ContextType, RequireFields<IQueryAbilityArgs, 'id'>>;
@@ -414,7 +402,6 @@ export type IResolvers<ContextType = Context> = {
   CreateCharacterPayload?: ICreateCharacterPayloadResolvers<ContextType>;
   LoginPayload?: ILoginPayloadResolvers<ContextType>;
   Mutation?: IMutationResolvers<ContextType>;
-  Personality?: IPersonalityResolvers<ContextType>;
   Query?: IQueryResolvers<ContextType>;
   Skill?: ISkillResolvers<ContextType>;
   User?: IUserResolvers<ContextType>;
@@ -441,17 +428,20 @@ type Character {
   abilities: [CharacterAbility!]!
   alignment: Alignment
   background: String
+  bonds: String
 
   """Range of 0 - 355000"""
   experience: Int!
+  flaws: String
   id: ID!
+  ideals: String
   inspiration: Int!
 
   """Range of 1 - 20"""
   level: Int!
   name: String!
-  personality: Personality
   skills: [CharacterSkill!]!
+  traits: String
 }
 
 type CharacterAbility {
@@ -502,13 +492,6 @@ type Mutation {
   login(input: LoginInput!): LoginPayload!
   signup(input: SignupInput!): Boolean!
   updateCharacterDetails(input: UpdateCharacterDetailsInput!): Character!
-}
-
-type Personality {
-  bonds: String
-  flaws: String
-  ideals: String
-  traits: String
 }
 
 type Query {

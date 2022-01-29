@@ -109,8 +109,5 @@ export const resolvers: IResolvers = {
         where: { id: alignmentId },
       });
     },
-    personality: ({ traits, ideals, bonds, flaws }, {}, ctx) => {
-      return { traits, ideals, bonds, flaws };
-    },
   },
 };

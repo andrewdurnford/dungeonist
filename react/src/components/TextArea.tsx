@@ -19,6 +19,8 @@ const StyledTextArea = styled.textarea`
   padding: 3px 8px;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.colors.black};
+  /* TODO: Pass this in as a conditional prop */
+  resize: none;
 
   font-family: inherit;
   font-size: inherit;

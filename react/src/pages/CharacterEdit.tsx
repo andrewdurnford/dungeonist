@@ -49,16 +49,16 @@ function CharacterEdit() {
         level={character.level}
         alignmentId={character.alignment?.id ?? ""}
         background={character.background ?? ""}
-        traits={character.personality?.traits ?? ""}
-        ideals={character.personality?.ideals ?? ""}
-        bonds={character.personality?.bonds ?? ""}
-        flaws={character.personality?.flaws ?? ""}
+        traits={character.traits ?? ""}
+        ideals={character.ideals ?? ""}
+        bonds={character.bonds ?? ""}
+        flaws={character.flaws ?? ""}
         loading={updateLoading}
         onSubmit={({
           name,
           level,
-          alignmentId,
           background,
+          alignmentId,
           traits,
           ideals,
           bonds,
@@ -70,8 +70,8 @@ function CharacterEdit() {
                 id: String(characterId),
                 name: name || undefined,
                 level: level || undefined,
-                alignmentId: alignmentId || undefined,
                 background: background || undefined,
+                alignmentId: alignmentId || undefined,
                 traits: traits || undefined,
                 ideals: ideals || undefined,
                 bonds: bonds || undefined,

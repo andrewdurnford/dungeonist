@@ -93,7 +93,10 @@ type Character {
   inspiration: Int!
   background: String
   alignment: Alignment
-  personality: Personality
+  traits: String
+  ideals: String
+  bonds: String
+  flaws: String
   abilities: [CharacterAbility!]!
   skills: [CharacterSkill!]!
 }
@@ -124,13 +127,6 @@ type CharacterSkill {
   ability: CharacterAbility!
   modifier: Int!
   isProficient: Boolean!
-}
-
-type Personality {
-  traits: String
-  ideals: String
-  bonds: String
-  flaws: String
 }
 
 type Skill {

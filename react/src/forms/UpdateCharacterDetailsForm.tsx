@@ -88,6 +88,13 @@ function UpdateCharacterDetailsForm({
           error={errors.level?.message}
           {...register("level", { valueAsNumber: true })}
         />
+        <Input
+          type="text"
+          label="Background"
+          placeholder="Acolyte"
+          error={errors.background?.message}
+          {...register("background")}
+        />
         <Select
           label="Alignment"
           error={errors.alignmentId?.message}
@@ -111,13 +118,6 @@ function UpdateCharacterDetailsForm({
           <option value="8">Neutral Evil</option>
           <option value="9">Chaotic Evil</option>
         </Select>
-        <Input
-          type="text"
-          label="Background"
-          placeholder="Acolyte"
-          error={errors.background?.message}
-          {...register("background")}
-        />
         <TextArea
           label="Personality traits"
           error={errors.traits?.message}

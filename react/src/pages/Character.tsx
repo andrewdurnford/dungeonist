@@ -47,16 +47,31 @@ function Character() {
         <li>
           <strong>Experience:</strong> {character.experience}
         </li>
-        {character.alignment && (
-          <li>
-            <strong>Alignment:</strong> {character.alignment.name}
-          </li>
-        )}
         {character.background && (
           <li>
             <strong>Background:</strong> {character.background}
           </li>
         )}
+        {character.alignment && (
+          <li>
+            <strong>Alignment:</strong> {character.alignment.name}
+          </li>
+        )}
+      </List>
+      <hr />
+      <List>
+        <li>
+          <strong>Personality Traits:</strong> {character.traits}
+        </li>
+        <li>
+          <strong>Ideals:</strong> {character.ideals}
+        </li>
+        <li>
+          <strong>Bonds:</strong> {character.bonds}
+        </li>
+        <li>
+          <strong>Flaws:</strong> {character.flaws}
+        </li>
       </List>
       <CharacterAbilities abilities={character.abilities} />
       <CharacterSkills skills={character.skills} />

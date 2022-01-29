@@ -9,13 +9,10 @@ query Character($id: ID!) {
       id
       name
     }
-    # TODO: flatten personality into character
-    personality {
-      traits
-      ideals
-      bonds
-      flaws
-    }
+    traits
+    ideals
+    bonds
+    flaws
     abilities {
       id
       name
