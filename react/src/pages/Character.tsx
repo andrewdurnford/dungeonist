@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
+import CharacterAbilities from "../components/CharacterAbilities";
 import { PageContainer } from "../components/Container";
 import Notification from "../components/Notification";
 import { useCharacterQuery } from "../utils/graphql";
@@ -41,15 +42,7 @@ function Character() {
         <li>Level {character.level}</li>
         <li>Experience {character.experience}</li>
       </List>
-      <h3>Abilities</h3>
-      <List>
-        {character.abilities.map(({ id, name, score, modifier }) => (
-          <li key={id}>
-            {name.slice(0, 3).toUpperCase()} {modifier >= 0 ? "+" : "-"}
-            {modifier} ({score})
-          </li>
-        ))}
-      </List>
+      <CharacterAbilities abilities={character.abilities} />
       <h3>Skills</h3>
       <List>
         {character.skills.map(({ id, name, modifier, ability }) => (
