@@ -51,8 +51,12 @@ function Characters() {
       )}
       <CreateCharacterForm
         loading={createLoading}
-        onSubmit={({ name }) =>
-          createCharacter({ variables: { input: { name: name || undefined } } })
+        onSubmit={({ name, level }) =>
+          createCharacter({
+            variables: {
+              input: { name: name || undefined, level: level || undefined },
+            },
+          })
         }
       />
       <List>
