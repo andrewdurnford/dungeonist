@@ -15,13 +15,61 @@ export type Scalars = {
   Float: number;
 };
 
-export type Character = {
-  __typename?: 'Character';
+export type Ability = {
+  __typename?: 'Ability';
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  skills: Array<Skill>;
+};
+
+export type Alignment = {
+  __typename?: 'Alignment';
+  description: Scalars['String'];
   id: Scalars['ID'];
   name: Scalars['String'];
 };
 
+export type Character = {
+  __typename?: 'Character';
+  abilities: Array<CharacterAbility>;
+  alignment?: Maybe<Alignment>;
+  /** Range of 0 - 355000 */
+  experience: Scalars['Int'];
+  id: Scalars['ID'];
+  inspiration: Scalars['Int'];
+  /** Range of 1 - 20 */
+  level: Scalars['Int'];
+  name: Scalars['String'];
+  personality?: Maybe<Personality>;
+  skills: Array<CharacterSkill>;
+};
+
+export type CharacterAbility = {
+  __typename?: 'CharacterAbility';
+  id: Scalars['ID'];
+  modifier: Scalars['Int'];
+  /** flattened from ability.name */
+  name: Scalars['String'];
+  score: Scalars['Int'];
+  /** related via skill.abilityId -> characterAbility.abilityId */
+  skills: Array<CharacterSkill>;
+};
+
+export type CharacterSkill = {
+  __typename?: 'CharacterSkill';
+  /** related via skill.abilityId -> characterAbility.abilityId */
+  ability: CharacterAbility;
+  id: Scalars['ID'];
+  isProficient: Scalars['Boolean'];
+  modifier: Scalars['Int'];
+  /** flattened from skill.name */
+  name: Scalars['String'];
+};
+
 export type CreateCharacterInput = {
+  /** range 1-20, default 1 */
+  level?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -63,15 +111,58 @@ export type MutationSignupArgs = {
   input: SignupInput;
 };
 
+export type Personality = {
+  __typename?: 'Personality';
+  bonds?: Maybe<Scalars['String']>;
+  flaws?: Maybe<Scalars['String']>;
+  id: Scalars['ID'];
+  ideals?: Maybe<Scalars['String']>;
+  traits?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
+  abilities: Array<Ability>;
+  ability?: Maybe<Ability>;
+  alignment?: Maybe<Alignment>;
+  alignments: Array<Alignment>;
+  character?: Maybe<Character>;
   characters: Array<Character>;
   me?: Maybe<User>;
+  skill?: Maybe<Skill>;
+  skills: Array<Skill>;
+};
+
+
+export type QueryAbilityArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryAlignmentArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryCharacterArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QuerySkillArgs = {
+  id: Scalars['ID'];
 };
 
 export type SignupInput = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type Skill = {
+  __typename?: 'Skill';
+  ability: Ability;
+  id: Scalars['ID'];
+  name: Scalars['String'];
 };
 
 export type User = {
@@ -100,6 +191,13 @@ export type SignupMutationVariables = Exact<{
 
 
 export type SignupMutation = { __typename?: 'Mutation', signup: boolean };
+
+export type CharacterQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id: string, name: string, level: number, experience: number, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } | null | undefined };
 
 export type CharactersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -216,6 +314,60 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const CharacterDocument = gql`
+    query Character($id: ID!) {
+  character(id: $id) {
+    id
+    name
+    level
+    experience
+    abilities {
+      id
+      name
+      score
+      modifier
+    }
+    skills {
+      id
+      name
+      modifier
+      isProficient
+      ability {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useCharacterQuery__
+ *
+ * To run a query within a React component, call `useCharacterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCharacterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCharacterQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCharacterQuery(baseOptions: Apollo.QueryHookOptions<CharacterQuery, CharacterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CharacterQuery, CharacterQueryVariables>(CharacterDocument, options);
+      }
+export function useCharacterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CharacterQuery, CharacterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CharacterQuery, CharacterQueryVariables>(CharacterDocument, options);
+        }
+export type CharacterQueryHookResult = ReturnType<typeof useCharacterQuery>;
+export type CharacterLazyQueryHookResult = ReturnType<typeof useCharacterLazyQuery>;
+export type CharacterQueryResult = Apollo.QueryResult<CharacterQuery, CharacterQueryVariables>;
 export const CharactersDocument = gql`
     query Characters {
   characters {

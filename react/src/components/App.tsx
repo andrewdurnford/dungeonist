@@ -6,6 +6,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import useAuth from "../hooks/useAuth";
 import Characters from "../pages/Characters";
+import Character from "../pages/Character";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -18,6 +19,7 @@ function App() {
         {isLoggedIn ? (
           <>
             <Route path="characters" element={<Characters />} />
+            <Route path="characters/:characterId" element={<Character />} />
           </>
         ) : (
           <>

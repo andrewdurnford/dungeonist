@@ -1,4 +1,5 @@
 import { gql } from "@apollo/client";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { PageContainer } from "../components/Container";
 import Notification from "../components/Notification";
@@ -56,7 +57,9 @@ function Characters() {
       />
       <List>
         {data.characters.map(({ id, name }) => (
-          <li key={id}>{name}</li>
+          <li key={id}>
+            <Link to={`/characters/${id}`}>{name}</Link>
+          </li>
         ))}
       </List>
     </PageContainer>
