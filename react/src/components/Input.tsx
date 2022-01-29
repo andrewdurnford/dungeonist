@@ -1,6 +1,5 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import ErrorText from "./ErrorText";
 
 const Container = styled.div`
   display: flex;
@@ -9,6 +8,12 @@ const Container = styled.div`
   > * + * {
     margin-top: 0.25rem;
   }
+`;
+
+// TODO: refactor into Text component
+const ErrorText = styled.p`
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.red500};
 `;
 
 const Label = styled.label<{ $required: boolean }>`

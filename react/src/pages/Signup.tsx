@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { PageContainer } from "../components/Container";
-import ErrorText from "../components/ErrorText";
+import Notification from "../components/Notification";
 import SignupForm from "../forms/SignupForm";
 import { useSignupMutation } from "../utils/graphql";
 
@@ -15,14 +15,13 @@ function Signup() {
   return (
     <PageContainer>
       <h1>Sign up</h1>
+      {error && <Notification>Error: {error.message}</Notification>}
       <SignupForm
         loading={loading}
         onSubmit={({ email, password }) =>
           signup({ variables: { input: { email, password } } })
         }
       />
-      {/* TODO: change to notification component */}
-      {error && <ErrorText>Error: {error.message}</ErrorText>}
     </PageContainer>
   );
 }

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import styled from "styled-components";
 import { PageContainer } from "../components/Container";
-import ErrorText from "../components/ErrorText";
+import Notification from "../components/Notification";
 import CreateCharacterForm from "../forms/CreateCharacterForm";
 import {
   useCharactersQuery,
@@ -40,19 +40,20 @@ function Characters() {
   if (loading) return <p>Loading...</p>;
 
   if (error || !data)
-    return <ErrorText>Error: {error && error.message}</ErrorText>;
+    return <Notification>Error: {error && error.message}</Notification>;
 
   return (
     <PageContainer>
       <h1>Characters</h1>
+      {createError && (
+        <Notification>Error: {createError?.message}</Notification>
+      )}
       <CreateCharacterForm
         loading={createLoading}
         onSubmit={({ name }) =>
           createCharacter({ variables: { input: { name: name || undefined } } })
         }
       />
-      {/* TODO: change to notification component */}
-      {createError && <ErrorText>Error: {createError?.message}</ErrorText>}
       <List>
         {data.characters.map(({ id, name }) => (
           <li key={id}>{name}</li>
