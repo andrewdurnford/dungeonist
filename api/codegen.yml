@@ -10,7 +10,6 @@ generates:
         Character: .prisma/client#Character
         CharacterAbility: .prisma/client#CharacterAbility
         CharacterSkill: .prisma/client#CharacterSkill
-        Personality: .prisma/client#Personality
         Skill: .prisma/client#Skill
         User: .prisma/client#User
     plugins:

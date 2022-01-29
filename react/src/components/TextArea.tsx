@@ -1,14 +1,11 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import Label from "./Label";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-
-  > * + * {
-    margin-top: 0.25rem;
-  }
+  gap: 0.25rem;
 `;
 
 // TODO: refactor into Text component
@@ -17,13 +14,11 @@ const ErrorText = styled.p`
   color: ${({ theme }) => theme.colors.red500};
 `;
 
-const StyledInput = styled.input<{ $error: boolean }>`
+const StyledTextArea = styled.textarea`
   display: inline-block;
   padding: 3px 8px;
   border-radius: 4px;
-  border: 1px solid
-    ${({ $error, theme }) =>
-      $error ? theme.colors.red500 : theme.colors.black};
+  border: 1px solid ${({ theme }) => theme.colors.black};
 
   font-family: inherit;
   font-size: inherit;
@@ -36,26 +31,25 @@ const StyledInput = styled.input<{ $error: boolean }>`
   }
 `;
 
-interface InputProps extends React.ComponentPropsWithoutRef<"input"> {
+interface TextAreaProps extends React.ComponentPropsWithoutRef<"textarea"> {
   label: string;
   error?: string;
   required?: boolean;
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ name, label, type, error, required = false, ...props }, ref) => (
+const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
+  ({ name, label, error, rows = 4, required = false, ...props }, ref) => (
     <Container>
       <Label htmlFor={name} required={required}>
         {label}
       </Label>
       {error && <ErrorText>{error}</ErrorText>}
-      <StyledInput
+      <StyledTextArea
         id={name}
         name={name}
-        type={type}
+        rows={rows}
         aria-label={label}
         aria-required={required}
-        $error={!!error}
         ref={ref}
         {...props}
       />
@@ -63,4 +57,4 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
   )
 );
 
-export default Input;
+export default TextArea;

@@ -4,6 +4,12 @@ query Character($id: ID!) {
     name
     level
     experience
+    personality {
+      traits
+      ideals
+      bonds
+      flaws
+    }
     abilities {
       id
       name

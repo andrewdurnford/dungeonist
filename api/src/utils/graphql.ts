@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Ability, Alignment, Character, CharacterAbility, CharacterSkill, Personality, Skill, User } from '.prisma/client';
+import { Ability, Alignment, Character, CharacterAbility, CharacterSkill, Skill, User } from '.prisma/client';
 import { Context } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -123,7 +123,6 @@ export type IPersonality = {
   __typename?: 'Personality';
   bonds?: Maybe<Scalars['String']>;
   flaws?: Maybe<Scalars['String']>;
-  id: Scalars['ID'];
   ideals?: Maybe<Scalars['String']>;
   traits?: Maybe<Scalars['String']>;
 };
@@ -174,10 +173,14 @@ export type ISkill = {
 };
 
 export type IUpdateCharacterDetailsInput = {
+  bonds?: InputMaybe<Scalars['String']>;
+  flaws?: InputMaybe<Scalars['String']>;
   id: Scalars['ID'];
+  ideals?: InputMaybe<Scalars['String']>;
   /** range 1-20, default 1 */
   level?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
+  traits?: InputMaybe<Scalars['String']>;
 };
 
 export type IUser = {
@@ -268,7 +271,7 @@ export type IResolversTypes = {
   LoginInput: ILoginInput;
   LoginPayload: ResolverTypeWrapper<Omit<ILoginPayload, 'user'> & { user: IResolversTypes['User'] }>;
   Mutation: ResolverTypeWrapper<{}>;
-  Personality: ResolverTypeWrapper<Personality>;
+  Personality: ResolverTypeWrapper<IPersonality>;
   Query: ResolverTypeWrapper<{}>;
   SignupInput: ISignupInput;
   Skill: ResolverTypeWrapper<Skill>;
@@ -292,7 +295,7 @@ export type IResolversParentTypes = {
   LoginInput: ILoginInput;
   LoginPayload: Omit<ILoginPayload, 'user'> & { user: IResolversParentTypes['User'] };
   Mutation: {};
-  Personality: Personality;
+  Personality: IPersonality;
   Query: {};
   SignupInput: ISignupInput;
   Skill: Skill;
@@ -368,7 +371,6 @@ export type IMutationResolvers<ContextType = Context, ParentType extends IResolv
 export type IPersonalityResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Personality'] = IResolversParentTypes['Personality']> = {
   bonds?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   flaws?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
   ideals?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   traits?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -500,7 +502,6 @@ type Mutation {
 type Personality {
   bonds: String
   flaws: String
-  id: ID!
   ideals: String
   traits: String
 }
@@ -529,11 +530,15 @@ type Skill {
 }
 
 input UpdateCharacterDetailsInput {
+  bonds: String
+  flaws: String
   id: ID!
+  ideals: String
 
   """range 1-20, default 1"""
   level: Int
   name: String
+  traits: String
 }
 
 type User {

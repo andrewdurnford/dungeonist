@@ -35,6 +35,10 @@ input UpdateCharacterDetailsInput {
   range 1-20, default 1
   """
   level: Int
+  traits: String
+  ideals: String
+  bonds: String
+  flaws: String
 }
 
 input LoginInput {
@@ -120,7 +124,6 @@ type CharacterSkill {
 }
 
 type Personality {
-  id: ID!
   traits: String
   ideals: String
   bonds: String

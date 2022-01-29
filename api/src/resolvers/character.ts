@@ -64,7 +64,7 @@ export const resolvers: IResolvers = {
 
       const userId = ctx.user?.id;
 
-      const { id, name, level } = input;
+      const { id, name, level, traits, ideals, bonds, flaws } = input;
 
       const oldCharacter = await ctx.prisma.character.findUnique({
         where: { id },
@@ -80,10 +80,19 @@ export const resolvers: IResolvers = {
           level: level ?? undefined,
           experience:
             level && isLevel(level) ? getExperiencePerLevel(level) : undefined,
+          traits: traits ?? undefined,
+          ideals: ideals ?? undefined,
+          bonds: bonds ?? undefined,
+          flaws: flaws ?? undefined,
         },
       });
 
       return character;
+    },
+  },
+  Character: {
+    personality: ({ traits, ideals, bonds, flaws }, {}, ctx) => {
+      return { traits, ideals, bonds, flaws };
     },
   },
 };

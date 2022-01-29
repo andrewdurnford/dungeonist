@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Button from "../components/Button";
 import Container from "../components/Container";
 import Input from "../components/Input";
+import TextArea from "../components/TextArea";
 
 const HorizontalContainer = styled.div`
   display: flex;
@@ -26,6 +27,10 @@ const schema = Yup.object().shape({
 type UpdateCharacterDetailsInput = {
   name?: string;
   level?: number;
+  traits?: string;
+  ideals?: string;
+  bonds?: string;
+  flaws?: string;
 };
 
 interface UpdateCharacterDetailsFormProps extends UpdateCharacterDetailsInput {
@@ -36,6 +41,10 @@ interface UpdateCharacterDetailsFormProps extends UpdateCharacterDetailsInput {
 function UpdateCharacterDetailsForm({
   name,
   level,
+  traits,
+  ideals,
+  bonds,
+  flaws,
   loading,
   onSubmit,
 }: UpdateCharacterDetailsFormProps) {
@@ -47,7 +56,11 @@ function UpdateCharacterDetailsForm({
     mode: "onTouched",
     defaultValues: {
       name,
-      level: level ?? 1,
+      level,
+      traits,
+      ideals,
+      bonds,
+      flaws,
     },
     resolver: yupResolver(schema),
   });
@@ -67,6 +80,26 @@ function UpdateCharacterDetailsForm({
           label="Level"
           error={errors.level?.message}
           {...register("level", { valueAsNumber: true })}
+        />
+        <TextArea
+          label="Personality traits"
+          error={errors.traits?.message}
+          {...register("traits")}
+        />
+        <TextArea
+          label="Ideals"
+          error={errors.ideals?.message}
+          {...register("ideals")}
+        />
+        <TextArea
+          label="Bonds"
+          error={errors.bonds?.message}
+          {...register("bonds")}
+        />
+        <TextArea
+          label="Flaws"
+          error={errors.flaws?.message}
+          {...register("flaws")}
         />
         <HorizontalContainer>
           <Button type="submit" loading={loading}>

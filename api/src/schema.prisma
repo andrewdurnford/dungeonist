@@ -25,21 +25,23 @@ model Alignment {
 }
 
 model Character {
-  id            String             @id @default(uuid())
-  name          String             @default("Untitled")
-  level         Int                @default(1) // range 1-20
-  experience    Int                @default(0) // range 0-355000
-  inspiration   Int                @default(0)
-  alignmentId   String?
-  personalityId String?            @unique
-  userId        String?
-  alignment     Alignment?         @relation(fields: [alignmentId], references: [id])
-  personality   Personality?       @relation(fields: [personalityId], references: [id])
-  user          User?              @relation(fields: [userId], references: [id])
-  abilities     CharacterAbility[]
-  skills        CharacterSkill[]
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  id          String             @id @default(uuid())
+  name        String             @default("Untitled")
+  level       Int                @default(1) // range 1-20
+  experience  Int                @default(0) // range 0-355000
+  inspiration Int                @default(0)
+  traits      String?
+  ideals      String?
+  bonds       String?
+  flaws       String?
+  alignmentId String?
+  userId      String?
+  alignment   Alignment?         @relation(fields: [alignmentId], references: [id])
+  user        User?              @relation(fields: [userId], references: [id])
+  abilities   CharacterAbility[]
+  skills      CharacterSkill[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
 }
 
 model CharacterAbility {
@@ -65,15 +67,6 @@ model CharacterSkill {
   updatedAt   DateTime  @updatedAt
 
   @@unique([characterId, skillId])
-}
-
-model Personality {
-  id        String     @id @default(uuid())
-  traits    String?
-  ideals    String?
-  bonds     String?
-  flaws     String?
-  character Character?
 }
 
 model Skill {
