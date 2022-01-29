@@ -96,6 +96,7 @@ export type IMutation = {
   createCharacter: ICreateCharacterPayload;
   login: ILoginPayload;
   signup: Scalars['Boolean'];
+  updateCharacterDetails: ICharacter;
 };
 
 
@@ -111,6 +112,11 @@ export type IMutationLoginArgs = {
 
 export type IMutationSignupArgs = {
   input: ISignupInput;
+};
+
+
+export type IMutationUpdateCharacterDetailsArgs = {
+  input: IUpdateCharacterDetailsInput;
 };
 
 export type IPersonality = {
@@ -165,6 +171,13 @@ export type ISkill = {
   ability: IAbility;
   id: Scalars['ID'];
   name: Scalars['String'];
+};
+
+export type IUpdateCharacterDetailsInput = {
+  id: Scalars['ID'];
+  /** range 1-20, default 1 */
+  level?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type IUser = {
@@ -260,6 +273,7 @@ export type IResolversTypes = {
   SignupInput: ISignupInput;
   Skill: ResolverTypeWrapper<Skill>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  UpdateCharacterDetailsInput: IUpdateCharacterDetailsInput;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -283,6 +297,7 @@ export type IResolversParentTypes = {
   SignupInput: ISignupInput;
   Skill: Skill;
   String: Scalars['String'];
+  UpdateCharacterDetailsInput: IUpdateCharacterDetailsInput;
   User: User;
 };
 
@@ -347,6 +362,7 @@ export type IMutationResolvers<ContextType = Context, ParentType extends IResolv
   createCharacter?: Resolver<IResolversTypes['CreateCharacterPayload'], ParentType, ContextType, RequireFields<IMutationCreateCharacterArgs, 'input'>>;
   login?: Resolver<IResolversTypes['LoginPayload'], ParentType, ContextType, RequireFields<IMutationLoginArgs, 'input'>>;
   signup?: Resolver<IResolversTypes['Boolean'], ParentType, ContextType, RequireFields<IMutationSignupArgs, 'input'>>;
+  updateCharacterDetails?: Resolver<IResolversTypes['Character'], ParentType, ContextType, RequireFields<IMutationUpdateCharacterDetailsArgs, 'input'>>;
 };
 
 export type IPersonalityResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Personality'] = IResolversParentTypes['Personality']> = {
@@ -478,6 +494,7 @@ type Mutation {
   createCharacter(input: CreateCharacterInput!): CreateCharacterPayload!
   login(input: LoginInput!): LoginPayload!
   signup(input: SignupInput!): Boolean!
+  updateCharacterDetails(input: UpdateCharacterDetailsInput!): Character!
 }
 
 type Personality {
@@ -509,6 +526,14 @@ type Skill {
   ability: Ability!
   id: ID!
   name: String!
+}
+
+input UpdateCharacterDetailsInput {
+  id: ID!
+
+  """range 1-20, default 1"""
+  level: Int
+  name: String
 }
 
 type User {

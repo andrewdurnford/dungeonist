@@ -1,0 +1,7 @@
+mutation UpdateCharacterDetails($input: UpdateCharacterDetailsInput!) {
+  updateCharacterDetails(input: $input) {
+    id
+    name
+    level
+  }
+}

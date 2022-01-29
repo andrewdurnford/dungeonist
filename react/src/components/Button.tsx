@@ -6,7 +6,7 @@ const StyledButton = styled.button<{ $variant: Variant }>`
   display: inline-block;
   border-radius: 4px;
   text-decoration: none;
-  padding: 3px 8em;
+  padding: 3px 8px;
 
   font-size: inherit;
   font-weight: inherit;

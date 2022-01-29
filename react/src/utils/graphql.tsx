@@ -94,6 +94,7 @@ export type Mutation = {
   createCharacter: CreateCharacterPayload;
   login: LoginPayload;
   signup: Scalars['Boolean'];
+  updateCharacterDetails: Character;
 };
 
 
@@ -109,6 +110,11 @@ export type MutationLoginArgs = {
 
 export type MutationSignupArgs = {
   input: SignupInput;
+};
+
+
+export type MutationUpdateCharacterDetailsArgs = {
+  input: UpdateCharacterDetailsInput;
 };
 
 export type Personality = {
@@ -165,6 +171,13 @@ export type Skill = {
   name: Scalars['String'];
 };
 
+export type UpdateCharacterDetailsInput = {
+  id: Scalars['ID'];
+  /** range 1-20, default 1 */
+  level?: InputMaybe<Scalars['Int']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   email: Scalars['String'];
@@ -191,6 +204,13 @@ export type SignupMutationVariables = Exact<{
 
 
 export type SignupMutation = { __typename?: 'Mutation', signup: boolean };
+
+export type UpdateCharacterDetailsMutationVariables = Exact<{
+  input: UpdateCharacterDetailsInput;
+}>;
+
+
+export type UpdateCharacterDetailsMutation = { __typename?: 'Mutation', updateCharacterDetails: { __typename?: 'Character', id: string, name: string, level: number } };
 
 export type CharacterQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -314,6 +334,41 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
+export const UpdateCharacterDetailsDocument = gql`
+    mutation UpdateCharacterDetails($input: UpdateCharacterDetailsInput!) {
+  updateCharacterDetails(input: $input) {
+    id
+    name
+    level
+  }
+}
+    `;
+export type UpdateCharacterDetailsMutationFn = Apollo.MutationFunction<UpdateCharacterDetailsMutation, UpdateCharacterDetailsMutationVariables>;
+
+/**
+ * __useUpdateCharacterDetailsMutation__
+ *
+ * To run a mutation, you first call `useUpdateCharacterDetailsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCharacterDetailsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCharacterDetailsMutation, { data, loading, error }] = useUpdateCharacterDetailsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateCharacterDetailsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCharacterDetailsMutation, UpdateCharacterDetailsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCharacterDetailsMutation, UpdateCharacterDetailsMutationVariables>(UpdateCharacterDetailsDocument, options);
+      }
+export type UpdateCharacterDetailsMutationHookResult = ReturnType<typeof useUpdateCharacterDetailsMutation>;
+export type UpdateCharacterDetailsMutationResult = Apollo.MutationResult<UpdateCharacterDetailsMutation>;
+export type UpdateCharacterDetailsMutationOptions = Apollo.BaseMutationOptions<UpdateCharacterDetailsMutation, UpdateCharacterDetailsMutationVariables>;
 export const CharacterDocument = gql`
     query Character($id: ID!) {
   character(id: $id) {

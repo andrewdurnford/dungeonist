@@ -56,5 +56,26 @@ export const resolvers: IResolvers = {
 
       return { character };
     },
+    updateCharacterDetails: async (_, { input }, ctx) => {
+      if (!ctx.user) throw new Error("Unauthenticated");
+
+      const userId = ctx.user?.id;
+
+      const { id, name, level } = input;
+
+      const oldCharacter = await ctx.prisma.character.findUnique({
+        where: { id },
+      });
+
+      if (!oldCharacter || oldCharacter.userId !== userId)
+        throw new Error("Character not found");
+
+      const character = await ctx.prisma.character.update({
+        where: { id },
+        data: { name: name ?? undefined, level: level ?? undefined },
+      });
+
+      return character;
+    },
   },
 };

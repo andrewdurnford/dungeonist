@@ -1,5 +1,6 @@
 type Mutation {
   createCharacter(input: CreateCharacterInput!): CreateCharacterPayload!
+  updateCharacterDetails(input: UpdateCharacterDetailsInput!): Character!
   login(input: LoginInput!): LoginPayload!
   signup(input: SignupInput!): Boolean!
 }
@@ -20,6 +21,15 @@ type Query {
 ### Inputs
 
 input CreateCharacterInput {
+  name: String
+  """
+  range 1-20, default 1
+  """
+  level: Int
+}
+
+input UpdateCharacterDetailsInput {
+  id: ID!
   name: String
   """
   range 1-20, default 1

@@ -38,6 +38,7 @@ function Character() {
   return (
     <PageContainer>
       <Link to={"/characters"}>Back</Link>
+      <Link to={`/characters/${characterId}/edit`}>Edit</Link>
       <h1>{character.name}</h1>
       <List>
         <li>Level {character.level}</li>
