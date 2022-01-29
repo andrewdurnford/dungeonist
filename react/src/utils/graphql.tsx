@@ -210,7 +210,7 @@ export type UpdateCharacterDetailsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCharacterDetailsMutation = { __typename?: 'Mutation', updateCharacterDetails: { __typename?: 'Character', id: string, name: string, level: number } };
+export type UpdateCharacterDetailsMutation = { __typename?: 'Mutation', updateCharacterDetails: { __typename?: 'Character', id: string, name: string, level: number, experience: number } };
 
 export type CharacterQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -340,6 +340,7 @@ export const UpdateCharacterDetailsDocument = gql`
     id
     name
     level
+    experience
   }
 }
     `;

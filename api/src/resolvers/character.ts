@@ -1,3 +1,4 @@
+import { getExperiencePerLevel, isLevel, Level } from "../utils/gameplay";
 import { IResolvers } from "../utils/graphql";
 
 export const resolvers: IResolvers = {
@@ -41,6 +42,8 @@ export const resolvers: IResolvers = {
           userId,
           name: name ?? undefined,
           level: level ?? undefined,
+          experience:
+            level && isLevel(level) ? getExperiencePerLevel(level) : undefined,
           abilities: {
             createMany: {
               data: abilities.map(({ id }) => ({ abilityId: id })),
@@ -72,7 +75,12 @@ export const resolvers: IResolvers = {
 
       const character = await ctx.prisma.character.update({
         where: { id },
-        data: { name: name ?? undefined, level: level ?? undefined },
+        data: {
+          name: name ?? undefined,
+          level: level ?? undefined,
+          experience:
+            level && isLevel(level) ? getExperiencePerLevel(level) : undefined,
+        },
       });
 
       return character;

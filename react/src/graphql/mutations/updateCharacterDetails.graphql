@@ -3,5 +3,6 @@ mutation UpdateCharacterDetails($input: UpdateCharacterDetailsInput!) {
     id
     name
     level
+    experience
   }
 }
