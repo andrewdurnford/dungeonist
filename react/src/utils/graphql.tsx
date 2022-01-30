@@ -45,6 +45,7 @@ export type Character = {
   /** Range of 1 - 20 */
   level: Scalars['Int'];
   name: Scalars['String'];
+  race?: Maybe<CharacterRace>;
   skills: Array<CharacterSkill>;
   traits?: Maybe<Scalars['String']>;
 };
@@ -58,6 +59,13 @@ export type CharacterAbility = {
   score: Scalars['Int'];
   /** related via skill.abilityId -> characterAbility.abilityId */
   skills: Array<CharacterSkill>;
+};
+
+export type CharacterRace = {
+  __typename?: 'CharacterRace';
+  id: Scalars['ID'];
+  /** flattened from race.name */
+  name: Scalars['String'];
 };
 
 export type CharacterSkill = {
@@ -154,6 +162,12 @@ export type QuerySkillArgs = {
   id: Scalars['ID'];
 };
 
+export type Race = {
+  __typename?: 'Race';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
 export type SignupInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -176,6 +190,7 @@ export type UpdateCharacterDetailsInput = {
   /** range 1-20, default 1 */
   level?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
+  raceId?: InputMaybe<Scalars['ID']>;
   traits?: InputMaybe<Scalars['String']>;
 };
 
@@ -211,14 +226,14 @@ export type UpdateCharacterDetailsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateCharacterDetailsMutation = { __typename?: 'Mutation', updateCharacterDetails: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined } };
+export type UpdateCharacterDetailsMutation = { __typename?: 'Mutation', updateCharacterDetails: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined } };
 
 export type CharacterQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } | null | undefined };
+export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } | null | undefined };
 
 export type CharactersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -351,6 +366,10 @@ export const UpdateCharacterDetailsDocument = gql`
     ideals
     bonds
     flaws
+    race {
+      id
+      name
+    }
   }
 }
     `;
@@ -396,6 +415,10 @@ export const CharacterDocument = gql`
     ideals
     bonds
     flaws
+    race {
+      id
+      name
+    }
     abilities {
       id
       name

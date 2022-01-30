@@ -41,6 +41,7 @@ input UpdateCharacterDetailsInput {
   ideals: String
   bonds: String
   flaws: String
+  raceId: ID
 }
 
 input LoginInput {
@@ -97,6 +98,7 @@ type Character {
   ideals: String
   bonds: String
   flaws: String
+  race: CharacterRace
   abilities: [CharacterAbility!]!
   skills: [CharacterSkill!]!
 }
@@ -115,6 +117,14 @@ type CharacterAbility {
   modifier: Int!
 }
 
+type CharacterRace {
+  id: ID!
+  """
+  flattened from race.name
+  """
+  name: String!
+}
+
 type CharacterSkill {
   id: ID!
   """
@@ -127,6 +137,11 @@ type CharacterSkill {
   ability: CharacterAbility!
   modifier: Int!
   isProficient: Boolean!
+}
+
+type Race {
+  id: ID!
+  name: String!
 }
 
 type Skill {

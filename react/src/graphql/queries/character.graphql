@@ -13,6 +13,10 @@ query Character($id: ID!) {
     ideals
     bonds
     flaws
+    race {
+      id
+      name
+    }
     abilities {
       id
       name

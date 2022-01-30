@@ -9,7 +9,9 @@ generates:
         Alignment: .prisma/client#Alignment
         Character: .prisma/client#Character
         CharacterAbility: .prisma/client#CharacterAbility
+        CharacterRace: .prisma/client#CharacterRace
         CharacterSkill: .prisma/client#CharacterSkill
+        Race: .prisma/client#Race
         Skill: .prisma/client#Skill
         User: .prisma/client#User
     plugins:

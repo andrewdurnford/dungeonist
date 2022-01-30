@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Ability, Alignment, Character, CharacterAbility, CharacterSkill, Skill, User } from '.prisma/client';
+import { Ability, Alignment, Character, CharacterAbility, CharacterRace, CharacterSkill, Race, Skill, User } from '.prisma/client';
 import { Context } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -47,6 +47,7 @@ export type ICharacter = {
   /** Range of 1 - 20 */
   level: Scalars['Int'];
   name: Scalars['String'];
+  race?: Maybe<ICharacterRace>;
   skills: Array<ICharacterSkill>;
   traits?: Maybe<Scalars['String']>;
 };
@@ -60,6 +61,13 @@ export type ICharacterAbility = {
   score: Scalars['Int'];
   /** related via skill.abilityId -> characterAbility.abilityId */
   skills: Array<ICharacterSkill>;
+};
+
+export type ICharacterRace = {
+  __typename?: 'CharacterRace';
+  id: Scalars['ID'];
+  /** flattened from race.name */
+  name: Scalars['String'];
 };
 
 export type ICharacterSkill = {
@@ -156,6 +164,12 @@ export type IQuerySkillArgs = {
   id: Scalars['ID'];
 };
 
+export type IRace = {
+  __typename?: 'Race';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
 export type ISignupInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -178,6 +192,7 @@ export type IUpdateCharacterDetailsInput = {
   /** range 1-20, default 1 */
   level?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
+  raceId?: InputMaybe<Scalars['ID']>;
   traits?: InputMaybe<Scalars['String']>;
 };
 
@@ -261,6 +276,7 @@ export type IResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Character: ResolverTypeWrapper<Character>;
   CharacterAbility: ResolverTypeWrapper<CharacterAbility>;
+  CharacterRace: ResolverTypeWrapper<CharacterRace>;
   CharacterSkill: ResolverTypeWrapper<CharacterSkill>;
   CreateCharacterInput: ICreateCharacterInput;
   CreateCharacterPayload: ResolverTypeWrapper<Omit<ICreateCharacterPayload, 'character'> & { character: IResolversTypes['Character'] }>;
@@ -270,6 +286,7 @@ export type IResolversTypes = {
   LoginPayload: ResolverTypeWrapper<Omit<ILoginPayload, 'user'> & { user: IResolversTypes['User'] }>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  Race: ResolverTypeWrapper<Race>;
   SignupInput: ISignupInput;
   Skill: ResolverTypeWrapper<Skill>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -284,6 +301,7 @@ export type IResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Character: Character;
   CharacterAbility: CharacterAbility;
+  CharacterRace: CharacterRace;
   CharacterSkill: CharacterSkill;
   CreateCharacterInput: ICreateCharacterInput;
   CreateCharacterPayload: Omit<ICreateCharacterPayload, 'character'> & { character: IResolversParentTypes['Character'] };
@@ -293,6 +311,7 @@ export type IResolversParentTypes = {
   LoginPayload: Omit<ILoginPayload, 'user'> & { user: IResolversParentTypes['User'] };
   Mutation: {};
   Query: {};
+  Race: Race;
   SignupInput: ISignupInput;
   Skill: Skill;
   String: Scalars['String'];
@@ -327,6 +346,7 @@ export type ICharacterResolvers<ContextType = Context, ParentType extends IResol
   inspiration?: Resolver<IResolversTypes['Int'], ParentType, ContextType>;
   level?: Resolver<IResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
+  race?: Resolver<Maybe<IResolversTypes['CharacterRace']>, ParentType, ContextType>;
   skills?: Resolver<Array<IResolversTypes['CharacterSkill']>, ParentType, ContextType>;
   traits?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -338,6 +358,12 @@ export type ICharacterAbilityResolvers<ContextType = Context, ParentType extends
   name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
   score?: Resolver<IResolversTypes['Int'], ParentType, ContextType>;
   skills?: Resolver<Array<IResolversTypes['CharacterSkill']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ICharacterRaceResolvers<ContextType = Context, ParentType extends IResolversParentTypes['CharacterRace'] = IResolversParentTypes['CharacterRace']> = {
+  id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -380,6 +406,12 @@ export type IQueryResolvers<ContextType = Context, ParentType extends IResolvers
   skills?: Resolver<Array<IResolversTypes['Skill']>, ParentType, ContextType>;
 };
 
+export type IRaceResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Race'] = IResolversParentTypes['Race']> = {
+  id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ISkillResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Skill'] = IResolversParentTypes['Skill']> = {
   ability?: Resolver<IResolversTypes['Ability'], ParentType, ContextType>;
   id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
@@ -398,11 +430,13 @@ export type IResolvers<ContextType = Context> = {
   Alignment?: IAlignmentResolvers<ContextType>;
   Character?: ICharacterResolvers<ContextType>;
   CharacterAbility?: ICharacterAbilityResolvers<ContextType>;
+  CharacterRace?: ICharacterRaceResolvers<ContextType>;
   CharacterSkill?: ICharacterSkillResolvers<ContextType>;
   CreateCharacterPayload?: ICreateCharacterPayloadResolvers<ContextType>;
   LoginPayload?: ILoginPayloadResolvers<ContextType>;
   Mutation?: IMutationResolvers<ContextType>;
   Query?: IQueryResolvers<ContextType>;
+  Race?: IRaceResolvers<ContextType>;
   Skill?: ISkillResolvers<ContextType>;
   User?: IUserResolvers<ContextType>;
 };
@@ -440,6 +474,7 @@ type Character {
   """Range of 1 - 20"""
   level: Int!
   name: String!
+  race: CharacterRace
   skills: [CharacterSkill!]!
   traits: String
 }
@@ -454,6 +489,13 @@ type CharacterAbility {
 
   """related via skill.abilityId -> characterAbility.abilityId"""
   skills: [CharacterSkill!]!
+}
+
+type CharacterRace {
+  id: ID!
+
+  """flattened from race.name"""
+  name: String!
 }
 
 type CharacterSkill {
@@ -506,6 +548,11 @@ type Query {
   skills: [Skill!]!
 }
 
+type Race {
+  id: ID!
+  name: String!
+}
+
 input SignupInput {
   email: String!
   password: String!
@@ -528,6 +575,7 @@ input UpdateCharacterDetailsInput {
   """range 1-20, default 1"""
   level: Int
   name: String
+  raceId: ID
   traits: String
 }
 

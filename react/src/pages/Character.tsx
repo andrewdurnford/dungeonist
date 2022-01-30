@@ -57,6 +57,11 @@ function Character() {
             <strong>Alignment:</strong> {character.alignment.name}
           </li>
         )}
+        {character.race && (
+          <li>
+            <strong>Race:</strong> {character.race.name}
+          </li>
+        )}
       </List>
       <hr />
       <List>

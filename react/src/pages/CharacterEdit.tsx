@@ -47,6 +47,7 @@ function CharacterEdit() {
       <UpdateCharacterDetailsForm
         name={character.name}
         level={character.level}
+        raceId={character.race?.id ?? ""}
         alignmentId={character.alignment?.id ?? ""}
         background={character.background ?? ""}
         traits={character.traits ?? ""}
@@ -58,6 +59,7 @@ function CharacterEdit() {
         onSubmit={({
           name,
           level,
+          raceId,
           background,
           alignmentId,
           traits,
@@ -71,6 +73,7 @@ function CharacterEdit() {
                 id: String(characterId),
                 name: name || undefined,
                 level: level || undefined,
+                raceId: raceId || undefined,
                 background: background || undefined,
                 alignmentId: alignmentId || undefined,
                 traits: traits || undefined,

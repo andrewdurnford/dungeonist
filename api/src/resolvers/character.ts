@@ -74,6 +74,7 @@ export const resolvers: IResolvers = {
         ideals,
         bonds,
         flaws,
+        raceId,
       } = input;
 
       const oldCharacter = await ctx.prisma.character.findUnique({
@@ -98,6 +99,18 @@ export const resolvers: IResolvers = {
           flaws: flaws ?? undefined,
         },
       });
+
+      // Update race
+      if (raceId) {
+        const characterId = id;
+        await ctx.prisma.characterRace.upsert({
+          where: { characterId },
+          // If 1-1 relation doesn't exist, create it with raceId
+          create: { characterId, raceId },
+          // If 1-1 relation does exist, update the raceId
+          update: { raceId },
+        });
+      }
 
       return character;
     },

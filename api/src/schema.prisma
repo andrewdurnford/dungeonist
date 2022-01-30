@@ -39,6 +39,7 @@ model Character {
   userId      String?
   alignment   Alignment?         @relation(fields: [alignmentId], references: [id])
   user        User?              @relation(fields: [userId], references: [id])
+  race        CharacterRace?
   abilities   CharacterAbility[]
   skills      CharacterSkill[]
   createdAt   DateTime           @default(now())
@@ -58,6 +59,16 @@ model CharacterAbility {
   @@unique([characterId, abilityId])
 }
 
+model CharacterRace {
+  id          String    @id @default(uuid())
+  characterId String    @unique
+  raceId      String
+  character   Character @relation(fields: [characterId], references: [id])
+  race        Race      @relation(fields: [raceId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
 model CharacterSkill {
   id          String    @id @default(uuid())
   characterId String
@@ -68,6 +79,13 @@ model CharacterSkill {
   updatedAt   DateTime  @updatedAt
 
   @@unique([characterId, skillId])
+}
+
+model Race {
+  id   String @id
+  name String
+
+  CharacterRace CharacterRace[]
 }
 
 model Skill {
