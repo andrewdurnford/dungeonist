@@ -7,7 +7,8 @@ import Signup from "../pages/Signup";
 import useAuth from "../hooks/useAuth";
 import Characters from "../pages/Characters";
 import Character from "../pages/Character";
-import CharacterEdit from "../pages/CharacterEdit";
+import CharacterDetails from "../pages/CharacterDetails";
+import CharacterSummary from "../pages/CharacterSummary";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -19,9 +20,11 @@ function App() {
         <Route path="/" element={<Home />} />
         {isLoggedIn ? (
           <>
-            <Route path="characters" element={<Characters />} />
-            <Route path="characters/:characterId" element={<Character />} />
-            <Route path="characters/:characterId/edit" element={<CharacterEdit />} />
+            <Route path="/characters" element={<Characters />} />
+            <Route path="/characters/:characterId" element={<Character />}>
+              <Route index element={<CharacterSummary />} />
+              <Route path="details" element={<CharacterDetails />} />
+            </Route>
           </>
         ) : (
           <>

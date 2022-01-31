@@ -1,18 +1,35 @@
-import styled from "styled-components";
+import { useParams } from "react-router-dom";
 import CharacterAbilities from "../components/CharacterAbilities";
 import CharacterSkills from "../components/CharacterSkills";
-import { CharacterQuery } from "../utils/graphql";
+import { PageContainer } from "../components/Container";
+import List from "../components/List";
+import Notification from "../components/Notification";
+import { useCharacterQuery } from "../utils/graphql";
 
-const List = styled.ul`
-  margin-left: 1rem;
-`;
+function CharacterSummary() {
+  const { characterId } = useParams();
 
-interface CharacterSummaryProps {
-  character: CharacterQuery["character"];
-}
+  const { data, loading, error } = useCharacterQuery({
+    variables: { id: String(characterId) },
+  });
 
-function CharacterSummary({ character }: CharacterSummaryProps) {
-  if (!character) return <div>error</div>;
+  if (loading)
+    return (
+      <PageContainer>
+        <p>Loading...</p>
+      </PageContainer>
+    );
+
+  if (error || !data?.character)
+    return (
+      <PageContainer>
+        <Notification>
+          Error{error ? `: ${error.message}` : ": Character does not exist"}
+        </Notification>
+      </PageContainer>
+    );
+
+  const { character } = data;
 
   return (
     <>

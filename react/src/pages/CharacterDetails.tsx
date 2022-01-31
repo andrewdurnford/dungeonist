@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PageContainer } from "../components/Container";
 import Notification from "../components/Notification";
 import UpdateCharacterDetailsForm from "../forms/UpdateCharacterDetailsForm";
@@ -22,13 +22,6 @@ function CharacterEdit() {
     onError: (err) => console.error(err),
   });
 
-  if (loading)
-    return (
-      <PageContainer>
-        <p>Loading...</p>
-      </PageContainer>
-    );
-
   if (error || !data?.character)
     return (
       <PageContainer>
@@ -41,8 +34,7 @@ function CharacterEdit() {
   const { character } = data;
 
   return (
-    <PageContainer>
-      <Link to={`/characters/${characterId}`}>Back</Link>
+    <>
       {updateError && <Notification>{updateError.message}</Notification>}
       <UpdateCharacterDetailsForm
         name={character.name}
@@ -86,7 +78,7 @@ function CharacterEdit() {
           navigate(`/characters/${characterId}`);
         }}
       />
-    </PageContainer>
+    </>
   );
 }
 

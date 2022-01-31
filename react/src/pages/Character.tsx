@@ -1,8 +1,8 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { PageContainer } from "../components/Container";
 import Notification from "../components/Notification";
 import { useCharacterQuery } from "../utils/graphql";
-import CharacterSummary from "./CharacterSummary";
+import CharacterMenu from "./CharacterMenu";
 
 function Character() {
   const { characterId } = useParams();
@@ -31,9 +31,7 @@ function Character() {
 
   return (
     <PageContainer>
-      <Link to={"/characters"}>Back</Link>
-      <Link to={`/characters/${characterId}/edit`}>Edit</Link>
-      <CharacterSummary character={character} />
+      <CharacterMenu character={character} />
     </PageContainer>
   );
 }
