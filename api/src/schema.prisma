@@ -11,10 +11,24 @@ datasource db {
 }
 
 model Ability {
-  id                 String             @id
-  name               String
-  skills             Skill[]
-  characterAbilities CharacterAbility[]
+  id     String  @id
+  name   String
+  skills Skill[]
+
+  // Relations
+  characterAbilities   CharacterAbility[]
+  AbilityScoreIncrease AbilityScoreIncrease[]
+}
+
+model AbilityScoreIncrease {
+  id        String  @id @default(uuid())
+  abilityId String
+  raceId    String
+  increase  Int
+  ability   Ability @relation(fields: [abilityId], references: [id])
+  race      Race    @relation(fields: [raceId], references: [id])
+
+  @@unique([abilityId, raceId])
 }
 
 model Alignment {
@@ -85,6 +99,17 @@ model Race {
   id   String @id
   name String
 
+  // score improvements
+  abilityScoreIncreases AbilityScoreIncrease[]
+
+  // race descriptions
+  age       String?
+  alignment String?
+  size      String?
+  speed     String?
+
+  // TODO: traits
+
   CharacterRace CharacterRace[]
 }
 
@@ -94,6 +119,12 @@ model Skill {
   abilityId       String
   ability         Ability          @relation(fields: [abilityId], references: [id])
   characterSkills CharacterSkill[]
+}
+
+model Trait {
+  id          String @id @default(uuid())
+  name        String
+  description String
 }
 
 model User {

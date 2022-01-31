@@ -18,7 +18,7 @@ export const resolvers: IResolvers = {
       return ability?.name ?? "";
     },
     modifier: (obj, {}, ctx) => {
-      return (obj.score - 10) / 2;
+      return Math.floor((obj.score - 10) / 2);
     },
     skills: async ({ characterId, abilityId }, {}, ctx) => {
       const skills = await ctx.prisma.skill.findMany({ where: { abilityId } });

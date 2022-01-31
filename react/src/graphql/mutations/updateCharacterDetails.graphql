@@ -17,5 +17,21 @@ mutation UpdateCharacterDetails($input: UpdateCharacterDetailsInput!) {
       id
       name
     }
+    abilities {
+      id
+      name
+      score
+      modifier
+    }
+    skills {
+      id
+      name
+      modifier
+      isProficient
+      ability {
+        id
+        name
+      }
+    }
   }
 }

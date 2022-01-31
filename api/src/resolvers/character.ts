@@ -110,6 +110,46 @@ export const resolvers: IResolvers = {
           // If 1-1 relation does exist, update the raceId
           update: { raceId },
         });
+
+        const characterAbilities = await ctx.prisma.characterAbility.findMany({
+          where: { characterId },
+        });
+
+        const abilityIncreases = await ctx.prisma.abilityScoreIncrease.findMany(
+          {
+            where: {
+              raceId,
+            },
+          }
+        );
+
+        // Remove previous increase (if any)
+        await ctx.prisma.characterAbility.updateMany({
+          where: {
+            characterId,
+          },
+          data: {
+            score: 10,
+          },
+        });
+
+        characterAbilities.map((ability) =>
+          abilityIncreases.map(async (abilityIncrease) => {
+            if (ability.abilityId !== abilityIncrease.abilityId) return;
+
+            await ctx.prisma.characterAbility.update({
+              where: {
+                characterId_abilityId: {
+                  characterId,
+                  abilityId: ability.abilityId,
+                },
+              },
+              data: {
+                score: 10 + abilityIncrease.increase,
+              },
+            });
+          })
+        );
       }
 
       return character;

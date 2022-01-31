@@ -43,7 +43,7 @@ export const resolvers: IResolvers = {
         },
       });
 
-      return ((ability?.score || 10) - 10) / 2;
+      return Math.floor(((ability?.score || 10) - 10) / 2);
     },
     isProficient: (_, {}, ctx) => {
       return false;

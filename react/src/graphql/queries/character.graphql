@@ -4,6 +4,7 @@ query Character($id: ID!) {
     name
     level
     experience
+    inspiration
     background
     alignment {
       id
