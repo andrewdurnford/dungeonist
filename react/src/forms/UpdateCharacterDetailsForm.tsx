@@ -79,7 +79,7 @@ function UpdateCharacterDetailsForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Container>
+      <Container direction="column">
         <Input
           type="text"
           label="Name"

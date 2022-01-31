@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { PageContainer } from "../components/Container";
-import Notification from "../components/Notification";
 import { useCharacterQuery } from "../utils/graphql";
+import NotFound from "./404";
 import CharacterMenu from "./CharacterMenu";
 
 function Character() {
@@ -18,14 +18,7 @@ function Character() {
       </PageContainer>
     );
 
-  if (error || !data?.character)
-    return (
-      <PageContainer>
-        <Notification>
-          Error{error ? `: ${error.message}` : ": Character does not exist"}
-        </Notification>
-      </PageContainer>
-    );
+  if (error || !data?.character) return <NotFound message={error?.message} />;
 
   const { character } = data;
 

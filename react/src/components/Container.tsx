@@ -1,68 +1,72 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-const Spacing = {
-  none: "0",
-  xs: "0.25rem",
-  s: "0.5rem",
-  m: "1rem",
-  l: "1.5rem",
-  xl: "2rem",
-};
+type FlexDirection = "row" | "column";
+type FlexWrap = "wrap" | "nowrap" | "wrap-reverse";
+type JustifyContent = "flex-start" | "flex-end" | "center" | "space-between";
+type AlignItems = "stretch" | "center" | "flex-start" | "flex-end";
 
 const StyledContainer = styled.div<{
-  $px: keyof typeof Spacing;
-  $py: keyof typeof Spacing;
-  $mt: keyof typeof Spacing;
+  $flexDirection: FlexDirection;
+  $flexWrap: FlexWrap;
+  $justifyContent: JustifyContent;
+  $alignItems: AlignItems;
+  $gap: string;
 }>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ $flexDirection: $direction }) => $direction};
+  flex-wrap: ${({ $flexWrap }) => $flexWrap};
+  justify-content: ${({ $justifyContent }) => $justifyContent};
+  align-items: ${({ $alignItems }) => $alignItems};
+  ${({ $gap }) =>
+    $gap &&
+    css`
+      gap: ${$gap};
+    `};
   max-width: 768px;
-  margin: ${({ $mt }) => `${Spacing[$mt]} auto 0`};
-  padding: ${({ $px, $py }) => `${Spacing[$py]} ${Spacing[$px]}`};
-
-  /* TODO: Use margin as flex gap fallback for Safari */
-  /* > * + * { */
-  /* margin-top: 1rem; */
-  /* } */
-  gap: 1rem;
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
 `;
 
 interface ContainerProps {
-  children: React.ReactNode;
-  px?: keyof typeof Spacing;
-  py?: keyof typeof Spacing;
-  mt?: keyof typeof Spacing;
+  children?: React.ReactNode;
+  direction?: FlexDirection;
+  wrap?: FlexWrap;
+  justifyContent?: JustifyContent;
+  alignItems?: AlignItems;
+  gap?: string;
 }
 
-/**
- * Flexbox container
- *
- * @param px horizontal padding
- * @param py vertical padding
- * @param mx horizontal margin
- * @param my vertical margin
- */
 function Container({
+  direction = "row",
+  wrap = "wrap",
+  justifyContent = "flex-start",
+  alignItems = "stretch",
+  gap = "none",
   children,
-  px = "none",
-  py = "none",
-  mt = "none",
 }: ContainerProps) {
   return (
-    <StyledContainer $px={px} $py={py} $mt={mt}>
+    <StyledContainer
+      $flexDirection={direction}
+      $flexWrap={wrap}
+      $justifyContent={justifyContent}
+      $alignItems={alignItems}
+      $gap={gap}
+    >
       {children}
     </StyledContainer>
   );
 }
 
-function PageContainer({ children, ...props }: ContainerProps) {
-  return (
-    <Container px="m" mt="xl" {...props}>
-      {children}
-    </Container>
-  );
-}
+export const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  max-width: 768px;
+`;
 
 export default Container;
-export { PageContainer };

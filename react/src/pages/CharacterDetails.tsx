@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { PageContainer } from "../components/Container";
 import Notification from "../components/Notification";
 import UpdateCharacterDetailsForm from "../forms/UpdateCharacterDetailsForm";
 import {
   useCharacterQuery,
   useUpdateCharacterDetailsMutation,
 } from "../utils/graphql";
+import NotFound from "./404";
 
 function CharacterEdit() {
   const navigate = useNavigate();
@@ -22,14 +22,7 @@ function CharacterEdit() {
     onError: (err) => console.error(err),
   });
 
-  if (error || !data?.character)
-    return (
-      <PageContainer>
-        <Notification>
-          Error{error ? `: ${error.message}` : ": Character does not exist"}
-        </Notification>
-      </PageContainer>
-    );
+  if (error || !data?.character) return <NotFound message={error?.message} />;
 
   const { character } = data;
 

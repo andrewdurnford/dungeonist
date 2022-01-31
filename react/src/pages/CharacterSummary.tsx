@@ -1,16 +1,18 @@
 import { useParams } from "react-router-dom";
 import CharacterAbilities from "../components/CharacterAbilities";
 import CharacterSkills from "../components/CharacterSkills";
-import { PageContainer } from "../components/Container";
+import Container, { PageContainer } from "../components/Container";
+import Col from "../components/Col";
 import List from "../components/List";
-import Notification from "../components/Notification";
 import { useCharacterQuery } from "../utils/graphql";
+import NotFound from "./404";
 
 function CharacterSummary() {
   const { characterId } = useParams();
 
   const { data, loading, error } = useCharacterQuery({
     variables: { id: String(characterId) },
+    skip: !characterId,
   });
 
   if (loading)
@@ -20,14 +22,7 @@ function CharacterSummary() {
       </PageContainer>
     );
 
-  if (error || !data?.character)
-    return (
-      <PageContainer>
-        <Notification>
-          Error{error ? `: ${error.message}` : ": Character does not exist"}
-        </Notification>
-      </PageContainer>
-    );
+  if (error || !data?.character) return <NotFound message={error?.message} />;
 
   const { character } = data;
 
@@ -58,22 +53,30 @@ function CharacterSummary() {
         )}
       </List>
       <hr />
-      <List>
-        <li>
-          <strong>Personality Traits:</strong> {character.traits}
-        </li>
-        <li>
-          <strong>Ideals:</strong> {character.ideals}
-        </li>
-        <li>
-          <strong>Bonds:</strong> {character.bonds}
-        </li>
-        <li>
-          <strong>Flaws:</strong> {character.flaws}
-        </li>
-      </List>
+
       <CharacterAbilities abilities={character.abilities} />
-      <CharacterSkills skills={character.skills} />
+
+      <Container justifyContent="space-between">
+        <Col width="4">
+          <CharacterSkills skills={character.skills} />
+        </Col>
+        <Col width="6">
+          <List>
+            <li>
+              <strong>Traits:</strong> {character.traits}
+            </li>
+            <li>
+              <strong>Ideals:</strong> {character.ideals}
+            </li>
+            <li>
+              <strong>Bonds:</strong> {character.bonds}
+            </li>
+            <li>
+              <strong>Flaws:</strong> {character.flaws}
+            </li>
+          </List>
+        </Col>
+      </Container>
     </>
   );
 }
