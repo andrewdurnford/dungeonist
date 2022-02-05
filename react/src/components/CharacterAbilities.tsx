@@ -3,7 +3,9 @@ import styled from "styled-components";
 const Row = styled.ul`
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
   padding: 1rem;
 `;

@@ -10,12 +10,6 @@ const Nav = styled(Container).attrs({
   px: "20px",
 })``;
 
-const Divider = styled.span`
-  font-size: 24px;
-  line-height: 32px;
-  color: ${({ theme }) => theme.colors.gray700};
-`;
-
 function CharacterBreadcrumb({ name }: { name?: string }) {
   const { characterId } = useParams();
 

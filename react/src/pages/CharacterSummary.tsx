@@ -6,6 +6,12 @@ import Col from "../components/Col";
 import List from "../components/List";
 import { useCharacterQuery } from "../utils/graphql";
 import NotFound from "./404";
+import styled from "styled-components";
+import Text from "../components/Text";
+
+const Main = styled(Container).attrs({ forwardedAs: "main" })`
+  padding: 2rem;
+`;
 
 function CharacterSummary() {
   const { characterId } = useParams();
@@ -27,57 +33,10 @@ function CharacterSummary() {
   const { character } = data;
 
   return (
-    <>
-      <h1>{character.name}</h1>
-      <List>
-        <li>
-          <strong>Level:</strong> {character.level}
-        </li>
-        <li>
-          <strong>Experience:</strong> {character.experience}
-        </li>
-        {character.background && (
-          <li>
-            <strong>Background:</strong> {character.background}
-          </li>
-        )}
-        {character.alignment && (
-          <li>
-            <strong>Alignment:</strong> {character.alignment.name}
-          </li>
-        )}
-        {character.race && (
-          <li>
-            <strong>Race:</strong> {character.race.name}
-          </li>
-        )}
-      </List>
-      <hr />
-
+    <Main direction="column" gap="16px">
       <CharacterAbilities abilities={character.abilities} />
-
-      <Container justifyContent="space-between">
-        <Col width="4">
-          <CharacterSkills skills={character.skills} />
-        </Col>
-        <Col width="6">
-          <List>
-            <li>
-              <strong>Traits:</strong> {character.traits}
-            </li>
-            <li>
-              <strong>Ideals:</strong> {character.ideals}
-            </li>
-            <li>
-              <strong>Bonds:</strong> {character.bonds}
-            </li>
-            <li>
-              <strong>Flaws:</strong> {character.flaws}
-            </li>
-          </List>
-        </Col>
-      </Container>
-    </>
+      <CharacterSkills skills={character.skills} />
+    </Main>
   );
 }
 
