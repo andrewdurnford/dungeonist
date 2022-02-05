@@ -19,7 +19,7 @@ const StyledContainer = styled.div<{
   justify-content: ${({ $justifyContent }) => $justifyContent};
   align-items: ${({ $alignItems }) => $alignItems};
   ${({ $gap }) =>
-    $gap &&
+    $gap !== "none" &&
     css`
       gap: ${$gap};
     `};
@@ -30,6 +30,9 @@ const StyledContainer = styled.div<{
 `;
 
 interface ContainerProps {
+  as?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
+  forwardedAs?: keyof JSX.IntrinsicElements | React.ComponentType<any>;
+  className?: string;
   children?: React.ReactNode;
   direction?: FlexDirection;
   wrap?: FlexWrap;
@@ -45,6 +48,7 @@ function Container({
   alignItems = "stretch",
   gap = "none",
   children,
+  ...props
 }: ContainerProps) {
   return (
     <StyledContainer
@@ -53,6 +57,7 @@ function Container({
       $justifyContent={justifyContent}
       $alignItems={alignItems}
       $gap={gap}
+      {...props}
     >
       {children}
     </StyledContainer>
@@ -65,7 +70,7 @@ export const PageContainer = styled.div`
   gap: 1rem;
   margin-left: auto;
   margin-right: auto;
-  padding: 1rem;
+  /* padding: 1rem; */
   max-width: 768px;
 `;
 

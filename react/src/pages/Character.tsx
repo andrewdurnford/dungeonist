@@ -1,8 +1,8 @@
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import CharacterHeader from "../components/CharacterHeader";
 import { PageContainer } from "../components/Container";
 import { useCharacterQuery } from "../utils/graphql";
 import NotFound from "./404";
-import CharacterMenu from "./CharacterMenu";
 
 function Character() {
   const { characterId } = useParams();
@@ -24,7 +24,8 @@ function Character() {
 
   return (
     <PageContainer>
-      <CharacterMenu character={character} />
+      <CharacterHeader name={character.name} />
+      <Outlet />
     </PageContainer>
   );
 }

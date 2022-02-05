@@ -40,7 +40,7 @@ function CreateCharacterForm({ loading, onSubmit }: CreateCharacterFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Container>
+      <Container direction="column" gap="16px">
         <Input
           type="text"
           label="Name"
