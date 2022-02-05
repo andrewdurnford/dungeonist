@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { PageContainer } from "../components/Container";
+import Container from "../components/Container";
 import Notification from "../components/Notification";
 import LoginForm from "../forms/LoginForm";
 import useAuth from "../hooks/useAuth";
@@ -27,7 +27,7 @@ function Login() {
   });
 
   return (
-    <PageContainer>
+    <Container direction="column" gap="16" mx="auto" p="32">
       <h1>Log in</h1>
       {error && <Notification>Error: {error.message}</Notification>}
       <LoginForm
@@ -36,7 +36,7 @@ function Login() {
           signup({ variables: { input: { email, password } } })
         }
       />
-    </PageContainer>
+    </Container>
   );
 }
 

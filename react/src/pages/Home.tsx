@@ -1,10 +1,10 @@
-import { PageContainer } from "../components/Container";
+import Container from "../components/Container";
 
 function Home() {
   return (
-    <PageContainer>
+    <Container direction="column" gap="16" mx="auto" p="32">
       <h1>Hello World</h1>
-    </PageContainer>
+    </Container>
   );
 }
 

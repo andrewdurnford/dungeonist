@@ -1,14 +1,7 @@
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
 import Container from "./Container";
 import { Link } from "./Link";
 import Text from "./Text";
-
-const Nav = styled(Container).attrs({
-  forwardedAs: "nav",
-  gap: "8px",
-  px: "20px",
-})``;
 
 function CharacterBreadcrumb({ name }: { name?: string }) {
   const { characterId } = useParams();
@@ -16,7 +9,7 @@ function CharacterBreadcrumb({ name }: { name?: string }) {
   if (!characterId) return null;
 
   return (
-    <Nav>
+    <Container forwardedAs="nav" gap="8" px="16" mx="auto">
       <Link size="24" to="/characters">
         Characters
       </Link>
@@ -24,7 +17,7 @@ function CharacterBreadcrumb({ name }: { name?: string }) {
       <Link size="24" to={`/characters/${characterId}`}>
         {name ?? "Loading..."}
       </Link>
-    </Nav>
+    </Container>
   );
 }
 

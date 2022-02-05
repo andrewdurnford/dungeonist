@@ -34,7 +34,7 @@ function LoginForm({ loading, onSubmit }: LoginFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Container>
+      <Container direction="column" gap="16">
         <Input
           type="text"
           label="Email"

@@ -1,25 +1,27 @@
 import Button from "./Button";
-import Container from "./Container";
+import Container, { FluidContainer } from "./Container";
 import Text from "./Text";
 
 interface SubtitleProps {
   name: string;
   loading?: boolean;
-  onCancel?: () => void;
+  onReset?: () => void;
 }
 
-function Subtitle({ name, loading, onCancel }: SubtitleProps) {
+function Subtitle({ name, loading, onReset }: SubtitleProps) {
   return (
-    <Container justifyContent="space-between" alignItems="center">
+    <Container alignItems="center">
       <Text as="h1" size="32">
         {name}
       </Text>
-      <Container gap="4px" fluid>
+      <FluidContainer justifyContent="flex-end" gap="4">
         <Button type="submit" loading={loading}>
           Save
         </Button>
-        <Button variant="secondary">Reset</Button>
-      </Container>
+        <Button variant="secondary" onClick={onReset}>
+          Reset
+        </Button>
+      </FluidContainer>
     </Container>
   );
 }

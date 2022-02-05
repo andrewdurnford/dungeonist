@@ -9,13 +9,6 @@ import TextArea from "../components/TextArea";
 import Select from "../components/Select";
 import Subtitle from "../components/SubTitle";
 
-const HorizontalContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: 0.25rem;
-`;
-
 const schema = Yup.object().shape({
   name: Yup.string(),
   level: Yup.number()
@@ -80,10 +73,10 @@ function UpdateCharacterDetailsForm({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Container direction="column" gap="16px">
-        <Subtitle name="Details" loading={loading} onCancel={onCancel} />
-        <Container gap="16px" justifyContent="center">
-          <Container direction="column" gap="8px" grow>
+      <Container direction="column" gap="16">
+        <Subtitle name="Details" loading={loading} onReset={onCancel} />
+        <Container gap="16" justifyContent="center">
+          <Container direction="column" gap="16" flexGrow={1}>
             <Input
               type="text"
               label="Name"
@@ -144,7 +137,7 @@ function UpdateCharacterDetailsForm({
               <option value="9">Chaotic Evil</option>
             </Select>
           </Container>
-          <Container direction="column" gap="8px" grow>
+          <Container direction="column" gap="16" flexGrow={1}>
             <TextArea
               label="Personality traits"
               error={errors.traits?.message}

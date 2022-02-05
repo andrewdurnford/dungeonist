@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { PageContainer } from "../components/Container";
+import Container from "../components/Container";
 import Notification from "../components/Notification";
 import CreateCharacterForm from "../forms/CreateCharacterForm";
 import {
@@ -44,7 +44,7 @@ function Characters() {
     return <Notification>Error: {error && error.message}</Notification>;
 
   return (
-    <PageContainer>
+    <Container forwardedAs="main" direction="column" p="32" mx="auto">
       <h1>Characters</h1>
       {createError && (
         <Notification>Error: {createError?.message}</Notification>
@@ -66,7 +66,7 @@ function Characters() {
           </li>
         ))}
       </List>
-    </PageContainer>
+    </Container>
   );
 }
 

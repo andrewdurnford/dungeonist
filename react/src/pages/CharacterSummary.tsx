@@ -1,17 +1,9 @@
 import { useParams } from "react-router-dom";
 import CharacterAbilities from "../components/CharacterAbilities";
 import CharacterSkills from "../components/CharacterSkills";
-import Container, { PageContainer } from "../components/Container";
-import Col from "../components/Col";
-import List from "../components/List";
+import Container from "../components/Container";
 import { useCharacterQuery } from "../utils/graphql";
 import NotFound from "./404";
-import styled from "styled-components";
-import Text from "../components/Text";
-
-const Main = styled(Container).attrs({ forwardedAs: "main" })`
-  padding: 2rem;
-`;
 
 function CharacterSummary() {
   const { characterId } = useParams();
@@ -23,9 +15,9 @@ function CharacterSummary() {
 
   if (loading)
     return (
-      <PageContainer>
+      <Container direction="column" gap="16" mx="auto" p="32">
         <p>Loading...</p>
-      </PageContainer>
+      </Container>
     );
 
   if (error || !data?.character) return <NotFound message={error?.message} />;
@@ -33,10 +25,10 @@ function CharacterSummary() {
   const { character } = data;
 
   return (
-    <Main direction="column" gap="16px">
+    <Container forwardedAs="main" direction="column" gap="16" mx="auto" p="32">
       <CharacterAbilities abilities={character.abilities} />
       <CharacterSkills skills={character.skills} />
-    </Main>
+    </Container>
   );
 }
 

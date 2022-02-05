@@ -1,6 +1,6 @@
 import { Outlet, useParams } from "react-router-dom";
 import CharacterHeader from "../components/CharacterHeader";
-import Container, { PageContainer } from "../components/Container";
+import Container from "../components/Container";
 import { useCharacterQuery } from "../utils/graphql";
 import NotFound from "./404";
 
@@ -13,9 +13,9 @@ function Character() {
 
   if (loading)
     return (
-      <PageContainer>
+      <Container direction="column" gap="16" mx="auto" p="32">
         <p>Loading...</p>
-      </PageContainer>
+      </Container>
     );
 
   if (error || !data?.character) return <NotFound message={error?.message} />;

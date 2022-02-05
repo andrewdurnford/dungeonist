@@ -1,24 +1,19 @@
-import styled from "styled-components";
 import CharacterBreadcrumb from "./CharacterBreadcrumb";
 import CharacterMenu from "./CharacterMenu";
-import Container from "./Container";
-
-const Header = styled(Container).attrs({
-  forwardedAs: "header",
-  direction: "column",
-  gap: "16px",
-  fluid: true,
-})`
-  padding-top: 1rem;
-  background: ${({ theme }) => theme.colors.gray100};
-`;
+import { FluidContainer } from "./Container";
 
 function CharacterHeader({ name }: { name?: string }) {
   return (
-    <Header>
+    <FluidContainer
+      forwardedAs="header"
+      direction="column"
+      gap="16"
+      pt="16"
+      background="gray100"
+    >
       <CharacterBreadcrumb name={name} />
       <CharacterMenu />
-    </Header>
+    </FluidContainer>
   );
 }
 
