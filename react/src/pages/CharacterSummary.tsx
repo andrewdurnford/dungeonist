@@ -25,7 +25,7 @@ function CharacterSummary() {
   const { character } = data;
 
   return (
-    <Container forwardedAs="main" direction="column" gap="16" mx="auto" p="32">
+    <Container as="main" direction="column" gap="16" mx="auto" p="32">
       <CharacterAbilities abilities={character.abilities} />
       <CharacterSkills skills={character.skills} />
     </Container>

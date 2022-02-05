@@ -29,7 +29,7 @@ function CharacterEdit() {
   const { character } = data;
 
   return (
-    <Container forwardedAs="main" direction="column" p="32" mx="auto">
+    <Container as="main" direction="column" p="32" mx="auto">
       {updateError && <Notification>{updateError.message}</Notification>}
       <UpdateCharacterDetailsForm
         name={character.name}

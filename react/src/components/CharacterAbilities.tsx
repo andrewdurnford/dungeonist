@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import Container from "./Container";
+import Text from "./Text";
 
 const Row = styled.ul`
   display: flex;
@@ -7,7 +9,6 @@ const Row = styled.ul`
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
 `;
 
 const Col = styled.li`
@@ -63,14 +64,16 @@ interface AbilitiesProps {
 
 function CharacterAbilities({ abilities }: AbilitiesProps) {
   return (
-    <div>
-      <h3>Abilities</h3>
+    <Container as="section" direction="column" gap="16">
+      <Text as="h3" weight="600">
+        Abilities
+      </Text>
       <Row>
         {abilities.map((ability) => (
           <AbilityBox ability={ability} />
         ))}
       </Row>
-    </div>
+    </Container>
   );
 }
 

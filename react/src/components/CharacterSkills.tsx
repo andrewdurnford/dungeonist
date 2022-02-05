@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import Container from "./Container";
+import Text from "./Text";
 
 const List = styled.ul`
   margin-left: 1.5rem;
-  padding: 1rem 0;
 `;
 
 const Item = styled.li`
@@ -60,14 +61,14 @@ interface CharacterSkillsProps {
 
 function CharacterSkills({ skills }: CharacterSkillsProps) {
   return (
-    <div>
-      <h3>Skills</h3>
+    <Container as="section" direction="column" gap="16">
+      <Text weight="600">Skills</Text>
       <List>
         {skills.map((skill) => (
           <SkillBox skill={skill} />
         ))}
       </List>
-    </div>
+    </Container>
   );
 }
 

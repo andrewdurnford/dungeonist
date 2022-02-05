@@ -76,7 +76,7 @@ function UpdateCharacterDetailsForm({
       <Container direction="column" gap="16">
         <Subtitle name="Details" loading={loading} onReset={onCancel} />
         <Container gap="16" justifyContent="center">
-          <Container direction="column" gap="16" flexGrow={1}>
+          <Container as="section" direction="column" gap="16" flexGrow={1}>
             <Input
               type="text"
               label="Name"
@@ -137,7 +137,7 @@ function UpdateCharacterDetailsForm({
               <option value="9">Chaotic Evil</option>
             </Select>
           </Container>
-          <Container direction="column" gap="16" flexGrow={1}>
+          <Container as="section" direction="column" gap="16" flexGrow={1}>
             <TextArea
               label="Personality traits"
               error={errors.traits?.message}
