@@ -4,11 +4,11 @@ import Container from "./Container";
 import { Link } from "./Link";
 import Text from "./Text";
 
-const Nav = styled(Container).attrs({ as: "nav" })`
-  display: flex;
-  gap: 8px;
-  padding: 4px;
-`;
+const Nav = styled(Container).attrs({
+  forwardedAs: "nav",
+  gap: "8px",
+  px: "20px",
+})``;
 
 const Divider = styled.span`
   font-size: 24px;

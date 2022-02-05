@@ -4,17 +4,13 @@ import CharacterMenu from "./CharacterMenu";
 import Container from "./Container";
 
 const Header = styled(Container).attrs({
-  as: "header",
+  forwardedAs: "header",
   direction: "column",
   gap: "16px",
+  fluid: true,
 })`
-  padding-top: 2rem;
-  padding-right: 2rem;
-  padding-left: 2rem;
-
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  padding-top: 1rem;
+  background: ${({ theme }) => theme.colors.gray100};
 `;
 
 function CharacterHeader({ name }: { name?: string }) {

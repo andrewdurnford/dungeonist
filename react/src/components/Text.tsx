@@ -7,6 +7,8 @@ type Weight = "400" | "600";
 const StyledText = styled.span<{ $size: Size; $weight: Weight }>`
   font-size: ${({ $size }) => `${$size}px`};
   font-weight: ${({ $weight }) => $weight};
+  line-height: ${({ $size }) =>
+    $size === "32" ? "42px" : $size === "24" ? "32px" : "1.5"};
 `;
 
 export interface TextProps {

@@ -12,6 +12,9 @@ const StyledContainer = styled.div<{
   $justifyContent: JustifyContent;
   $alignItems: AlignItems;
   $gap: string;
+  $grow: boolean;
+  $fluid: boolean;
+  $px: string;
 }>`
   display: flex;
   flex-direction: ${({ $flexDirection: $direction }) => $direction};
@@ -23,10 +26,26 @@ const StyledContainer = styled.div<{
     css`
       gap: ${$gap};
     `};
-  max-width: 768px;
-  margin-left: 0;
-  margin-right: 0;
-  padding: 0;
+  ${({ $grow }) =>
+    $grow &&
+    css`
+      flex: 1;
+    `};
+  ${({ $fluid }) =>
+    $fluid
+      ? undefined
+      : css`
+          max-width: 768px;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100%;
+        `};
+  /* width: 100%; */
+  ${({ $px }) =>
+    $px !== "none" &&
+    css`
+      padding: 0 ${$px};
+    `};
 `;
 
 interface ContainerProps {
@@ -39,6 +58,9 @@ interface ContainerProps {
   justifyContent?: JustifyContent;
   alignItems?: AlignItems;
   gap?: string;
+  grow?: boolean;
+  fluid?: boolean;
+  px?: string;
 }
 
 function Container({
@@ -47,6 +69,9 @@ function Container({
   justifyContent = "flex-start",
   alignItems = "stretch",
   gap = "none",
+  grow = false,
+  fluid = false,
+  px = "none",
   children,
   ...props
 }: ContainerProps) {
@@ -57,6 +82,9 @@ function Container({
       $justifyContent={justifyContent}
       $alignItems={alignItems}
       $gap={gap}
+      $grow={grow}
+      $fluid={fluid}
+      $px={px}
       {...props}
     >
       {children}

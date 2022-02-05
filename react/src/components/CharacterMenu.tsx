@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Container from "./Container";
 import { Tab } from "./Link";
 
-const TabList = styled(Container).attrs({})`
+const TabList = styled(Container).attrs({ fluid: true })`
   border-bottom: 1px solid ${({ theme }) => theme.colors.black};
 `;
 
@@ -14,7 +14,7 @@ function CharacterMenu() {
 
   return (
     <TabList>
-      <Container as="nav">
+      <Container as="nav" px="16px">
         <Tab to="" end>Summary</Tab>
         <Tab to="details">Details</Tab>
         <Tab to="race">Race</Tab>

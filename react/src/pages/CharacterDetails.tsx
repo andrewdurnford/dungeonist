@@ -1,11 +1,18 @@
 import { useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+import Container from "../components/Container";
 import Notification from "../components/Notification";
+import Subtitle from "../components/SubTitle";
 import UpdateCharacterDetailsForm from "../forms/UpdateCharacterDetailsForm";
 import {
   useCharacterQuery,
   useUpdateCharacterDetailsMutation,
 } from "../utils/graphql";
 import NotFound from "./404";
+
+const Main = styled(Container).attrs({ forwardedAs: "main" })`
+  padding: 2rem;
+`;
 
 function CharacterEdit() {
   const navigate = useNavigate();
@@ -27,7 +34,7 @@ function CharacterEdit() {
   const { character } = data;
 
   return (
-    <>
+    <Main direction="column">
       {updateError && <Notification>{updateError.message}</Notification>}
       <UpdateCharacterDetailsForm
         name={character.name}
@@ -71,7 +78,7 @@ function CharacterEdit() {
           navigate(`/characters/${characterId}`);
         }}
       />
-    </>
+    </Main>
   );
 }
 

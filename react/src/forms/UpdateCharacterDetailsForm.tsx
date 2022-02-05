@@ -7,6 +7,7 @@ import Container from "../components/Container";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
 import Select from "../components/Select";
+import Subtitle from "../components/SubTitle";
 
 const HorizontalContainer = styled.div`
   display: flex;
@@ -80,94 +81,92 @@ function UpdateCharacterDetailsForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container direction="column" gap="16px">
-        <Input
-          type="text"
-          label="Name"
-          placeholder="Untitled"
-          error={errors.name?.message}
-          {...register("name")}
-        />
-        <Input
-          type="number"
-          label="Level"
-          error={errors.level?.message}
-          {...register("level", { valueAsNumber: true })}
-        />
-        <Select
-          label="Race"
-          error={errors.raceId?.message}
-          {...register("raceId")}
-        >
-          <option value="" selected disabled></option>
-          {/* TODO: query this from the api */}
-          <option value="1">Dwarf</option>
-          <option value="2">Elf</option>
-          <option value="3">Halfling</option>
-          <option value="4">Human</option>
-          <option value="5">Dragonborn</option>
-          <option value="6">Gnome</option>
-          <option value="7">Elf</option>
-          <option value="8">Orc</option>
-          <option value="9">Tiefling</option>
-        </Select>
-        <Input
-          type="text"
-          label="Background"
-          placeholder="Acolyte"
-          error={errors.background?.message}
-          {...register("background")}
-        />
-        <Select
-          label="Alignment"
-          error={errors.alignmentId?.message}
-          {...register("alignmentId")}
-        >
-          {/* 
+        <Subtitle name="Details" loading={loading} onCancel={onCancel} />
+        <Container gap="16px" justifyContent="center">
+          <Container direction="column" gap="8px" grow>
+            <Input
+              type="text"
+              label="Name"
+              placeholder="Untitled"
+              error={errors.name?.message}
+              {...register("name")}
+            />
+            <Input
+              type="number"
+              label="Level"
+              error={errors.level?.message}
+              {...register("level", { valueAsNumber: true })}
+            />
+            <Select
+              label="Race"
+              error={errors.raceId?.message}
+              {...register("raceId")}
+            >
+              <option value="" selected disabled></option>
+              {/* TODO: query this from the api */}
+              <option value="1">Dwarf</option>
+              <option value="2">Elf</option>
+              <option value="3">Halfling</option>
+              <option value="4">Human</option>
+              <option value="5">Dragonborn</option>
+              <option value="6">Gnome</option>
+              <option value="7">Elf</option>
+              <option value="8">Orc</option>
+              <option value="9">Tiefling</option>
+            </Select>
+            <Input
+              type="text"
+              label="Background"
+              placeholder="Acolyte"
+              error={errors.background?.message}
+              {...register("background")}
+            />
+            <Select
+              label="Alignment"
+              error={errors.alignmentId?.message}
+              {...register("alignmentId")}
+            >
+              {/* 
             TODO: remove empty option without showing the first
             alignment as selected (even though it isn't) when
             default value is ""
           */}
-          <option value="" selected disabled></option>
-          {/* TODO: query this from the api */}
-          <option value="1">Lawful Good</option>
-          <option value="2">Neutral Good</option>
-          <option value="3">Chaotic Good</option>
-          <option value="4">Lawful Neutral</option>
-          <option value="5">Neutral</option>
-          <option value="6">Chaotic Neutral</option>
-          <option value="7">Lawful Evil</option>
-          <option value="8">Neutral Evil</option>
-          <option value="9">Chaotic Evil</option>
-        </Select>
-        <TextArea
-          label="Personality traits"
-          error={errors.traits?.message}
-          {...register("traits")}
-        />
-        <TextArea
-          label="Ideals"
-          error={errors.ideals?.message}
-          {...register("ideals")}
-        />
-        <TextArea
-          label="Bonds"
-          error={errors.bonds?.message}
-          {...register("bonds")}
-        />
-        <TextArea
-          label="Flaws"
-          error={errors.flaws?.message}
-          {...register("flaws")}
-        />
-        <HorizontalContainer>
-          <Button type="submit" loading={loading}>
-            Update
-          </Button>
-          {/* TODO: this should be a Link */}
-          <Button variant="secondary" onClick={onCancel}>
-            Cancel
-          </Button>
-        </HorizontalContainer>
+              <option value="" selected disabled></option>
+              {/* TODO: query this from the api */}
+              <option value="1">Lawful Good</option>
+              <option value="2">Neutral Good</option>
+              <option value="3">Chaotic Good</option>
+              <option value="4">Lawful Neutral</option>
+              <option value="5">Neutral</option>
+              <option value="6">Chaotic Neutral</option>
+              <option value="7">Lawful Evil</option>
+              <option value="8">Neutral Evil</option>
+              <option value="9">Chaotic Evil</option>
+            </Select>
+          </Container>
+          <Container direction="column" gap="8px" grow>
+            <TextArea
+              label="Personality traits"
+              error={errors.traits?.message}
+              {...register("traits")}
+            />
+            <TextArea
+              label="Ideals"
+              error={errors.ideals?.message}
+              {...register("ideals")}
+            />
+            <TextArea
+              label="Bonds"
+              error={errors.bonds?.message}
+              {...register("bonds")}
+            />
+            <TextArea
+              label="Flaws"
+              error={errors.flaws?.message}
+              {...register("flaws")}
+            />
+          </Container>
+        </Container>
       </Container>
     </form>
   );

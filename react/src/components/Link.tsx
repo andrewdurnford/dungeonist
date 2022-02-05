@@ -62,7 +62,7 @@ export const NavLink = ({ children, ...props }: TextProps & NavLinkProps) => {
 };
 
 export const Tab = styled(NavLink)`
-  padding: 3.5px 8px;
+  padding: 11.5px 16px;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.gray200};
