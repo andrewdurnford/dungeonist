@@ -22,7 +22,6 @@ const schema = Yup.object().shape({
 type UpdateCharacterDetailsInput = {
   name?: string;
   level?: number;
-  raceId?: string;
   alignmentId?: string;
   background?: string;
   traits?: string;
@@ -40,7 +39,6 @@ interface UpdateCharacterDetailsFormProps extends UpdateCharacterDetailsInput {
 function UpdateCharacterDetailsForm({
   name,
   level,
-  raceId,
   alignmentId,
   background,
   traits,
@@ -60,7 +58,6 @@ function UpdateCharacterDetailsForm({
     defaultValues: {
       name,
       level,
-      raceId,
       alignmentId,
       background,
       traits,
@@ -90,23 +87,6 @@ function UpdateCharacterDetailsForm({
               error={errors.level?.message}
               {...register("level", { valueAsNumber: true })}
             />
-            <Select
-              label="Race"
-              error={errors.raceId?.message}
-              {...register("raceId")}
-            >
-              <option value="" selected disabled></option>
-              {/* TODO: query this from the api */}
-              <option value="1">Dwarf</option>
-              <option value="2">Elf</option>
-              <option value="3">Halfling</option>
-              <option value="4">Human</option>
-              <option value="5">Dragonborn</option>
-              <option value="6">Gnome</option>
-              <option value="7">Elf</option>
-              <option value="8">Orc</option>
-              <option value="9">Tiefling</option>
-            </Select>
             <Input
               type="text"
               label="Background"

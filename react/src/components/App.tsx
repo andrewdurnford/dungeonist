@@ -9,6 +9,7 @@ import Characters from "../pages/Characters";
 import Character from "../pages/Character";
 import CharacterDetails from "../pages/CharacterDetails";
 import CharacterSummary from "../pages/CharacterSummary";
+import CharacterRace from "../pages/CharacterRace";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -24,6 +25,7 @@ function App() {
             <Route path="/characters/:characterId" element={<Character />}>
               <Route index element={<CharacterSummary />} />
               <Route path="details" element={<CharacterDetails />} />
+              <Route path="race" element={<CharacterRace />} />
             </Route>
           </>
         ) : (
