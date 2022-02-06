@@ -4,7 +4,7 @@ import Container from "../components/Container";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
 import Select from "../components/Select";
-import Subtitle from "../components/SubTitle";
+import Subtitle from "../components/Subtitle";
 import { UpdateCharacterDetailsInput } from "../utils/graphql";
 
 type CharacterRaceForm = {
@@ -13,6 +13,7 @@ type CharacterRaceForm = {
 
 interface UpdateCharacterDetailsFormProps extends CharacterRaceForm {
   loading?: boolean;
+  onChange: (raceId: string) => void;
   onCancel: () => void;
   onSubmit: (data: UpdateCharacterDetailsInput) => void;
 }
@@ -20,7 +21,8 @@ interface UpdateCharacterDetailsFormProps extends CharacterRaceForm {
 function CharacterRaceForm({
   raceId,
   loading,
-  onCancel,
+  onChange,
+  onCancel, // TODO: update to onReset?
   onSubmit,
 }: UpdateCharacterDetailsFormProps) {
   const {
@@ -43,7 +45,9 @@ function CharacterRaceForm({
             <Select
               label="Race"
               error={errors.raceId?.message}
-              {...register("raceId")}
+              {...register("raceId", {
+                onChange: (e: any) => onChange(e.target.value),
+              })}
             >
               <option value="" selected disabled></option>
               {/* TODO: query this from the api */}

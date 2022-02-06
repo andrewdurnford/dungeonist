@@ -6,6 +6,7 @@ import { resolvers as CharacterAbility } from "../resolvers/characterAbility";
 import { resolvers as CharacterRace } from "../resolvers/characterRace";
 import { resolvers as CharacterSkill } from "../resolvers/characterSkill";
 import { resolvers as Personality } from "../resolvers/personality";
+import { resolvers as Race } from "../resolvers/race";
 import { resolvers as Skill } from "../resolvers/skill";
 import { resolvers as User } from "../resolvers/user";
 
@@ -19,6 +20,7 @@ const resolvers = merge(
   CharacterRace,
   CharacterSkill,
   Personality,
+  Race,
   Skill,
   User
 );

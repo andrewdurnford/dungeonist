@@ -7,7 +7,7 @@ import Container from "../components/Container";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
 import Select from "../components/Select";
-import Subtitle from "../components/SubTitle";
+import Subtitle from "../components/Subtitle";
 
 const schema = Yup.object().shape({
   name: Yup.string(),
@@ -72,7 +72,11 @@ function UpdateCharacterDetailsForm({
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container direction="column" gap="16">
         <Subtitle name="Details" loading={loading} onReset={onCancel} />
-        <Container gap="16" justifyContent="center">
+        <Container
+          // TODO: wrap="wrap"
+          gap="16"
+          justifyContent="center"
+        >
           <Container as="section" direction="column" gap="16" flexGrow={1}>
             <Input
               type="text"

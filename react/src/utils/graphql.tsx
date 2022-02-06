@@ -23,6 +23,13 @@ export type Ability = {
   skills: Array<Skill>;
 };
 
+export type AbilityScoreIncrease = {
+  __typename?: 'AbilityScoreIncrease';
+  ability: Ability;
+  id: Scalars['ID'];
+  increase: Scalars['Int'];
+};
+
 export type Alignment = {
   __typename?: 'Alignment';
   description: Scalars['String'];
@@ -138,6 +145,8 @@ export type Query = {
   character?: Maybe<Character>;
   characters: Array<Character>;
   me?: Maybe<User>;
+  race?: Maybe<Race>;
+  races: Array<Race>;
   skill?: Maybe<Skill>;
   skills: Array<Skill>;
 };
@@ -158,14 +167,25 @@ export type QueryCharacterArgs = {
 };
 
 
+export type QueryRaceArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type QuerySkillArgs = {
   id: Scalars['ID'];
 };
 
 export type Race = {
   __typename?: 'Race';
+  abilityScoreIncreases: Array<AbilityScoreIncrease>;
+  age?: Maybe<Scalars['String']>;
+  alignment?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
+  size?: Maybe<Scalars['String']>;
+  speed?: Maybe<Scalars['String']>;
 };
 
 export type SignupInput = {
@@ -244,6 +264,13 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string } | null | undefined };
+
+export type RaceQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type RaceQuery = { __typename?: 'Query', race?: { __typename?: 'Race', id: string, name: string, description?: string | null | undefined, age?: string | null | undefined, alignment?: string | null | undefined, size?: string | null | undefined, speed?: string | null | undefined, abilityScoreIncreases: Array<{ __typename?: 'AbilityScoreIncrease', id: string, increase: number, ability: { __typename?: 'Ability', id: string, name: string } }> } | null | undefined };
 
 
 export const CreateCharacterDocument = gql`
@@ -553,3 +580,52 @@ export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export const RaceDocument = gql`
+    query Race($id: ID!) {
+  race(id: $id) {
+    id
+    name
+    description
+    age
+    alignment
+    size
+    speed
+    abilityScoreIncreases {
+      id
+      ability {
+        id
+        name
+      }
+      increase
+    }
+  }
+}
+    `;
+
+/**
+ * __useRaceQuery__
+ *
+ * To run a query within a React component, call `useRaceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRaceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRaceQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRaceQuery(baseOptions: Apollo.QueryHookOptions<RaceQuery, RaceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RaceQuery, RaceQueryVariables>(RaceDocument, options);
+      }
+export function useRaceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RaceQuery, RaceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RaceQuery, RaceQueryVariables>(RaceDocument, options);
+        }
+export type RaceQueryHookResult = ReturnType<typeof useRaceQuery>;
+export type RaceLazyQueryHookResult = ReturnType<typeof useRaceLazyQuery>;
+export type RaceQueryResult = Apollo.QueryResult<RaceQuery, RaceQueryVariables>;

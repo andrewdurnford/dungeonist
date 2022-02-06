@@ -65,6 +65,6 @@ export const Tab = styled(NavLink)`
   padding: 11.5px 16px;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.gray200};
+    background-color: ${({ theme }) => theme.colors.gray100};
   }
 `;

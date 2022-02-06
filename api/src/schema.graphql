@@ -14,6 +14,8 @@ type Query {
   characters: [Character!]!
   # TODO: deprecate in favour of `user`
   me: User
+  races: [Race!]!
+  race(id: ID!): Race
   skill(id: ID!): Skill
   skills: [Skill!]!
 }
@@ -72,6 +74,12 @@ type Ability {
   name: String!
   description: String!
   skills: [Skill!]!
+}
+
+type AbilityScoreIncrease {
+  id: ID!
+  ability: Ability!
+  increase: Int!
 }
 
 type Alignment {
@@ -142,6 +150,12 @@ type CharacterSkill {
 type Race {
   id: ID!
   name: String!
+  description: String
+  age: String
+  alignment: String
+  size: String
+  speed: String
+  abilityScoreIncreases: [AbilityScoreIncrease!]!
 }
 
 type Skill {

@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Ability, Alignment, Character, CharacterAbility, CharacterRace, CharacterSkill, Race, Skill, User } from '.prisma/client';
+import { Ability, AbilityScoreIncrease, Alignment, Character, CharacterAbility, CharacterRace, CharacterSkill, Race, Skill, User } from '.prisma/client';
 import { Context } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -23,6 +23,13 @@ export type IAbility = {
   id: Scalars['ID'];
   name: Scalars['String'];
   skills: Array<ISkill>;
+};
+
+export type IAbilityScoreIncrease = {
+  __typename?: 'AbilityScoreIncrease';
+  ability: IAbility;
+  id: Scalars['ID'];
+  increase: Scalars['Int'];
 };
 
 export type IAlignment = {
@@ -140,6 +147,8 @@ export type IQuery = {
   character?: Maybe<ICharacter>;
   characters: Array<ICharacter>;
   me?: Maybe<IUser>;
+  race?: Maybe<IRace>;
+  races: Array<IRace>;
   skill?: Maybe<ISkill>;
   skills: Array<ISkill>;
 };
@@ -160,14 +169,25 @@ export type IQueryCharacterArgs = {
 };
 
 
+export type IQueryRaceArgs = {
+  id: Scalars['ID'];
+};
+
+
 export type IQuerySkillArgs = {
   id: Scalars['ID'];
 };
 
 export type IRace = {
   __typename?: 'Race';
+  abilityScoreIncreases: Array<IAbilityScoreIncrease>;
+  age?: Maybe<Scalars['String']>;
+  alignment?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
+  size?: Maybe<Scalars['String']>;
+  speed?: Maybe<Scalars['String']>;
 };
 
 export type ISignupInput = {
@@ -272,6 +292,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type IResolversTypes = {
   Ability: ResolverTypeWrapper<Ability>;
+  AbilityScoreIncrease: ResolverTypeWrapper<AbilityScoreIncrease>;
   Alignment: ResolverTypeWrapper<Alignment>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Character: ResolverTypeWrapper<Character>;
@@ -297,6 +318,7 @@ export type IResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type IResolversParentTypes = {
   Ability: Ability;
+  AbilityScoreIncrease: AbilityScoreIncrease;
   Alignment: Alignment;
   Boolean: Scalars['Boolean'];
   Character: Character;
@@ -324,6 +346,13 @@ export type IAbilityResolvers<ContextType = Context, ParentType extends IResolve
   id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
   skills?: Resolver<Array<IResolversTypes['Skill']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type IAbilityScoreIncreaseResolvers<ContextType = Context, ParentType extends IResolversParentTypes['AbilityScoreIncrease'] = IResolversParentTypes['AbilityScoreIncrease']> = {
+  ability?: Resolver<IResolversTypes['Ability'], ParentType, ContextType>;
+  id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
+  increase?: Resolver<IResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -402,13 +431,21 @@ export type IQueryResolvers<ContextType = Context, ParentType extends IResolvers
   character?: Resolver<Maybe<IResolversTypes['Character']>, ParentType, ContextType, RequireFields<IQueryCharacterArgs, 'id'>>;
   characters?: Resolver<Array<IResolversTypes['Character']>, ParentType, ContextType>;
   me?: Resolver<Maybe<IResolversTypes['User']>, ParentType, ContextType>;
+  race?: Resolver<Maybe<IResolversTypes['Race']>, ParentType, ContextType, RequireFields<IQueryRaceArgs, 'id'>>;
+  races?: Resolver<Array<IResolversTypes['Race']>, ParentType, ContextType>;
   skill?: Resolver<Maybe<IResolversTypes['Skill']>, ParentType, ContextType, RequireFields<IQuerySkillArgs, 'id'>>;
   skills?: Resolver<Array<IResolversTypes['Skill']>, ParentType, ContextType>;
 };
 
 export type IRaceResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Race'] = IResolversParentTypes['Race']> = {
+  abilityScoreIncreases?: Resolver<Array<IResolversTypes['AbilityScoreIncrease']>, ParentType, ContextType>;
+  age?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
+  alignment?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
+  size?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
+  speed?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -427,6 +464,7 @@ export type IUserResolvers<ContextType = Context, ParentType extends IResolversP
 
 export type IResolvers<ContextType = Context> = {
   Ability?: IAbilityResolvers<ContextType>;
+  AbilityScoreIncrease?: IAbilityScoreIncreaseResolvers<ContextType>;
   Alignment?: IAlignmentResolvers<ContextType>;
   Character?: ICharacterResolvers<ContextType>;
   CharacterAbility?: ICharacterAbilityResolvers<ContextType>;
@@ -450,6 +488,12 @@ type Ability {
   id: ID!
   name: String!
   skills: [Skill!]!
+}
+
+type AbilityScoreIncrease {
+  ability: Ability!
+  id: ID!
+  increase: Int!
 }
 
 type Alignment {
@@ -544,13 +588,21 @@ type Query {
   character(id: ID!): Character
   characters: [Character!]!
   me: User
+  race(id: ID!): Race
+  races: [Race!]!
   skill(id: ID!): Skill
   skills: [Skill!]!
 }
 
 type Race {
+  abilityScoreIncreases: [AbilityScoreIncrease!]!
+  age: String
+  alignment: String
+  description: String
   id: ID!
   name: String!
+  size: String
+  speed: String
 }
 
 input SignupInput {

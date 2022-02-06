@@ -96,8 +96,9 @@ model CharacterSkill {
 }
 
 model Race {
-  id   String @id
-  name String
+  id          String  @id
+  name        String
+  description String?
 
   // score improvements
   abilityScoreIncreases AbilityScoreIncrease[]

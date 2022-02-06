@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Main } from "../components/Container";
 import Loader from "../components/Loader";
 import Notification from "../components/Notification";
+import Text from "../components/Text";
 import CreateCharacterForm from "../forms/CreateCharacterForm";
 import {
   useCharactersQuery,
@@ -46,7 +47,9 @@ function Characters() {
 
   return (
     <Main>
-      <h1>Characters</h1>
+      <Text as="h1" size="32">
+        Characters
+      </Text>
       {createError && (
         <Notification>Error: {createError?.message}</Notification>
       )}

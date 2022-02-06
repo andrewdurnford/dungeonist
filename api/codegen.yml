@@ -6,6 +6,7 @@ generates:
       contextType: ./context#Context
       mappers:
         Ability: .prisma/client#Ability
+        AbilityScoreIncrease: .prisma/client#AbilityScoreIncrease
         Alignment: .prisma/client#Alignment
         Character: .prisma/client#Character
         CharacterAbility: .prisma/client#CharacterAbility

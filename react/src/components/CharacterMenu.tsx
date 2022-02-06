@@ -1,9 +1,12 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import Container, { FluidContainer } from "./Container";
+import Container from "./Container";
 import { Tab } from "./Link";
 
-const TabList = styled(FluidContainer)`
+const TabList = styled(Container).attrs({
+  forwardedAs: "nav",
+  mx: "auto",
+})`
   border-bottom: 1px solid ${({ theme }) => theme.colors.black};
 `;
 
@@ -14,13 +17,11 @@ function CharacterMenu() {
 
   return (
     <TabList>
-      <Container forwardedAs="nav" gap="8" px="16" mx="auto">
-        <Tab to="" end>
-          Summary
-        </Tab>
-        <Tab to="details">Details</Tab>
-        <Tab to="race">Race</Tab>
-      </Container>
+      <Tab to="" end>
+        Summary
+      </Tab>
+      <Tab to="details">Details</Tab>
+      <Tab to="race">Race</Tab>
     </TabList>
   );
 }

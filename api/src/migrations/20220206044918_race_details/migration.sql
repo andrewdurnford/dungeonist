@@ -1,6 +1,7 @@
 -- AlterTable
 ALTER TABLE "Race" ADD COLUMN     "age" TEXT,
 ADD COLUMN     "alignment" TEXT,
+ADD COLUMN     "description" TEXT,
 ADD COLUMN     "size" TEXT,
 ADD COLUMN     "speed" TEXT;
 
