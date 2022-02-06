@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
-import Container from "../components/Container";
+import { Main } from "../components/Container";
 import Notification from "../components/Notification";
 import UpdateCharacterDetailsForm from "../forms/UpdateCharacterDetailsForm";
 import {
@@ -29,7 +28,7 @@ function CharacterEdit() {
   const { character } = data;
 
   return (
-    <Container as="main" direction="column" p="32" mx="auto">
+    <Main>
       {updateError && <Notification>{updateError.message}</Notification>}
       <UpdateCharacterDetailsForm
         name={character.name}
@@ -73,7 +72,7 @@ function CharacterEdit() {
           navigate(`/characters/${characterId}`);
         }}
       />
-    </Container>
+    </Main>
   );
 }
 

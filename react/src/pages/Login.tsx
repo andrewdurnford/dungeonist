@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import Container from "../components/Container";
+import { Main } from "../components/Container";
 import Notification from "../components/Notification";
+import Text from "../components/Text";
 import LoginForm from "../forms/LoginForm";
 import useAuth from "../hooks/useAuth";
 import { useLoginMutation } from "../utils/graphql";
@@ -27,8 +28,10 @@ function Login() {
   });
 
   return (
-    <Container direction="column" gap="16" mx="auto" p="32">
-      <h1>Log in</h1>
+    <Main>
+      <Text as="h1" size="32">
+        Log in
+      </Text>
       {error && <Notification>Error: {error.message}</Notification>}
       <LoginForm
         loading={loading}
@@ -36,7 +39,7 @@ function Login() {
           signup({ variables: { input: { email, password } } })
         }
       />
-    </Container>
+    </Main>
   );
 }
 

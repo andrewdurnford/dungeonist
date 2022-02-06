@@ -1,6 +1,7 @@
 import { Outlet, useParams } from "react-router-dom";
 import CharacterHeader from "../components/CharacterHeader";
-import Container from "../components/Container";
+import Container, { Main } from "../components/Container";
+import Loader from "../components/Loader";
 import { useCharacterQuery } from "../utils/graphql";
 import NotFound from "./404";
 
@@ -11,12 +12,7 @@ function Character() {
     variables: { id: String(characterId) },
   });
 
-  if (loading)
-    return (
-      <Container direction="column" gap="16" mx="auto" p="32">
-        <p>Loading...</p>
-      </Container>
-    );
+  if (loading) return <Loader />;
 
   if (error || !data?.character) return <NotFound message={error?.message} />;
 

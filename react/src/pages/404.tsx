@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Notification from "../components/Notification";
-import Container from "../components/Container";
+import { Main } from "../components/Container";
+import Text from "../components/Text";
 
 interface NotFoundProps {
   message?: string;
@@ -8,11 +9,13 @@ interface NotFoundProps {
 
 function NotFound({ message }: NotFoundProps) {
   return (
-    <Container direction="column" gap="16" mx="auto" p="32">
-      <h1>404</h1>
+    <Main>
+      <Text as="h1" size="32">
+        404
+      </Text>
       <Notification>{message ? message : "Not Found"}</Notification>
       <Link to="/">Home</Link>
-    </Container>
+    </Main>
   );
 }
 

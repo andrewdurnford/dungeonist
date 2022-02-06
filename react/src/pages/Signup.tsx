@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import Container from "../components/Container";
+import { Main } from "../components/Container";
 import Notification from "../components/Notification";
+import Text from "../components/Text";
 import SignupForm from "../forms/SignupForm";
 import { useSignupMutation } from "../utils/graphql";
 
@@ -13,8 +14,10 @@ function Signup() {
   });
 
   return (
-    <Container direction="column" gap="16" mx="auto" p="32">
-      <h1>Sign up</h1>
+    <Main>
+      <Text as="h1" size="32">
+        Sign up
+      </Text>
       {error && <Notification>Error: {error.message}</Notification>}
       <SignupForm
         loading={loading}
@@ -22,7 +25,7 @@ function Signup() {
           signup({ variables: { input: { email, password } } })
         }
       />
-    </Container>
+    </Main>
   );
 }
 

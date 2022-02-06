@@ -1,7 +1,8 @@
 import { gql } from "@apollo/client";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import Container from "../components/Container";
+import { Main } from "../components/Container";
+import Loader from "../components/Loader";
 import Notification from "../components/Notification";
 import CreateCharacterForm from "../forms/CreateCharacterForm";
 import {
@@ -38,13 +39,13 @@ function Characters() {
       },
     });
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
 
   if (error || !data)
     return <Notification>Error: {error && error.message}</Notification>;
 
   return (
-    <Container forwardedAs="main" direction="column" p="32" mx="auto">
+    <Main>
       <h1>Characters</h1>
       {createError && (
         <Notification>Error: {createError?.message}</Notification>
@@ -66,7 +67,7 @@ function Characters() {
           </li>
         ))}
       </List>
-    </Container>
+    </Main>
   );
 }
 

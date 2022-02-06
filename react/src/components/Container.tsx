@@ -337,4 +337,32 @@ export const FluidContainer = styled(Container)`
   max-width: 100%;
 `;
 
+interface NamedContainerProps {
+  children?: React.ReactNode;
+}
+
+export function Main({ children }: NamedContainerProps) {
+  return (
+    <Container as="main" direction="column" gap="16" mx="auto" p="32">
+      {children}
+    </Container>
+  );
+}
+
+export function Article({ children }: NamedContainerProps) {
+  return (
+    <Container direction="row" gap="16">
+      {children}
+    </Container>
+  );
+}
+
+export function Section({ children }: NamedContainerProps) {
+  return (
+    <Container direction="column" gap="16" flexGrow={1}>
+      {children}
+    </Container>
+  );
+}
+
 export default Container;
