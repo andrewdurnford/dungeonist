@@ -26,6 +26,8 @@ jobs:
 
       - run: npm ci
       - run: npm run build
+      # Add custom 404 page for gh-pages
+      - run: cp dist/index.html dist/404.html
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
