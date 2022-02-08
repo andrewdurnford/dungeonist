@@ -1,6 +1,7 @@
 {
   "name": "react",
   "version": "0.0.0",
+  "homepage": "andrewdurnford.github.io/dungeonist/",
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",

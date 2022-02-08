@@ -53,7 +53,7 @@ function Characters() {
       {createError && (
         <Notification>Error: {createError?.message}</Notification>
       )}
-      <CreateCharacterForm
+      {/* <CreateCharacterForm
         loading={createLoading}
         onSubmit={({ name, level }) =>
           createCharacter({
@@ -62,7 +62,7 @@ function Characters() {
             },
           })
         }
-      />
+      /> */}
       <List>
         {data.characters.map(({ id, name }) => (
           <li key={id}>

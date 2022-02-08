@@ -8,8 +8,12 @@ import {
   RaceQueryVariables,
 } from "../utils/graphql";
 
+const api = graphql.link(
+  import.meta.env.PROD ? "https://example.com" : import.meta.env.VITE_API_URL
+);
+
 export const handlers = [
-  graphql.query<MeQuery>("Me", (req, res, ctx) => {
+  api.query<MeQuery>("Me", (req, res, ctx) => {
     return res(
       ctx.data({
         me: {
@@ -21,7 +25,7 @@ export const handlers = [
       })
     );
   }),
-  graphql.query<CharactersQuery>("Characters", (req, res, ctx) => {
+  api.query<CharactersQuery>("Characters", (req, res, ctx) => {
     return res(
       ctx.data({
         characters: [
@@ -34,7 +38,7 @@ export const handlers = [
       })
     );
   }),
-  graphql.query<CharacterQuery, CharacterQueryVariables>(
+  api.query<CharacterQuery, CharacterQueryVariables>(
     "Character",
     (req, res, ctx) => {
       return res(
@@ -307,7 +311,7 @@ export const handlers = [
       );
     }
   ),
-  graphql.query<RaceQuery, RaceQueryVariables>("Race", (req, res, ctx) => {
+  api.query<RaceQuery, RaceQueryVariables>("Race", (req, res, ctx) => {
     if (req.variables.id === "1") {
       return res(
         ctx.data({

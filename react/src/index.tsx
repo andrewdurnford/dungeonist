@@ -14,7 +14,9 @@ import { handlers } from "./mocks/handlers";
 import { GlobalStyle, theme } from "./utils/theme";
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:4000/graphql",
+  uri: import.meta.env.PROD
+    ? "https://example.com"
+    : import.meta.env.VITE_API_URL,
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -33,10 +35,24 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-if (import.meta.env.VITE_APP_MOCKS === "true") {
-  localStorage.setItem("token", "jwt");
+if (import.meta.env.VITE_APP_MOCKS === "true" || import.meta.env.PROD) {
+  // See: https://mswjs.io/docs/getting-started/integrate/browser#using-homepage-property-in-packagejson
+  if (window.location.pathname === `/dungeonist"`) {
+    window.location.pathname = `/dungeonist/`;
+  }
+
+  // Skip login by manually setting a local storage auth token
+  localStorage.setItem("token", "example");
+
   const worker = setupWorker(...handlers);
-  worker.start();
+
+  worker.start({
+    ...(import.meta.env.PROD && {
+      serviceWorker: {
+        url: "/dungeonist/mockServiceWorker.js",
+      },
+    }),
+  });
 }
 
 ReactDOM.render(

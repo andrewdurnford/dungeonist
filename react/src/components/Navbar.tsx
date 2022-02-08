@@ -90,6 +90,7 @@ function Navbar() {
               </li>
               <li>
                 <NavButton
+                  disabled={import.meta.env.PROD}
                   onClick={() => {
                     logout();
                     navigate("/");
