@@ -1,13 +1,22 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import styled from "styled-components";
-import Button from "../components/Button";
 import Container from "../components/Container";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
 import Select from "../components/Select";
 import Subtitle from "../components/Subtitle";
+import styled from "styled-components";
+
+// TODO: update Container to not rely on 'width: 100%'
+const Section = styled(Container).attrs({
+  forwardedAs: "section",
+  direction: "column",
+  gap: "16",
+  flexGrow: 1,
+})`
+  width: auto;
+`;
 
 const schema = Yup.object().shape({
   name: Yup.string(),
@@ -72,12 +81,8 @@ function UpdateCharacterDetailsForm({
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container direction="column" gap="16">
         <Subtitle name="Details" loading={loading} onReset={onCancel} />
-        <Container
-          // TODO: wrap="wrap"
-          gap="16"
-          justifyContent="center"
-        >
-          <Container as="section" direction="column" gap="16" flexGrow={1}>
+        <Container wrap="wrap" gap="16" justifyContent="center">
+          <Section>
             <Input
               type="text"
               label="Name"
@@ -120,8 +125,8 @@ function UpdateCharacterDetailsForm({
               <option value="8">Neutral Evil</option>
               <option value="9">Chaotic Evil</option>
             </Select>
-          </Container>
-          <Container as="section" direction="column" gap="16" flexGrow={1}>
+          </Section>
+          <Section>
             <TextArea
               label="Personality traits"
               error={errors.traits?.message}
@@ -142,7 +147,7 @@ function UpdateCharacterDetailsForm({
               error={errors.flaws?.message}
               {...register("flaws")}
             />
-          </Container>
+          </Section>
         </Container>
       </Container>
     </form>
