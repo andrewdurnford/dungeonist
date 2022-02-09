@@ -1,8 +1,5 @@
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import Container from "../components/Container";
-import Input from "../components/Input";
-import TextArea from "../components/TextArea";
 import Select from "../components/Select";
 import Subtitle from "../components/Subtitle";
 import { UpdateCharacterDetailsInput } from "../utils/graphql";
@@ -12,6 +9,7 @@ type CharacterRaceForm = {
 };
 
 interface UpdateCharacterDetailsFormProps extends CharacterRaceForm {
+  races: Array<{ id: string; name: string }>;
   loading?: boolean;
   onChange: (raceId: string) => void;
   onCancel: () => void;
@@ -20,6 +18,7 @@ interface UpdateCharacterDetailsFormProps extends CharacterRaceForm {
 
 function CharacterRaceForm({
   raceId,
+  races,
   loading,
   onChange,
   onCancel, // TODO: update to onReset?
@@ -50,16 +49,11 @@ function CharacterRaceForm({
               })}
             >
               <option value="" selected disabled></option>
-              {/* TODO: query this from the api */}
-              <option value="1">Dwarf</option>
-              <option value="2">Elf</option>
-              <option value="3">Halfling</option>
-              <option value="4">Human</option>
-              <option value="5">Dragonborn</option>
-              <option value="6">Gnome</option>
-              <option value="7">Elf</option>
-              <option value="8">Orc</option>
-              <option value="9">Tiefling</option>
+              {races.map(({ id, name }) => (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              ))}
             </Select>
           </Container>
         </Container>

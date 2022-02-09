@@ -1,0 +1,6 @@
+query Races {
+  races {
+    id
+    name
+  }
+}

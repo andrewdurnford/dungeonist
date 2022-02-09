@@ -3,12 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import Box from "../components/Box";
 import Container, { Article, Main, Section } from "../components/Container";
 import List from "../components/List";
+import Loader from "../components/Loader";
 import Notification from "../components/Notification";
 import Text from "../components/Text";
 import CharacterRaceForm from "../forms/CharacterRaceForm";
 import {
   useCharacterQuery,
   useRaceLazyQuery,
+  useRacesQuery,
   useUpdateCharacterDetailsMutation,
 } from "../utils/graphql";
 import NotFound from "./404";
@@ -22,6 +24,12 @@ function CharacterRace() {
   const { data, loading, error } = useCharacterQuery({
     variables: { id: String(characterId) },
   });
+
+  const {
+    data: races,
+    loading: racesLoading,
+    error: racesError,
+  } = useRacesQuery();
 
   const [getRace, { data: raceData, loading: raceLoading, error: raceError }] =
     useRaceLazyQuery();
@@ -52,12 +60,16 @@ function CharacterRace() {
     onError: (err) => console.error(err),
   });
 
-  if (error || !data?.character) return <NotFound message={error?.message} />;
+  if (loading || racesLoading) return <Loader />;
+
+  if (error || racesError || !data?.character || !races)
+    return <NotFound message={error?.message} />;
 
   return (
     <Main>
       <CharacterRaceForm
         raceId={data.character.race?.id}
+        races={races.races}
         onChange={(raceId) => setRaceId(raceId)}
         onCancel={() => navigate(`/characters/${characterId}`)}
         onSubmit={({ raceId }) => {

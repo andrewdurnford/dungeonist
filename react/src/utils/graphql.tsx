@@ -272,6 +272,11 @@ export type RaceQueryVariables = Exact<{
 
 export type RaceQuery = { __typename?: 'Query', race?: { __typename?: 'Race', id: string, name: string, description?: string | null | undefined, age?: string | null | undefined, alignment?: string | null | undefined, size?: string | null | undefined, speed?: string | null | undefined, abilityScoreIncreases: Array<{ __typename?: 'AbilityScoreIncrease', id: string, increase: number, ability: { __typename?: 'Ability', id: string, name: string } }> } | null | undefined };
 
+export type RacesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RacesQuery = { __typename?: 'Query', races: Array<{ __typename?: 'Race', id: string, name: string }> };
+
 
 export const CreateCharacterDocument = gql`
     mutation CreateCharacter($input: CreateCharacterInput!) {
@@ -629,3 +634,38 @@ export function useRaceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RaceQ
 export type RaceQueryHookResult = ReturnType<typeof useRaceQuery>;
 export type RaceLazyQueryHookResult = ReturnType<typeof useRaceLazyQuery>;
 export type RaceQueryResult = Apollo.QueryResult<RaceQuery, RaceQueryVariables>;
+export const RacesDocument = gql`
+    query Races {
+  races {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useRacesQuery__
+ *
+ * To run a query within a React component, call `useRacesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRacesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRacesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRacesQuery(baseOptions?: Apollo.QueryHookOptions<RacesQuery, RacesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RacesQuery, RacesQueryVariables>(RacesDocument, options);
+      }
+export function useRacesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RacesQuery, RacesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RacesQuery, RacesQueryVariables>(RacesDocument, options);
+        }
+export type RacesQueryHookResult = ReturnType<typeof useRacesQuery>;
+export type RacesLazyQueryHookResult = ReturnType<typeof useRacesLazyQuery>;
+export type RacesQueryResult = Apollo.QueryResult<RacesQuery, RacesQueryVariables>;
