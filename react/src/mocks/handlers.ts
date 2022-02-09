@@ -374,7 +374,7 @@ export const handlers = [
             abilityScoreIncreases: [
               {
                 id: "1",
-                ability: { id: "3", name: "Constituion" },
+                ability: { id: "3", name: "Constitution" },
                 increase: 2,
               },
             ],
@@ -400,7 +400,7 @@ export const handlers = [
             abilityScoreIncreases: [
               {
                 id: "1",
-                ability: { id: "3", name: "Constituion" },
+                ability: { id: "3", name: "Constitution" },
                 increase: 2,
               },
             ],
@@ -460,7 +460,7 @@ export const handlers = [
               },
               {
                 id: "3",
-                ability: { id: "3", name: "Constituion" },
+                ability: { id: "3", name: "Constitution" },
                 increase: 1,
               },
               {
