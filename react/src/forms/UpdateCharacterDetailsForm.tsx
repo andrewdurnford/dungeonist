@@ -40,6 +40,7 @@ type UpdateCharacterDetailsInput = {
 };
 
 interface UpdateCharacterDetailsFormProps extends UpdateCharacterDetailsInput {
+  alignments: Array<{ id: string; name: string }>;
   loading?: boolean;
   onCancel: () => void;
   onSubmit: (data: UpdateCharacterDetailsInput) => void;
@@ -54,6 +55,7 @@ function UpdateCharacterDetailsForm({
   ideals,
   bonds,
   flaws,
+  alignments,
   loading,
   onCancel,
   onSubmit,
@@ -108,22 +110,12 @@ function UpdateCharacterDetailsForm({
               error={errors.alignmentId?.message}
               {...register("alignmentId")}
             >
-              {/* 
-            TODO: remove empty option without showing the first
-            alignment as selected (even though it isn't) when
-            default value is ""
-          */}
               <option value="" selected disabled></option>
-              {/* TODO: query this from the api */}
-              <option value="1">Lawful Good</option>
-              <option value="2">Neutral Good</option>
-              <option value="3">Chaotic Good</option>
-              <option value="4">Lawful Neutral</option>
-              <option value="5">Neutral</option>
-              <option value="6">Chaotic Neutral</option>
-              <option value="7">Lawful Evil</option>
-              <option value="8">Neutral Evil</option>
-              <option value="9">Chaotic Evil</option>
+              {alignments.map(({ id, name }) => (
+                <option key={id} value={id}>
+                  {name}
+                </option>
+              ))}
             </Select>
           </Section>
           <Section>

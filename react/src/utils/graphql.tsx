@@ -248,6 +248,11 @@ export type UpdateCharacterDetailsMutationVariables = Exact<{
 
 export type UpdateCharacterDetailsMutation = { __typename?: 'Mutation', updateCharacterDetails: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } };
 
+export type AlignmentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AlignmentsQuery = { __typename?: 'Query', alignments: Array<{ __typename?: 'Alignment', id: string, name: string }> };
+
 export type CharacterQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -447,6 +452,41 @@ export function useUpdateCharacterDetailsMutation(baseOptions?: Apollo.MutationH
 export type UpdateCharacterDetailsMutationHookResult = ReturnType<typeof useUpdateCharacterDetailsMutation>;
 export type UpdateCharacterDetailsMutationResult = Apollo.MutationResult<UpdateCharacterDetailsMutation>;
 export type UpdateCharacterDetailsMutationOptions = Apollo.BaseMutationOptions<UpdateCharacterDetailsMutation, UpdateCharacterDetailsMutationVariables>;
+export const AlignmentsDocument = gql`
+    query Alignments {
+  alignments {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useAlignmentsQuery__
+ *
+ * To run a query within a React component, call `useAlignmentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAlignmentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAlignmentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAlignmentsQuery(baseOptions?: Apollo.QueryHookOptions<AlignmentsQuery, AlignmentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AlignmentsQuery, AlignmentsQueryVariables>(AlignmentsDocument, options);
+      }
+export function useAlignmentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AlignmentsQuery, AlignmentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AlignmentsQuery, AlignmentsQueryVariables>(AlignmentsDocument, options);
+        }
+export type AlignmentsQueryHookResult = ReturnType<typeof useAlignmentsQuery>;
+export type AlignmentsLazyQueryHookResult = ReturnType<typeof useAlignmentsLazyQuery>;
+export type AlignmentsQueryResult = Apollo.QueryResult<AlignmentsQuery, AlignmentsQueryVariables>;
 export const CharacterDocument = gql`
     query Character($id: ID!) {
   character(id: $id) {

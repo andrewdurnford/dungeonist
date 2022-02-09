@@ -3,6 +3,7 @@ import { Main } from "../components/Container";
 import Notification from "../components/Notification";
 import UpdateCharacterDetailsForm from "../forms/UpdateCharacterDetailsForm";
 import {
+  useAlignmentsQuery,
   useCharacterQuery,
   useUpdateCharacterDetailsMutation,
 } from "../utils/graphql";
@@ -16,6 +17,12 @@ function CharacterEdit() {
     variables: { id: String(characterId) },
   });
 
+  const {
+    data: alignments,
+    loading: alignmentsLoading,
+    error: alignmentsError,
+  } = useAlignmentsQuery();
+
   const [
     updateCharacterDetails,
     { loading: updateLoading, error: updateError },
@@ -23,7 +30,8 @@ function CharacterEdit() {
     onError: (err) => console.error(err),
   });
 
-  if (error || !data?.character) return <NotFound message={error?.message} />;
+  if (error || alignmentsError || !data?.character || !alignments)
+    return <NotFound message={error?.message} />;
 
   const { character } = data;
 
@@ -39,6 +47,7 @@ function CharacterEdit() {
         ideals={character.ideals ?? ""}
         bonds={character.bonds ?? ""}
         flaws={character.flaws ?? ""}
+        alignments={alignments.alignments}
         loading={updateLoading}
         onCancel={() => navigate(`/characters/${characterId}`)}
         onSubmit={({
