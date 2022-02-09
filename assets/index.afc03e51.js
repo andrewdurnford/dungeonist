@@ -220,13 +220,6 @@ var ze=Object.defineProperty,Ee=Object.defineProperties;var Te=Object.getOwnProp
     font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
     line-height: 1.5;
     font-size: 16px;
-
-    background: #374151;
-  }
-
-  #root {
-    background: #fff;
-    height: 100vh;
   }
 `,be={black:"#000000",white:"#FFFFFF",blue400:"#60A5FA",blue500:"#3B82F6",blue600:"#2563EB",gray100:"#F3F4F6",gray200:"#E5E7EB",gray500:"#9CA3AF",gray600:"#4B5563",gray700:"#374151",red50:"#FEF2F2",red200:"#FECACA",red400:"#F87171",red500:"#EF4444"},yi={sm:640,md:768,lg:1024,xl:1280},bi={colors:be,breakpoints:yi};function vi(e){if(e!=="none")return`${e}px`}function y(e){if(e!=="none")return e==="auto"?"auto":`${e}px`}const xi=u.div`
   /* flex parent */
