@@ -42,7 +42,9 @@ if (import.meta.env.VITE_APP_MOCKS === "true" || import.meta.env.PROD) {
   }
 
   // Skip login by manually setting a local storage auth token
-  localStorage.setItem("token", "example");
+  if (!localStorage.getItem("token")) {
+    localStorage.setItem("token", "example");
+  }
 
   const worker = setupWorker(...handlers);
 
