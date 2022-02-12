@@ -8,10 +8,10 @@ const prisma = new PrismaClient();
 
 async function main() {
   // TODO: Update to use glob path '../seeds/*.ts
-  abilitySeed();
-  alignmentSeed();
-  raceSeed();
-  skillSeed();
+  await abilitySeed();
+  await alignmentSeed();
+  await raceSeed();
+  await skillSeed();
 }
 
 main()
