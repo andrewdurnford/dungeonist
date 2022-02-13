@@ -53,16 +53,18 @@ function Characters() {
       {createError && (
         <Notification>Error: {createError?.message}</Notification>
       )}
-      {/* <CreateCharacterForm
-        loading={createLoading}
-        onSubmit={({ name, level }) =>
-          createCharacter({
-            variables: {
-              input: { name: name || undefined, level: level || undefined },
-            },
-          })
-        }
-      /> */}
+      {!import.meta.env.PROD && (
+        <CreateCharacterForm
+          loading={createLoading}
+          onSubmit={({ name, level }) =>
+            createCharacter({
+              variables: {
+                input: { name: name || undefined, level: level || undefined },
+              },
+            })
+          }
+        />
+      )}
       <List>
         {data.characters.map(({ id, name }) => (
           <li key={id}>
