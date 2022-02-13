@@ -7,6 +7,10 @@ export default defineConfig(({ command }) => {
     return {
       base: "/dungeonist/",
       plugins: [react()],
+      build: {
+        // Required to support top-level await
+        target: "esnext",
+      },
     };
   }
 

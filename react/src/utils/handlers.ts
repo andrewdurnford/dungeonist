@@ -9,6 +9,7 @@ let modules: GraphQLHandler<GraphQLRequest<any>>[] = [];
 // Regular for loop is required to iterate over the key (path) of the glob
 // imports. Creating a mutable array, and pushing each resolved handler to it is
 // required due to the complexity of return values from Promises inside a map.
+// NOTE: 'esnext' is the required build target to support top-level await.
 for (const path in mocks) {
   const handlers = await Promise.resolve(
     mocks[path]().then((module) => {
