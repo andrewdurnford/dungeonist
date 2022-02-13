@@ -48,7 +48,7 @@ function CharacterRaceForm({
                 onChange: (e: any) => onChange(e.target.value),
               })}
             >
-              <option value="" selected disabled></option>
+              <option value="" disabled></option>
               {races.map(({ id, name }) => (
                 <option key={id} value={id}>
                   {name}

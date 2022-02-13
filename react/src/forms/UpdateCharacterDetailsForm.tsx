@@ -110,7 +110,7 @@ function UpdateCharacterDetailsForm({
               error={errors.alignmentId?.message}
               {...register("alignmentId")}
             >
-              <option value="" selected disabled></option>
+              <option value="" disabled></option>
               {alignments.map(({ id, name }) => (
                 <option key={id} value={id}>
                   {name}
