@@ -70,7 +70,7 @@ function CharacterAbilities({ abilities }: AbilitiesProps) {
       </Text>
       <Row>
         {abilities.map((ability) => (
-          <AbilityBox ability={ability} />
+          <AbilityBox key={ability.id} ability={ability} />
         ))}
       </Row>
     </Container>

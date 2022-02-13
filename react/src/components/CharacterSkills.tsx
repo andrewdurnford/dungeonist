@@ -65,7 +65,7 @@ function CharacterSkills({ skills }: CharacterSkillsProps) {
       <Text weight="600">Skills</Text>
       <List>
         {skills.map((skill) => (
-          <SkillBox skill={skill} />
+          <SkillBox key={skill.id} skill={skill} />
         ))}
       </List>
     </Container>
