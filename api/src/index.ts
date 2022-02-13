@@ -3,7 +3,7 @@ import { ApolloServer } from "apollo-server-express";
 import * as cors from "cors";
 import * as express from "express";
 import * as jwt from "jsonwebtoken";
-import { typeDefs } from "./utils/graphql";
+import { typeDefs } from "./utils/typeDefs";
 import { getResolvers } from "./utils/resolvers";
 
 // TODO: Support top-level await to remove this wrapper function
