@@ -1,10 +1,10 @@
-import { GraphQLHandler, GraphQLRequest } from "msw";
+import { GraphQLHandler, GraphQLRequest, GraphQLVariables } from "msw";
 
 // See: https://vitejs.dev/guide/features.html#glob-import
 const mocks = import.meta.glob("../mocks/**/*.ts");
 
 // Extract each graphql handler from each file in './src/mocks/**/*.ts'
-let modules: GraphQLHandler<GraphQLRequest<any>>[] = [];
+let modules: GraphQLHandler<GraphQLRequest<GraphQLVariables>>[] = [];
 
 // Regular for loop is required to iterate over the key (path) of the glob
 // imports. Creating a mutable array, and pushing each resolved handler to it is
