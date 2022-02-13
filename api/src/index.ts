@@ -1,43 +1,51 @@
 import { PrismaClient } from "@prisma/client";
-import { ApolloServer, gql } from "apollo-server-express";
+import { ApolloServer } from "apollo-server-express";
 import * as cors from "cors";
 import * as express from "express";
 import * as jwt from "jsonwebtoken";
 import { typeDefs } from "./utils/graphql";
-import resolvers from "./utils/resolvers";
+import { getResolvers } from "./utils/resolvers";
 
-const app = express();
+// TODO: Support top-level await to remove this wrapper function
+(async () => {
+  await getResolvers();
 
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
+  const app = express();
 
-const prisma = new PrismaClient();
+  app.use(
+    cors({
+      origin: "*",
+      credentials: true,
+    })
+  );
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: async ({ req }) => {
-    try {
-      const header = req.headers.authorization;
-      const token = header.replace("Bearer ", "");
-      const payload = jwt.verify(token, "secret") as any;
-      const id = payload.sub;
+  const prisma = new PrismaClient();
 
-      const user = await prisma.user.findUnique({ where: { id } });
+  const server = new ApolloServer({
+    typeDefs,
+    // TODO: Return a 'resolvers' object from 'utils/resolvers'
+    resolvers: await getResolvers(),
+    context: async ({ req }) => {
+      try {
+        const header = req.headers.authorization;
+        const token = header.replace("Bearer ", "");
+        const payload = jwt.verify(token, "secret") as any;
+        const id = payload.sub;
 
-      return { prisma, user };
-    } catch {
-      return { prisma };
-    }
-  },
-});
+        const user = await prisma.user.findUnique({ where: { id } });
 
-server.start().then(() => server.applyMiddleware({ app }));
+        return { prisma, user };
+      } catch {
+        return { prisma };
+      }
+    },
+  });
 
-app.listen({ port: 4000 }, () => {
-  console.log(`🚀  Server ready at http://localhost:4000${server.graphqlPath}`);
-});
+  server.start().then(() => server.applyMiddleware({ app }));
+
+  app.listen({ port: 4000 }, () => {
+    console.log(
+      `🚀  Server ready at http://localhost:4000${server.graphqlPath}`
+    );
+  });
+})();

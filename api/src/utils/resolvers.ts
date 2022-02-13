@@ -1,28 +1,21 @@
+import * as glob from "glob";
 import { merge } from "lodash";
-import { resolvers as Ability } from "../resolvers/ability";
-import { resolvers as Alignment } from "../resolvers/alignment";
-import { resolvers as Character } from "../resolvers/character";
-import { resolvers as CharacterAbility } from "../resolvers/characterAbility";
-import { resolvers as CharacterRace } from "../resolvers/characterRace";
-import { resolvers as CharacterSkill } from "../resolvers/characterSkill";
-import { resolvers as Personality } from "../resolvers/personality";
-import { resolvers as Race } from "../resolvers/race";
-import { resolvers as Skill } from "../resolvers/skill";
-import { resolvers as User } from "../resolvers/user";
+import * as path from "path";
 
-// TODO: automate with glob pattern 'src/resolvers/**/*'
-const resolvers = merge(
-  {},
-  Ability,
-  Alignment,
-  Character,
-  CharacterAbility,
-  CharacterRace,
-  CharacterSkill,
-  Personality,
-  Race,
-  Skill,
-  User
-);
+// TODO: Use top-level await and return merged 'resolvers' array
+export async function getResolvers() {
+  let allResolvers = {};
 
-export default resolvers;
+  await Promise.all(
+    glob
+      .sync(path.join(__dirname, "../resolvers/**/*.ts"))
+      .map(async (path) => {
+        // Get the 'resolvers' object from each file
+        const { resolvers } = await import(path);
+        // Deep merge the object with all other resolvers
+        allResolvers = merge({}, allResolvers, resolvers);
+      })
+  );
+
+  return allResolvers;
+}
