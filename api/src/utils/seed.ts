@@ -6,12 +6,29 @@ import { main as skillSeed } from "../seeds/skill";
 
 const prisma = new PrismaClient();
 
+// TODO: Update to use glob path '../seeds/*.ts
+//
+// The following code successfully calls each seed function with a glob import,
+// but due to foreign-key constraints causes errors when seeding as the scripts
+// will run out of order due to being asynchronous.
+//
+// ```
+// async function main() {
+//   glob
+//     .sync(path.join(__dirname, "../seeds/**/*.ts"))
+//     // Get the 'main' function from each seed file and call it
+//     .map(async (path) => {
+//       const { main } = await import(path);
+//       await main();
+//     });
+// }
+// ```
+
 async function main() {
-  // TODO: Update to use glob path '../seeds/*.ts
   await abilitySeed();
+  await skillSeed();
   await alignmentSeed();
   await raceSeed();
-  await skillSeed();
 }
 
 main()
