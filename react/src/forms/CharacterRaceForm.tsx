@@ -12,20 +12,19 @@ interface UpdateCharacterDetailsFormProps extends CharacterRaceForm {
   races: Array<{ id: string; name: string }>;
   loading?: boolean;
   onChange: (raceId: string) => void;
-  onCancel: () => void;
   onSubmit: (data: UpdateCharacterDetailsInput) => void;
 }
 
 function CharacterRaceForm({
-  raceId,
+  raceId = "",
   races,
   loading,
   onChange,
-  onCancel, // TODO: update to onReset?
   onSubmit,
 }: UpdateCharacterDetailsFormProps) {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<UpdateCharacterDetailsInput>({
@@ -38,7 +37,14 @@ function CharacterRaceForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container direction="column" gap="16">
-        <Subtitle name="Race" loading={loading} onReset={onCancel} />
+        <Subtitle
+          name="Race"
+          loading={loading}
+          onReset={() => {
+            reset({ raceId }, { keepDefaultValues: true });
+            onChange(String(raceId));
+          }}
+        />
         <Container gap="16" justifyContent="center">
           <Container as="section" direction="column" gap="16" flexGrow={1}>
             <Select

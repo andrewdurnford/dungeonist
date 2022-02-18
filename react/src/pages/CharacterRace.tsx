@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Box from "../components/Box";
-import Container, { Article, Main, Section } from "../components/Container";
+import Container, { Main, Section } from "../components/Container";
 import List from "../components/List";
 import Loader from "../components/Loader";
 import Notification from "../components/Notification";
@@ -71,7 +71,6 @@ function CharacterRace() {
         raceId={data.character.race?.id}
         races={races.races}
         onChange={(raceId) => setRaceId(raceId)}
-        onCancel={() => navigate(`/characters/${characterId}`)}
         onSubmit={({ raceId }) => {
           updateCharacterDetails({
             variables: {

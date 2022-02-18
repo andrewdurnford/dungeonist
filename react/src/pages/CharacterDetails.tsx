@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Main } from "../components/Container";
 import Notification from "../components/Notification";
-import UpdateCharacterDetailsForm from "../forms/UpdateCharacterDetailsForm";
+import CharacterDetailsForm from "../forms/CharacterDetailsForm";
 import {
   useAlignmentsQuery,
   useCharacterQuery,
@@ -38,7 +38,7 @@ function CharacterEdit() {
   return (
     <Main>
       {updateError && <Notification>{updateError.message}</Notification>}
-      <UpdateCharacterDetailsForm
+      <CharacterDetailsForm
         name={character.name}
         level={character.level}
         alignmentId={character.alignment?.id ?? ""}
@@ -49,7 +49,6 @@ function CharacterEdit() {
         flaws={character.flaws ?? ""}
         alignments={alignments.alignments}
         loading={updateLoading}
-        onCancel={() => navigate(`/characters/${characterId}`)}
         onSubmit={({
           name,
           level,

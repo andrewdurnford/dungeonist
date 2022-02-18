@@ -8,7 +8,7 @@ import Select from "../components/Select";
 import Subtitle from "../components/Subtitle";
 import styled from "styled-components";
 
-// TODO: update Container to not rely on 'width: 100%'
+// TODO:  Container to not rely on 'width: 100%'
 const Section = styled(Container).attrs({
   forwardedAs: "section",
   direction: "column",
@@ -28,7 +28,7 @@ const schema = Yup.object().shape({
     .max(20, "Level must be between 1 and 20"),
 });
 
-type UpdateCharacterDetailsInput = {
+type CharacterDetailsInput = {
   name?: string;
   level?: number;
   alignmentId?: string;
@@ -39,14 +39,13 @@ type UpdateCharacterDetailsInput = {
   flaws?: string;
 };
 
-interface UpdateCharacterDetailsFormProps extends UpdateCharacterDetailsInput {
+interface CharacterDetailsFormProps extends CharacterDetailsInput {
   alignments: Array<{ id: string; name: string }>;
   loading?: boolean;
-  onCancel: () => void;
-  onSubmit: (data: UpdateCharacterDetailsInput) => void;
+  onSubmit: (data: CharacterDetailsInput) => void;
 }
 
-function UpdateCharacterDetailsForm({
+function CharacterDetailsForm({
   name,
   level,
   alignmentId,
@@ -57,14 +56,14 @@ function UpdateCharacterDetailsForm({
   flaws,
   alignments,
   loading,
-  onCancel,
   onSubmit,
-}: UpdateCharacterDetailsFormProps) {
+}: CharacterDetailsFormProps) {
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<UpdateCharacterDetailsInput>({
+  } = useForm<CharacterDetailsInput>({
     mode: "onTouched",
     defaultValues: {
       name,
@@ -82,7 +81,25 @@ function UpdateCharacterDetailsForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container direction="column" gap="16">
-        <Subtitle name="Details" loading={loading} onReset={onCancel} />
+        <Subtitle
+          name="Details"
+          loading={loading}
+          onReset={() =>
+            reset(
+              {
+                alignmentId,
+                background,
+                bonds,
+                flaws,
+                ideals,
+                level,
+                name,
+                traits,
+              },
+              { keepDefaultValues: true }
+            )
+          }
+        />
         <Container wrap="wrap" gap="16" justifyContent="center">
           <Section>
             <Input
@@ -146,4 +163,4 @@ function UpdateCharacterDetailsForm({
   );
 }
 
-export default UpdateCharacterDetailsForm;
+export default CharacterDetailsForm;

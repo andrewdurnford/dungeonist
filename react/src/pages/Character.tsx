@@ -1,6 +1,5 @@
 import { Outlet, useParams } from "react-router-dom";
 import CharacterHeader from "../components/CharacterHeader";
-import Container, { Main } from "../components/Container";
 import Loader from "../components/Loader";
 import { useCharacterQuery } from "../utils/graphql";
 import NotFound from "./404";
