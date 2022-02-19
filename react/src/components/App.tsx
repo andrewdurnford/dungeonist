@@ -10,6 +10,12 @@ import Character from "../pages/Character";
 import CharacterDetails from "../pages/CharacterDetails";
 import CharacterSummary from "../pages/CharacterSummary";
 import CharacterRace from "../pages/CharacterRace";
+import CharacterUpdateDetails from "../pages/CharacterUpdateDetails";
+import CharacterUpdateRace from "../pages/CharacterUpdateRace";
+import CharacterUpdateClass from "../pages/CharacterUpdateClass";
+import CharacterUpdateAbilities from "../pages/CharacterUpdateAbilities";
+import CharacterUpdateEquipment from "../pages/CharacterUpdateEquipment";
+import CharacterUpdate from "../pages/CharacterUpdate";
 
 function App() {
   const { isLoggedIn } = useAuth();
@@ -26,6 +32,16 @@ function App() {
               <Route index element={<CharacterSummary />} />
               <Route path="details" element={<CharacterDetails />} />
               <Route path="race" element={<CharacterRace />} />
+            </Route>
+            <Route
+              path="/characters/:characterId/edit"
+              element={<CharacterUpdate />}
+            >
+              <Route index element={<CharacterUpdateDetails />} />
+              <Route path="race" element={<CharacterUpdateRace />} />
+              <Route path="class" element={<CharacterUpdateClass />} />
+              <Route path="abilities" element={<CharacterUpdateAbilities />} />
+              <Route path="equipment" element={<CharacterUpdateEquipment />} />
             </Route>
           </>
         ) : (

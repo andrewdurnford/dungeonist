@@ -68,7 +68,7 @@ function Characters() {
       <List>
         {data.characters.map(({ id, name }) => (
           <li key={id}>
-            <Link to={`/characters/${id}`}>{name}</Link>
+            <Link to={`/characters/${id}/edit`}>{name}</Link>
           </li>
         ))}
       </List>
