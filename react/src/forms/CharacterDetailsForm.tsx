@@ -1,34 +1,21 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import Container from "../components/Container";
-import Input from "../components/Input";
-import TextArea from "../components/TextArea";
-import Select from "../components/Select";
-import Subtitle from "../components/Subtitle";
-import styled from "styled-components";
-
-// TODO:  Container to not rely on 'width: 100%'
-const Section = styled(Container).attrs({
-  forwardedAs: "section",
-  direction: "column",
-  gap: "16",
-  flexGrow: 1,
-})`
-  width: auto;
-`;
+import Button from "../components/Button";
+import { useAlignmentsQuery } from "../utils/graphql";
+import Notification from "../components/Notification";
 
 const schema = Yup.object().shape({
-  name: Yup.string(),
+  name: Yup.string().required(),
   level: Yup.number()
     .typeError("Level must be between 1 and 20")
     .integer("Level must be between 1 and 20")
-    .strict()
     .min(1, "Level must be between 1 and 20")
-    .max(20, "Level must be between 1 and 20"),
+    .max(20, "Level must be between 1 and 20")
+    .required(),
 });
 
-type CharacterDetailsInput = {
+export interface CharacterDetailsFormValues {
   name?: string;
   level?: number;
   alignmentId?: string;
@@ -37,128 +24,93 @@ type CharacterDetailsInput = {
   ideals?: string;
   bonds?: string;
   flaws?: string;
-};
+}
 
-interface CharacterDetailsFormProps extends CharacterDetailsInput {
-  alignments: Array<{ id: string; name: string }>;
-  loading?: boolean;
-  onSubmit: (data: CharacterDetailsInput) => void;
+interface CharacterDetailsFormProps {
+  defaultValues: CharacterDetailsFormValues;
+  onSubmit: (data: CharacterDetailsFormValues) => void; // Promise<void>;
 }
 
 function CharacterDetailsForm({
-  name,
-  level,
-  alignmentId,
-  background,
-  traits,
-  ideals,
-  bonds,
-  flaws,
-  alignments,
-  loading,
+  defaultValues,
   onSubmit,
 }: CharacterDetailsFormProps) {
+  const { data, loading, error } = useAlignmentsQuery();
+
+  if (error) return <Notification>{error.message}</Notification>;
+
+  const { alignments } = data || {};
+
   const {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
-  } = useForm<CharacterDetailsInput>({
+    formState: { errors, isSubmitting },
+  } = useForm<CharacterDetailsFormValues>({
     mode: "onTouched",
-    defaultValues: {
-      name,
-      level,
-      alignmentId,
-      background,
-      traits,
-      ideals,
-      bonds,
-      flaws,
-    },
+    defaultValues,
     resolver: yupResolver(schema),
   });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Container direction="column" gap="16">
-        <Subtitle
-          name="Details"
-          loading={loading}
-          onReset={() =>
-            reset(
-              {
-                alignmentId,
-                background,
-                bonds,
-                flaws,
-                ideals,
-                level,
-                name,
-                traits,
-              },
-              { keepDefaultValues: true }
-            )
-          }
+      <div>
+        <Button type="submit" loading={isSubmitting}>
+          Save
+        </Button>{" "}
+        <Button variant="secondary" onClick={() => reset(defaultValues)}>
+          Reset
+        </Button>
+      </div>
+      <div>
+        <label htmlFor="name">Name</label>
+        {errors?.name && <span>{errors.name.message}</span>}
+        <input type="text" id="name" {...register("name")} />
+      </div>
+      <div>
+        <label htmlFor="level">Level</label>
+        {errors?.level && <span>{errors.level.message}</span>}
+        <input
+          type="number"
+          id="level"
+          {...register("level", { valueAsNumber: true })}
         />
-        <Container wrap="wrap" gap="16" justifyContent="center">
-          <Section>
-            <Input
-              type="text"
-              label="Name"
-              placeholder="Untitled"
-              error={errors.name?.message}
-              {...register("name")}
-            />
-            <Input
-              type="number"
-              label="Level"
-              error={errors.level?.message}
-              {...register("level", { valueAsNumber: true })}
-            />
-            <Input
-              type="text"
-              label="Background"
-              placeholder="Acolyte"
-              error={errors.background?.message}
-              {...register("background")}
-            />
-            <Select
-              label="Alignment"
-              error={errors.alignmentId?.message}
-              {...register("alignmentId")}
-            >
-              <option value="" disabled></option>
-              {alignments.map(({ id, name }) => (
-                <option key={id} value={id}>
-                  {name}
-                </option>
-              ))}
-            </Select>
-          </Section>
-          <Section>
-            <TextArea
-              label="Personality traits"
-              error={errors.traits?.message}
-              {...register("traits")}
-            />
-            <TextArea
-              label="Ideals"
-              error={errors.ideals?.message}
-              {...register("ideals")}
-            />
-            <TextArea
-              label="Bonds"
-              error={errors.bonds?.message}
-              {...register("bonds")}
-            />
-            <TextArea
-              label="Flaws"
-              error={errors.flaws?.message}
-              {...register("flaws")}
-            />
-          </Section>
-        </Container>
-      </Container>
+      </div>
+      <div>
+        <label htmlFor="background">Background</label>
+        <input type="text" id="background" {...register("background")} />
+      </div>
+      <div>
+        <label htmlFor="alignmentId">Alignment</label>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <select id="alignmentId" {...register("alignmentId")}>
+            <option value="" disabled></option>
+            {alignments?.map(({ id, name }) => (
+              <option key={id} value={id}>
+                {name}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
+      <div>
+        <label htmlFor="traits">Traits</label>
+        <textarea id="traits" rows={4} {...register("traits")}></textarea>
+      </div>
+      <div>
+        <label htmlFor="ideals">Ideals</label>
+        <textarea id="ideals" rows={4} {...register("ideals")}></textarea>
+      </div>
+      <div>
+        <label htmlFor="bonds">Bonds</label>
+        <textarea id="bonds" rows={4} {...register("bonds")}></textarea>
+      </div>
+      <div>
+        <label htmlFor="flaws">Flaws</label>
+        <textarea id="flaws" rows={4} {...register("flaws")}></textarea>
+      </div>
     </form>
   );
 }

@@ -1,69 +1,79 @@
 import { useForm } from "react-hook-form";
-import Container from "../components/Container";
-import Select from "../components/Select";
-import Subtitle from "../components/Subtitle";
-import { UpdateCharacterDetailsInput } from "../utils/graphql";
+import Button from "../components/Button";
+import Notification from "../components/Notification";
+import { useRacesQuery } from "../utils/graphql";
 
-type CharacterRaceForm = {
+export interface CharacterRaceFormValues {
   raceId?: string;
-};
+}
 
-interface UpdateCharacterDetailsFormProps extends CharacterRaceForm {
-  races: Array<{ id: string; name: string }>;
-  loading?: boolean;
+interface CharacterRaceFormProps {
+  defaultValues: CharacterRaceFormValues;
+  onSubmit: (data: CharacterRaceFormValues) => void;
   onChange: (raceId: string) => void;
-  onSubmit: (data: UpdateCharacterDetailsInput) => void;
 }
 
 function CharacterRaceForm({
-  raceId = "",
-  races,
-  loading,
-  onChange,
+  defaultValues,
   onSubmit,
-}: UpdateCharacterDetailsFormProps) {
+  onChange,
+}: CharacterRaceFormProps) {
+  const { data, loading, error } = useRacesQuery();
+
+  if (error) return <Notification>{error.message}</Notification>;
+
+  const { races } = data || {};
+
   const {
     register,
     reset,
     handleSubmit,
-    formState: { errors },
-  } = useForm<UpdateCharacterDetailsInput>({
+    formState: { isSubmitting },
+  } = useForm<CharacterRaceFormValues>({
     mode: "onTouched",
-    defaultValues: {
-      raceId,
-    },
+    defaultValues,
   });
+
+  const raceId = register("raceId");
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Container direction="column" gap="16">
-        <Subtitle
-          name="Race"
-          loading={loading}
-          onReset={() => {
-            reset({ raceId }, { keepDefaultValues: true });
-            onChange(String(raceId));
+      <div>
+        <Button type="submit" loading={isSubmitting}>
+          Save
+        </Button>{" "}
+        <Button
+          variant="secondary"
+          onClick={() => {
+            reset(defaultValues);
+            onChange(defaultValues.raceId ?? "");
           }}
-        />
-        <Container gap="16" justifyContent="center">
-          <Container as="section" direction="column" gap="16" flexGrow={1}>
-            <Select
-              label="Race"
-              error={errors.raceId?.message}
-              {...register("raceId", {
-                onChange: (e: any) => onChange(e.target.value),
-              })}
-            >
-              <option value="" disabled></option>
-              {races.map(({ id, name }) => (
-                <option key={id} value={id}>
-                  {name}
-                </option>
-              ))}
-            </Select>
-          </Container>
-        </Container>
-      </Container>
+        >
+          Reset
+        </Button>
+      </div>
+      <div>
+        <label htmlFor="raceId">Race</label>
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <select
+            id="raceId"
+            {...register("raceId")}
+            onChange={(e) => {
+              onChange(e.target.value);
+              raceId.onChange(e);
+            }}
+          >
+            <option value="" disabled></option>
+            {races?.map(({ id, name }) => (
+              <option key={id} value={id}>
+                {name}
+              </option>
+            ))}
+          </select>
+        )}
+      </div>
     </form>
   );
 }

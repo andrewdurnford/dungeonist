@@ -18,7 +18,7 @@ function Subtitle({ name, loading, onReset }: SubtitleProps) {
         <Button type="submit" loading={loading}>
           Save
         </Button>
-        <Button variant="secondary" type="reset" onClick={onReset}>
+        <Button variant="secondary" onClick={onReset}>
           Reset
         </Button>
       </FluidContainer>

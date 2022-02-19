@@ -6,10 +6,6 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import useAuth from "../hooks/useAuth";
 import Characters from "../pages/Characters";
-import Character from "../pages/Character";
-import CharacterDetails from "../pages/CharacterDetails";
-import CharacterSummary from "../pages/CharacterSummary";
-import CharacterRace from "../pages/CharacterRace";
 import CharacterUpdateDetails from "../pages/CharacterUpdateDetails";
 import CharacterUpdateRace from "../pages/CharacterUpdateRace";
 import CharacterUpdateClass from "../pages/CharacterUpdateClass";
@@ -22,17 +18,12 @@ function App() {
 
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <Navbar />
+      {/* <Navbar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         {isLoggedIn ? (
           <>
             <Route path="/characters" element={<Characters />} />
-            <Route path="/characters/:characterId" element={<Character />}>
-              <Route index element={<CharacterSummary />} />
-              <Route path="details" element={<CharacterDetails />} />
-              <Route path="race" element={<CharacterRace />} />
-            </Route>
             <Route
               path="/characters/:characterId/edit"
               element={<CharacterUpdate />}
