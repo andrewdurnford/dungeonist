@@ -40,7 +40,7 @@ function CharacterUpdateDetails() {
     <main>
       <h2>Character Details</h2>
       {loading ? (
-        <div>"Loading..."</div>
+        <div>Loading...</div>
       ) : (
         <>
           {updateError && <Notification>{updateError.message}</Notification>}

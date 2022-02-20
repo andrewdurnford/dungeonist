@@ -56,7 +56,7 @@ function Button({
       disabled={loading || disabled}
       {...props}
     >
-      {children && loading ? <div>"Loading..."</div> : children}
+      {children && loading ? <div>Loading...</div> : children}
     </StyledButton>
   );
 }

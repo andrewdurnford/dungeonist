@@ -14,7 +14,7 @@ function CharacterUpdateAbilities() {
   return (
     <main>
       <h2>Character Abilities</h2>
-      {loading ? <div>"Loading..."</div> : <div>Abilities</div>}
+      {loading ? <div>Loading...</div> : <div>Abilities</div>}
     </main>
   );
 }

@@ -14,7 +14,7 @@ function CharacterUpdateEquipment() {
   return (
     <main>
       <h2>Character Equipment</h2>
-      {loading ? <div>"Loading..."</div> : <div>Equipment</div>}
+      {loading ? <div>Loading...</div> : <div>Equipment</div>}
     </main>
   );
 }

@@ -14,7 +14,7 @@ function CharacterUpdateClass() {
   return (
     <main>
       <h2>Character Class</h2>
-      {loading ? <div>"Loading..."</div> : <div>Class</div>}
+      {loading ? <div>Loading...</div> : <div>Class</div>}
     </main>
   );
 }

@@ -1,35 +1,35 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Notification from "../components/Notification";
+import RaceDetails from "../components/RaceDetails";
 import CharacterRaceForm, {
   CharacterRaceFormValues,
 } from "../forms/CharacterRaceForm";
 import {
   useCharacterQuery,
-  useRaceLazyQuery,
-  useRaceQuery,
   useUpdateCharacterDetailsMutation,
 } from "../utils/graphql";
 
 function CharacterUpdateRace() {
-  const { characterId } = useParams();
+  const [raceId, setRaceId] = useState("");
 
-  const [getRace, { data: raceData, loading: raceLoading, error: raceError }] =
-    useRaceLazyQuery({
-      // TODO: this doesn't seem to work with 'cache-first' fetchPolicy
-      // fetchPolicy: "cache-first",
-    });
+  const { characterId } = useParams();
 
   const { data, loading, error } = useCharacterQuery({
     variables: { id: characterId! },
     skip: !characterId,
     onCompleted: ({ character }) =>
-      character?.race && getRace({ variables: { id: character.race.id } }),
+      character?.race && setRaceId(character.race.id),
   });
 
   const [updateCharacter, { error: updateError }] =
     useUpdateCharacterDetailsMutation({
       onError: (err) => console.error(err.message),
     });
+
+  useEffect(() => {
+    setRaceId(data?.character?.race?.id ?? "");
+  }, [data]);
 
   if (error) return null;
 
@@ -43,14 +43,14 @@ function CharacterUpdateRace() {
     <main>
       <h2>Character Race</h2>
       {loading ? (
-        <div>"Loading..."</div>
+        <div>Loading...</div>
       ) : (
         <>
           {updateError && <Notification>{updateError.message}</Notification>}
           <CharacterRaceForm
             defaultValues={defaultValues}
             onChange={(raceId) => {
-              if (raceId !== "") getRace({ variables: { id: raceId } });
+              if (raceId !== "") setRaceId(raceId);
             }}
             onSubmit={(data) => {
               updateCharacter({
@@ -63,57 +63,7 @@ function CharacterUpdateRace() {
               });
             }}
           />
-          {/* TODO: refactor into a new component? */}
-          {raceError && <Notification>{raceError.message}</Notification>}
-          <div>
-            <h3>Ability Score Improvements</h3>
-            <ul>
-              {raceLoading ? (
-                <li>Loading...</li>
-              ) : (
-                raceData?.race?.abilityScoreIncreases.map((x) => (
-                  <li key={x.id}>{`${x.ability.name} ${
-                    x.increase >= 0 ? "+" : "-"
-                  }${x.increase}
-                `}</li>
-                ))
-              )}
-            </ul>
-            <h3>Details</h3>
-            <p>{raceLoading ? "Loading..." : raceData?.race?.description}</p>
-            <label>Age</label>
-            <textarea
-              rows={4}
-              disabled
-              defaultValue={
-                raceLoading ? "Loading..." : raceData?.race?.age ?? ""
-              }
-            ></textarea>
-            <label>Alignment</label>
-            <textarea
-              rows={4}
-              disabled
-              defaultValue={
-                raceLoading ? "Loading..." : raceData?.race?.alignment ?? ""
-              }
-            ></textarea>
-            <label>Size</label>
-            <textarea
-              rows={4}
-              disabled
-              defaultValue={
-                raceLoading ? "Loading..." : raceData?.race?.size ?? ""
-              }
-            ></textarea>
-            <label>Speed</label>
-            <textarea
-              rows={4}
-              disabled
-              defaultValue={
-                raceLoading ? "Loading..." : raceData?.race?.speed ?? ""
-              }
-            ></textarea>
-          </div>
+          <RaceDetails raceId={raceId} />
         </>
       )}
     </main>

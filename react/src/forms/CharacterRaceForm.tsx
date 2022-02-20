@@ -28,7 +28,7 @@ function CharacterRaceForm({
     register,
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isDirty, isSubmitting },
   } = useForm<CharacterRaceFormValues>({
     mode: "onTouched",
     defaultValues,
@@ -39,11 +39,12 @@ function CharacterRaceForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <Button type="submit" loading={isSubmitting}>
+        <Button type="submit" disabled={!isDirty} loading={isSubmitting}>
           Save
         </Button>{" "}
         <Button
           variant="secondary"
+          disabled={!isDirty}
           onClick={() => {
             reset(defaultValues);
             onChange(defaultValues.raceId ?? "");

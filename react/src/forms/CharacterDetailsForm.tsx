@@ -45,7 +45,7 @@ function CharacterDetailsForm({
     register,
     reset,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isDirty, isSubmitting },
   } = useForm<CharacterDetailsFormValues>({
     mode: "onTouched",
     defaultValues,
@@ -55,10 +55,14 @@ function CharacterDetailsForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <Button type="submit" loading={isSubmitting}>
+        <Button type="submit" disabled={!isDirty} loading={isSubmitting}>
           Save
         </Button>{" "}
-        <Button variant="secondary" onClick={() => reset(defaultValues)}>
+        <Button
+          variant="secondary"
+          disabled={!isDirty}
+          onClick={() => reset(defaultValues)}
+        >
           Reset
         </Button>
       </div>
