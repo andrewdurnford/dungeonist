@@ -35,6 +35,7 @@ function RaceDetails({ raceId }: RaceDetailsProps) {
         )}
       </ul>
       <h3>Details</h3>
+      <hr />
       <p>{loading ? "Loading..." : race?.description}</p>
       <label>
         <strong>Age</strong>
@@ -52,6 +53,20 @@ function RaceDetails({ raceId }: RaceDetailsProps) {
         <strong>Speed</strong>
       </label>
       <p>{loading ? "Loading..." : race?.speed ?? ""}</p>
+      {race?.traits && race.traits.length > 0 && (
+        <>
+          <h3>Traits</h3>
+          <hr />
+          {race?.traits.map(({ id, name, description }) => (
+            <div key={id}>
+              <label>
+                <strong>{name}</strong>
+              </label>
+              <p>{description}</p>
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 }

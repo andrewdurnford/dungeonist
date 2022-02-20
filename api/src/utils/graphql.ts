@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { Ability, AbilityScoreIncrease, Alignment, Character, CharacterAbility, CharacterRace, CharacterSkill, Race, Skill, User } from '.prisma/client';
+import { Ability, AbilityScoreIncrease, Alignment, Character, CharacterAbility, CharacterRace, CharacterSkill, Race, Trait, Skill, User } from '.prisma/client';
 import { Context } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -185,9 +185,11 @@ export type IRace = {
   alignment?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  languages?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   size?: Maybe<Scalars['String']>;
   speed?: Maybe<Scalars['String']>;
+  traits: Array<ITrait>;
 };
 
 export type ISignupInput = {
@@ -198,6 +200,13 @@ export type ISignupInput = {
 export type ISkill = {
   __typename?: 'Skill';
   ability: IAbility;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type ITrait = {
+  __typename?: 'Trait';
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
 };
@@ -311,6 +320,7 @@ export type IResolversTypes = {
   SignupInput: ISignupInput;
   Skill: ResolverTypeWrapper<Skill>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Trait: ResolverTypeWrapper<Trait>;
   UpdateCharacterDetailsInput: IUpdateCharacterDetailsInput;
   User: ResolverTypeWrapper<User>;
 };
@@ -337,6 +347,7 @@ export type IResolversParentTypes = {
   SignupInput: ISignupInput;
   Skill: Skill;
   String: Scalars['String'];
+  Trait: Trait;
   UpdateCharacterDetailsInput: IUpdateCharacterDetailsInput;
   User: User;
 };
@@ -443,14 +454,23 @@ export type IRaceResolvers<ContextType = Context, ParentType extends IResolversP
   alignment?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
+  languages?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
   size?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   speed?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
+  traits?: Resolver<Array<IResolversTypes['Trait']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ISkillResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Skill'] = IResolversParentTypes['Skill']> = {
   ability?: Resolver<IResolversTypes['Ability'], ParentType, ContextType>;
+  id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ITraitResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Trait'] = IResolversParentTypes['Trait']> = {
+  description?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<IResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -476,6 +496,7 @@ export type IResolvers<ContextType = Context> = {
   Query?: IQueryResolvers<ContextType>;
   Race?: IRaceResolvers<ContextType>;
   Skill?: ISkillResolvers<ContextType>;
+  Trait?: ITraitResolvers<ContextType>;
   User?: IUserResolvers<ContextType>;
 };
 

@@ -155,7 +155,15 @@ type Race {
   alignment: String
   size: String
   speed: String
+  languages: String
+  traits: [Trait!]!
   abilityScoreIncreases: [AbilityScoreIncrease!]!
+}
+
+type Trait {
+  id: ID!
+  name: String!
+  description: String
 }
 
 type Skill {

@@ -7,6 +7,12 @@ query Race($id: ID!) {
     alignment
     size
     speed
+    languages
+    traits {
+      id
+      name
+      description
+    }
     abilityScoreIncreases {
       id
       ability {

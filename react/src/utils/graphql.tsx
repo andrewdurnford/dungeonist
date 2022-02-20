@@ -183,9 +183,11 @@ export type Race = {
   alignment?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  languages?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   size?: Maybe<Scalars['String']>;
   speed?: Maybe<Scalars['String']>;
+  traits: Array<Trait>;
 };
 
 export type SignupInput = {
@@ -196,6 +198,13 @@ export type SignupInput = {
 export type Skill = {
   __typename?: 'Skill';
   ability: Ability;
+  id: Scalars['ID'];
+  name: Scalars['String'];
+};
+
+export type Trait = {
+  __typename?: 'Trait';
+  description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
 };
@@ -275,7 +284,7 @@ export type RaceQueryVariables = Exact<{
 }>;
 
 
-export type RaceQuery = { __typename?: 'Query', race?: { __typename?: 'Race', id: string, name: string, description?: string | null | undefined, age?: string | null | undefined, alignment?: string | null | undefined, size?: string | null | undefined, speed?: string | null | undefined, abilityScoreIncreases: Array<{ __typename?: 'AbilityScoreIncrease', id: string, increase: number, ability: { __typename?: 'Ability', id: string, name: string } }> } | null | undefined };
+export type RaceQuery = { __typename?: 'Query', race?: { __typename?: 'Race', id: string, name: string, description?: string | null | undefined, age?: string | null | undefined, alignment?: string | null | undefined, size?: string | null | undefined, speed?: string | null | undefined, languages?: string | null | undefined, abilityScoreIncreases: Array<{ __typename?: 'AbilityScoreIncrease', id: string, increase: number, ability: { __typename?: 'Ability', id: string, name: string } }>, traits: Array<{ __typename?: 'Trait', id: string, name: string, description?: string | null | undefined }> } | null | undefined };
 
 export type RacesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -635,6 +644,7 @@ export const RaceDocument = gql`
     alignment
     size
     speed
+    languages
     abilityScoreIncreases {
       id
       ability {
@@ -642,6 +652,11 @@ export const RaceDocument = gql`
         name
       }
       increase
+    }
+    traits {
+      id
+      name
+      description
     }
   }
 }

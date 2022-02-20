@@ -18,6 +18,13 @@ export const resolvers: IResolvers = {
         },
       });
     },
+    traits: async (obj, {}, ctx) => {
+      return await ctx.prisma.trait.findMany({
+        where: {
+          raceId: obj.id,
+        },
+      });
+    },
   },
   AbilityScoreIncrease: {
     ability: async (obj, {}, ctx) => {

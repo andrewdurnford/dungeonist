@@ -13,6 +13,7 @@ generates:
         CharacterRace: .prisma/client#CharacterRace
         CharacterSkill: .prisma/client#CharacterSkill
         Race: .prisma/client#Race
+        Trait: .prisma/client#Trait
         Skill: .prisma/client#Skill
         User: .prisma/client#User
     plugins:

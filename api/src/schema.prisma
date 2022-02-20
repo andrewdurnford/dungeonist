@@ -108,8 +108,10 @@ model Race {
   alignment String?
   size      String?
   speed     String?
+  languages String?
 
-  // TODO: traits
+  // race traits
+  traits Trait[]
 
   CharacterRace CharacterRace[]
 }
@@ -126,6 +128,8 @@ model Trait {
   id          String @id @default(uuid())
   name        String
   description String
+  raceId      String
+  race        Race   @relation(fields: [raceId], references: [id])
 }
 
 model User {
