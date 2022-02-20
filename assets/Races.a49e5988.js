@@ -1,0 +1,1 @@
+import{t as n}from"./vendor.0e3099c9.js";const m=[n.query("Races",(r,a,e)=>a(e.data({races:[{id:"1",name:"Dwarf"},{id:"2",name:"Elf"},{id:"3",name:"Halfling"},{id:"4",name:"Human"},{id:"5",name:"Dragonborn"},{id:"6",name:"Gnome"},{id:"7",name:"Half-Elf"},{id:"8",name:"Half-Orc"},{id:"9",name:"Tiefling"}]})))];export{m as handlers};
