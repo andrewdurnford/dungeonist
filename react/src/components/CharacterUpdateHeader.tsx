@@ -13,13 +13,13 @@ function CharacterUpdateHeader() {
   const { character } = data || {};
 
   return (
-    <header>
+    <>
       <nav>
         <Link to="/characters">Characters</Link> <span>/</span>{" "}
         <span>{loading ? "Loading..." : character?.name}</span>
       </nav>
       <h1>{loading ? "Loading..." : character?.name}</h1>
-    </header>
+    </>
   );
 }
 

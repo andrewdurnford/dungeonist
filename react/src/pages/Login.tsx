@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { Main } from "../components/Container";
+import Container from "../components/Container";
 import Notification from "../components/Notification";
-import Text from "../components/Text";
 import LoginForm from "../forms/LoginForm";
 import useAuth from "../hooks/useAuth";
 import { useLoginMutation } from "../utils/graphql";
@@ -10,7 +9,7 @@ function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const [signup, { loading, error }] = useLoginMutation({
+  const [userLogin, { error }] = useLoginMutation({
     onError: (err) => console.error(err),
     onCompleted: ({ login: data }) => {
       login(data);
@@ -28,18 +27,15 @@ function Login() {
   });
 
   return (
-    <Main>
-      <Text as="h1" size="32">
-        Log in
-      </Text>
+    <main>
+      <h1>Log in</h1>
       {error && <Notification>Error: {error.message}</Notification>}
       <LoginForm
-        loading={loading}
         onSubmit={({ email, password }) =>
-          signup({ variables: { input: { email, password } } })
+          userLogin({ variables: { input: { email, password } } })
         }
       />
-    </Main>
+    </main>
   );
 }
 

@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Navbar";
-import Home from "../pages/Home";
 import NotFound from "../pages/404";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -20,7 +19,6 @@ function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       {/* <Navbar /> */}
       <Routes>
-        <Route path="/" element={<Home />} />
         {isLoggedIn ? (
           <>
             <Route path="/characters" element={<Characters />} />

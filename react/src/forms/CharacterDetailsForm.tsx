@@ -28,7 +28,7 @@ export interface CharacterDetailsFormValues {
 
 interface CharacterDetailsFormProps {
   defaultValues: CharacterDetailsFormValues;
-  onSubmit: (data: CharacterDetailsFormValues) => void; // Promise<void>;
+  onSubmit: (data: CharacterDetailsFormValues) => void;
 }
 
 function CharacterDetailsForm({

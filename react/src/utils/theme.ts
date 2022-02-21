@@ -10,6 +10,23 @@ export const GlobalStyle = createGlobalStyle`
     font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
     line-height: 1.5;
     font-size: 16px;
+    margin: 0;
+  }
+
+  header {
+    padding: 1rem 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 2rem 2rem;
   }
 
   label {

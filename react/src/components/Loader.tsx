@@ -1,10 +1,8 @@
-import { Main } from "./Container";
-
 function Loader() {
   return (
-    <Main>
+    <main>
       <p>Loading...</p>
-    </Main>
+    </main>
   );
 }
 

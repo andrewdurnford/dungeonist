@@ -1,7 +1,6 @@
 import { Outlet, useParams } from "react-router-dom";
 import CharacterUpdateHeader from "../components/CharacterUpdateHeader";
 import CharacterUpdateMenu from "../components/CharacterUpdateMenu";
-import Container from "../components/Container";
 import { useCharacterQuery } from "../utils/graphql";
 
 function CharacterUpdate() {
@@ -17,11 +16,13 @@ function CharacterUpdate() {
   if (data && !data.character) return <div>404: Not Found</div>;
 
   return (
-    <Container direction="column" p="32" mx="auto">
-      <CharacterUpdateHeader />
-      <CharacterUpdateMenu />
+    <>
+      <header>
+        <CharacterUpdateHeader />
+        <CharacterUpdateMenu />
+      </header>
       <Outlet />
-    </Container>
+    </>
   );
 }
 
