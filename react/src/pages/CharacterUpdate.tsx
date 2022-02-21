@@ -17,7 +17,7 @@ function CharacterUpdate() {
   if (data && !data.character) return <div>404: Not Found</div>;
 
   return (
-    <Container direction="column" p="32">
+    <Container direction="column" p="32" mx="auto">
       <CharacterUpdateHeader />
       <CharacterUpdateMenu />
       <Outlet />
