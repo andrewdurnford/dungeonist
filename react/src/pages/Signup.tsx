@@ -3,14 +3,28 @@ import { Main } from "../components/Container";
 import Notification from "../components/Notification";
 import Text from "../components/Text";
 import SignupForm from "../forms/SignupForm";
+import useAuth from "../hooks/useAuth";
 import { useSignupMutation } from "../utils/graphql";
 
 function Signup() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [signup, { loading, error }] = useSignupMutation({
     onError: (err) => console.error(err),
-    onCompleted: () => navigate("/"),
+    onCompleted: ({ signup: data }) => {
+      login(data);
+      navigate("/");
+    },
+    update(cache, { data }) {
+      cache.modify({
+        fields: {
+          user() {
+            return data?.signup.user;
+          },
+        },
+      });
+    },
   });
 
   return (

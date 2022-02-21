@@ -1,0 +1,36 @@
+fragment CharacterDetails on Character {
+  id
+  name
+  level
+  experience
+  inspiration
+  background
+  alignment {
+    id
+    name
+  }
+  traits
+  ideals
+  bonds
+  flaws
+  race {
+    id
+    name
+  }
+  abilities {
+    id
+    name
+    score
+    modifier
+  }
+  skills {
+    id
+    name
+    modifier
+    isProficient
+    ability {
+      id
+      name
+    }
+  }
+}

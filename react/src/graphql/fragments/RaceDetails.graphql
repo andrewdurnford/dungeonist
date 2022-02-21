@@ -1,0 +1,23 @@
+fragment RaceDetails on Race {
+  id
+  name
+  description
+  age
+  alignment
+  size
+  speed
+  languages
+  traits {
+    id
+    name
+    description
+  }
+  abilityScoreIncreases {
+    id
+    ability {
+      id
+      name
+    }
+    increase
+  }
+}

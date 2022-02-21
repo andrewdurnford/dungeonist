@@ -1,25 +1,5 @@
 query Race($id: ID!) {
   race(id: $id) {
-    id
-    name
-    description
-    age
-    alignment
-    size
-    speed
-    languages
-    traits {
-      id
-      name
-      description
-    }
-    abilityScoreIncreases {
-      id
-      ability {
-        id
-        name
-      }
-      increase
-    }
+    ...RaceDetails
   }
 }

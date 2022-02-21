@@ -5,7 +5,7 @@ import CharacterDetailsForm, {
 } from "../forms/CharacterDetailsForm";
 import {
   useCharacterQuery,
-  useUpdateCharacterDetailsMutation,
+  useCharacterUpdateMutation,
 } from "../utils/graphql";
 
 function CharacterUpdateDetails() {
@@ -16,10 +16,9 @@ function CharacterUpdateDetails() {
     skip: !characterId,
   });
 
-  const [updateCharacter, { error: updateError }] =
-    useUpdateCharacterDetailsMutation({
-      onError: (err) => console.error(err.message),
-    });
+  const [updateCharacter, { error: updateError }] = useCharacterUpdateMutation({
+    onError: (err) => console.error(err.message),
+  });
 
   if (error) return null;
 

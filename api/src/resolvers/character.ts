@@ -27,7 +27,7 @@ export const resolvers: IResolvers = {
     },
   },
   Mutation: {
-    createCharacter: async (_, { input }, ctx) => {
+    characterCreate: async (_, { input }, ctx) => {
       if (!ctx.user) throw new Error("Unauthenticated");
 
       const userId = ctx.user?.id;
@@ -35,15 +35,12 @@ export const resolvers: IResolvers = {
       const abilities = await ctx.prisma.ability.findMany();
       const skills = await ctx.prisma.skill.findMany();
 
-      const { name, level } = input;
+      const { name } = input;
 
       const character = await ctx.prisma.character.create({
         data: {
           userId,
           name: name ?? undefined,
-          level: level ?? undefined,
-          experience:
-            level && isLevel(level) ? getExperiencePerLevel(level) : undefined,
           abilities: {
             createMany: {
               data: abilities.map(({ id }) => ({ abilityId: id })),
@@ -57,9 +54,9 @@ export const resolvers: IResolvers = {
         },
       });
 
-      return { character };
+      return character;
     },
-    updateCharacterDetails: async (_, { input }, ctx) => {
+    characterUpdate: async (_, { input }, ctx) => {
       if (!ctx.user) throw new Error("Unauthenticated");
 
       const userId = ctx.user?.id;
@@ -100,7 +97,7 @@ export const resolvers: IResolvers = {
         },
       });
 
-      // Update race
+      // TODO: Move race update to a new mutation 'characterUpdateRace'
       if (raceId) {
         const characterId = id;
         await ctx.prisma.characterRace.upsert({

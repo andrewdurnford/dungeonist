@@ -1,8 +1,8 @@
 type Mutation {
-  createCharacter(input: CreateCharacterInput!): CreateCharacterPayload!
-  updateCharacterDetails(input: UpdateCharacterDetailsInput!): Character!
+  characterCreate(input: CharacterCreateInput!): Character!
+  characterUpdate(input: CharacterUpdateInput!): Character!
   login(input: LoginInput!): LoginPayload!
-  signup(input: SignupInput!): Boolean!
+  signup(input: SignupInput!): SignupPayload!
 }
 
 type Query {
@@ -12,25 +12,20 @@ type Query {
   alignments: [Alignment!]!
   character(id: ID!): Character
   characters: [Character!]!
-  # TODO: deprecate in favour of `user`
-  me: User
   races: [Race!]!
   race(id: ID!): Race
   skill(id: ID!): Skill
   skills: [Skill!]!
+  user: User
 }
 
-### Inputs
+# Inputs
 
-input CreateCharacterInput {
+input CharacterCreateInput {
   name: String
-  """
-  range 1-20, default 1
-  """
-  level: Int
 }
 
-input UpdateCharacterDetailsInput {
+input CharacterUpdateInput {
   id: ID!
   name: String
   """
@@ -56,18 +51,19 @@ input SignupInput {
   password: String!
 }
 
-### Payloads
-
-type CreateCharacterPayload {
-  character: Character!
-}
+# Payloads
 
 type LoginPayload {
   token: String!
   user: User!
 }
 
-### Types
+type SignupPayload {
+  token: String!
+  user: User!
+}
+
+# Types
 
 type Ability {
   id: ID!
@@ -113,13 +109,7 @@ type Character {
 
 type CharacterAbility {
   id: ID!
-  """
-  flattened from ability.name
-  """
   name: String!
-  """
-  related via skill.abilityId -> characterAbility.abilityId
-  """
   skills: [CharacterSkill!]!
   score: Int!
   modifier: Int!
@@ -127,21 +117,12 @@ type CharacterAbility {
 
 type CharacterRace {
   id: ID!
-  """
-  flattened from race.name
-  """
   name: String!
 }
 
 type CharacterSkill {
   id: ID!
-  """
-  flattened from skill.name
-  """
   name: String!
-  """
-  related via skill.abilityId -> characterAbility.abilityId
-  """
   ability: CharacterAbility!
   modifier: Int!
   isProficient: Boolean!

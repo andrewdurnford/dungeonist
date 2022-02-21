@@ -7,7 +7,7 @@ import CharacterRaceForm, {
 } from "../forms/CharacterRaceForm";
 import {
   useCharacterQuery,
-  useUpdateCharacterDetailsMutation,
+  useCharacterUpdateMutation,
 } from "../utils/graphql";
 
 function CharacterUpdateRace() {
@@ -22,10 +22,9 @@ function CharacterUpdateRace() {
       character?.race && setRaceId(character.race.id),
   });
 
-  const [updateCharacter, { error: updateError }] =
-    useUpdateCharacterDetailsMutation({
-      onError: (err) => console.error(err.message),
-    });
+  const [updateCharacter, { error: updateError }] = useCharacterUpdateMutation({
+    onError: (err) => console.error(err.message),
+  });
 
   useEffect(() => {
     setRaceId(data?.character?.race?.id ?? "");

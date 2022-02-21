@@ -63,40 +63,42 @@ export type ICharacterAbility = {
   __typename?: 'CharacterAbility';
   id: Scalars['ID'];
   modifier: Scalars['Int'];
-  /** flattened from ability.name */
   name: Scalars['String'];
   score: Scalars['Int'];
-  /** related via skill.abilityId -> characterAbility.abilityId */
   skills: Array<ICharacterSkill>;
+};
+
+export type ICharacterCreateInput = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type ICharacterRace = {
   __typename?: 'CharacterRace';
   id: Scalars['ID'];
-  /** flattened from race.name */
   name: Scalars['String'];
 };
 
 export type ICharacterSkill = {
   __typename?: 'CharacterSkill';
-  /** related via skill.abilityId -> characterAbility.abilityId */
   ability: ICharacterAbility;
   id: Scalars['ID'];
   isProficient: Scalars['Boolean'];
   modifier: Scalars['Int'];
-  /** flattened from skill.name */
   name: Scalars['String'];
 };
 
-export type ICreateCharacterInput = {
+export type ICharacterUpdateInput = {
+  alignmentId?: InputMaybe<Scalars['ID']>;
+  background?: InputMaybe<Scalars['String']>;
+  bonds?: InputMaybe<Scalars['String']>;
+  flaws?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID'];
+  ideals?: InputMaybe<Scalars['String']>;
   /** range 1-20, default 1 */
   level?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
-};
-
-export type ICreateCharacterPayload = {
-  __typename?: 'CreateCharacterPayload';
-  character: ICharacter;
+  raceId?: InputMaybe<Scalars['ID']>;
+  traits?: InputMaybe<Scalars['String']>;
 };
 
 export type ILoginInput = {
@@ -112,15 +114,20 @@ export type ILoginPayload = {
 
 export type IMutation = {
   __typename?: 'Mutation';
-  createCharacter: ICreateCharacterPayload;
+  characterCreate: ICharacter;
+  characterUpdate: ICharacter;
   login: ILoginPayload;
-  signup: Scalars['Boolean'];
-  updateCharacterDetails: ICharacter;
+  signup: ISignupPayload;
 };
 
 
-export type IMutationCreateCharacterArgs = {
-  input: ICreateCharacterInput;
+export type IMutationCharacterCreateArgs = {
+  input: ICharacterCreateInput;
+};
+
+
+export type IMutationCharacterUpdateArgs = {
+  input: ICharacterUpdateInput;
 };
 
 
@@ -133,11 +140,6 @@ export type IMutationSignupArgs = {
   input: ISignupInput;
 };
 
-
-export type IMutationUpdateCharacterDetailsArgs = {
-  input: IUpdateCharacterDetailsInput;
-};
-
 export type IQuery = {
   __typename?: 'Query';
   abilities: Array<IAbility>;
@@ -146,11 +148,11 @@ export type IQuery = {
   alignments: Array<IAlignment>;
   character?: Maybe<ICharacter>;
   characters: Array<ICharacter>;
-  me?: Maybe<IUser>;
   race?: Maybe<IRace>;
   races: Array<IRace>;
   skill?: Maybe<ISkill>;
   skills: Array<ISkill>;
+  user?: Maybe<IUser>;
 };
 
 
@@ -197,6 +199,12 @@ export type ISignupInput = {
   password: Scalars['String'];
 };
 
+export type ISignupPayload = {
+  __typename?: 'SignupPayload';
+  token: Scalars['String'];
+  user: IUser;
+};
+
 export type ISkill = {
   __typename?: 'Skill';
   ability: IAbility;
@@ -209,20 +217,6 @@ export type ITrait = {
   description?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
   name: Scalars['String'];
-};
-
-export type IUpdateCharacterDetailsInput = {
-  alignmentId?: InputMaybe<Scalars['ID']>;
-  background?: InputMaybe<Scalars['String']>;
-  bonds?: InputMaybe<Scalars['String']>;
-  flaws?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
-  ideals?: InputMaybe<Scalars['String']>;
-  /** range 1-20, default 1 */
-  level?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
-  raceId?: InputMaybe<Scalars['ID']>;
-  traits?: InputMaybe<Scalars['String']>;
 };
 
 export type IUser = {
@@ -306,10 +300,10 @@ export type IResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Character: ResolverTypeWrapper<Character>;
   CharacterAbility: ResolverTypeWrapper<CharacterAbility>;
+  CharacterCreateInput: ICharacterCreateInput;
   CharacterRace: ResolverTypeWrapper<CharacterRace>;
   CharacterSkill: ResolverTypeWrapper<CharacterSkill>;
-  CreateCharacterInput: ICreateCharacterInput;
-  CreateCharacterPayload: ResolverTypeWrapper<Omit<ICreateCharacterPayload, 'character'> & { character: IResolversTypes['Character'] }>;
+  CharacterUpdateInput: ICharacterUpdateInput;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   LoginInput: ILoginInput;
@@ -318,10 +312,10 @@ export type IResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
   Race: ResolverTypeWrapper<Race>;
   SignupInput: ISignupInput;
+  SignupPayload: ResolverTypeWrapper<Omit<ISignupPayload, 'user'> & { user: IResolversTypes['User'] }>;
   Skill: ResolverTypeWrapper<Skill>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Trait: ResolverTypeWrapper<Trait>;
-  UpdateCharacterDetailsInput: IUpdateCharacterDetailsInput;
   User: ResolverTypeWrapper<User>;
 };
 
@@ -333,10 +327,10 @@ export type IResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Character: Character;
   CharacterAbility: CharacterAbility;
+  CharacterCreateInput: ICharacterCreateInput;
   CharacterRace: CharacterRace;
   CharacterSkill: CharacterSkill;
-  CreateCharacterInput: ICreateCharacterInput;
-  CreateCharacterPayload: Omit<ICreateCharacterPayload, 'character'> & { character: IResolversParentTypes['Character'] };
+  CharacterUpdateInput: ICharacterUpdateInput;
   ID: Scalars['ID'];
   Int: Scalars['Int'];
   LoginInput: ILoginInput;
@@ -345,10 +339,10 @@ export type IResolversParentTypes = {
   Query: {};
   Race: Race;
   SignupInput: ISignupInput;
+  SignupPayload: Omit<ISignupPayload, 'user'> & { user: IResolversParentTypes['User'] };
   Skill: Skill;
   String: Scalars['String'];
   Trait: Trait;
-  UpdateCharacterDetailsInput: IUpdateCharacterDetailsInput;
   User: User;
 };
 
@@ -416,11 +410,6 @@ export type ICharacterSkillResolvers<ContextType = Context, ParentType extends I
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ICreateCharacterPayloadResolvers<ContextType = Context, ParentType extends IResolversParentTypes['CreateCharacterPayload'] = IResolversParentTypes['CreateCharacterPayload']> = {
-  character?: Resolver<IResolversTypes['Character'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type ILoginPayloadResolvers<ContextType = Context, ParentType extends IResolversParentTypes['LoginPayload'] = IResolversParentTypes['LoginPayload']> = {
   token?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<IResolversTypes['User'], ParentType, ContextType>;
@@ -428,10 +417,10 @@ export type ILoginPayloadResolvers<ContextType = Context, ParentType extends IRe
 };
 
 export type IMutationResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Mutation'] = IResolversParentTypes['Mutation']> = {
-  createCharacter?: Resolver<IResolversTypes['CreateCharacterPayload'], ParentType, ContextType, RequireFields<IMutationCreateCharacterArgs, 'input'>>;
+  characterCreate?: Resolver<IResolversTypes['Character'], ParentType, ContextType, RequireFields<IMutationCharacterCreateArgs, 'input'>>;
+  characterUpdate?: Resolver<IResolversTypes['Character'], ParentType, ContextType, RequireFields<IMutationCharacterUpdateArgs, 'input'>>;
   login?: Resolver<IResolversTypes['LoginPayload'], ParentType, ContextType, RequireFields<IMutationLoginArgs, 'input'>>;
-  signup?: Resolver<IResolversTypes['Boolean'], ParentType, ContextType, RequireFields<IMutationSignupArgs, 'input'>>;
-  updateCharacterDetails?: Resolver<IResolversTypes['Character'], ParentType, ContextType, RequireFields<IMutationUpdateCharacterDetailsArgs, 'input'>>;
+  signup?: Resolver<IResolversTypes['SignupPayload'], ParentType, ContextType, RequireFields<IMutationSignupArgs, 'input'>>;
 };
 
 export type IQueryResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Query'] = IResolversParentTypes['Query']> = {
@@ -441,11 +430,11 @@ export type IQueryResolvers<ContextType = Context, ParentType extends IResolvers
   alignments?: Resolver<Array<IResolversTypes['Alignment']>, ParentType, ContextType>;
   character?: Resolver<Maybe<IResolversTypes['Character']>, ParentType, ContextType, RequireFields<IQueryCharacterArgs, 'id'>>;
   characters?: Resolver<Array<IResolversTypes['Character']>, ParentType, ContextType>;
-  me?: Resolver<Maybe<IResolversTypes['User']>, ParentType, ContextType>;
   race?: Resolver<Maybe<IResolversTypes['Race']>, ParentType, ContextType, RequireFields<IQueryRaceArgs, 'id'>>;
   races?: Resolver<Array<IResolversTypes['Race']>, ParentType, ContextType>;
   skill?: Resolver<Maybe<IResolversTypes['Skill']>, ParentType, ContextType, RequireFields<IQuerySkillArgs, 'id'>>;
   skills?: Resolver<Array<IResolversTypes['Skill']>, ParentType, ContextType>;
+  user?: Resolver<Maybe<IResolversTypes['User']>, ParentType, ContextType>;
 };
 
 export type IRaceResolvers<ContextType = Context, ParentType extends IResolversParentTypes['Race'] = IResolversParentTypes['Race']> = {
@@ -459,6 +448,12 @@ export type IRaceResolvers<ContextType = Context, ParentType extends IResolversP
   size?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   speed?: Resolver<Maybe<IResolversTypes['String']>, ParentType, ContextType>;
   traits?: Resolver<Array<IResolversTypes['Trait']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ISignupPayloadResolvers<ContextType = Context, ParentType extends IResolversParentTypes['SignupPayload'] = IResolversParentTypes['SignupPayload']> = {
+  token?: Resolver<IResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<IResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -490,11 +485,11 @@ export type IResolvers<ContextType = Context> = {
   CharacterAbility?: ICharacterAbilityResolvers<ContextType>;
   CharacterRace?: ICharacterRaceResolvers<ContextType>;
   CharacterSkill?: ICharacterSkillResolvers<ContextType>;
-  CreateCharacterPayload?: ICreateCharacterPayloadResolvers<ContextType>;
   LoginPayload?: ILoginPayloadResolvers<ContextType>;
   Mutation?: IMutationResolvers<ContextType>;
   Query?: IQueryResolvers<ContextType>;
   Race?: IRaceResolvers<ContextType>;
+  SignupPayload?: ISignupPayloadResolvers<ContextType>;
   Skill?: ISkillResolvers<ContextType>;
   Trait?: ITraitResolvers<ContextType>;
   User?: IUserResolvers<ContextType>;

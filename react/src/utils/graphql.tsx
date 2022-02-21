@@ -61,40 +61,42 @@ export type CharacterAbility = {
   __typename?: 'CharacterAbility';
   id: Scalars['ID'];
   modifier: Scalars['Int'];
-  /** flattened from ability.name */
   name: Scalars['String'];
   score: Scalars['Int'];
-  /** related via skill.abilityId -> characterAbility.abilityId */
   skills: Array<CharacterSkill>;
+};
+
+export type CharacterCreateInput = {
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type CharacterRace = {
   __typename?: 'CharacterRace';
   id: Scalars['ID'];
-  /** flattened from race.name */
   name: Scalars['String'];
 };
 
 export type CharacterSkill = {
   __typename?: 'CharacterSkill';
-  /** related via skill.abilityId -> characterAbility.abilityId */
   ability: CharacterAbility;
   id: Scalars['ID'];
   isProficient: Scalars['Boolean'];
   modifier: Scalars['Int'];
-  /** flattened from skill.name */
   name: Scalars['String'];
 };
 
-export type CreateCharacterInput = {
+export type CharacterUpdateInput = {
+  alignmentId?: InputMaybe<Scalars['ID']>;
+  background?: InputMaybe<Scalars['String']>;
+  bonds?: InputMaybe<Scalars['String']>;
+  flaws?: InputMaybe<Scalars['String']>;
+  id: Scalars['ID'];
+  ideals?: InputMaybe<Scalars['String']>;
   /** range 1-20, default 1 */
   level?: InputMaybe<Scalars['Int']>;
   name?: InputMaybe<Scalars['String']>;
-};
-
-export type CreateCharacterPayload = {
-  __typename?: 'CreateCharacterPayload';
-  character: Character;
+  raceId?: InputMaybe<Scalars['ID']>;
+  traits?: InputMaybe<Scalars['String']>;
 };
 
 export type LoginInput = {
@@ -110,15 +112,20 @@ export type LoginPayload = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createCharacter: CreateCharacterPayload;
+  characterCreate: Character;
+  characterUpdate: Character;
   login: LoginPayload;
-  signup: Scalars['Boolean'];
-  updateCharacterDetails: Character;
+  signup: SignupPayload;
 };
 
 
-export type MutationCreateCharacterArgs = {
-  input: CreateCharacterInput;
+export type MutationCharacterCreateArgs = {
+  input: CharacterCreateInput;
+};
+
+
+export type MutationCharacterUpdateArgs = {
+  input: CharacterUpdateInput;
 };
 
 
@@ -131,11 +138,6 @@ export type MutationSignupArgs = {
   input: SignupInput;
 };
 
-
-export type MutationUpdateCharacterDetailsArgs = {
-  input: UpdateCharacterDetailsInput;
-};
-
 export type Query = {
   __typename?: 'Query';
   abilities: Array<Ability>;
@@ -144,11 +146,11 @@ export type Query = {
   alignments: Array<Alignment>;
   character?: Maybe<Character>;
   characters: Array<Character>;
-  me?: Maybe<User>;
   race?: Maybe<Race>;
   races: Array<Race>;
   skill?: Maybe<Skill>;
   skills: Array<Skill>;
+  user?: Maybe<User>;
 };
 
 
@@ -195,6 +197,12 @@ export type SignupInput = {
   password: Scalars['String'];
 };
 
+export type SignupPayload = {
+  __typename?: 'SignupPayload';
+  token: Scalars['String'];
+  user: User;
+};
+
 export type Skill = {
   __typename?: 'Skill';
   ability: Ability;
@@ -209,32 +217,29 @@ export type Trait = {
   name: Scalars['String'];
 };
 
-export type UpdateCharacterDetailsInput = {
-  alignmentId?: InputMaybe<Scalars['ID']>;
-  background?: InputMaybe<Scalars['String']>;
-  bonds?: InputMaybe<Scalars['String']>;
-  flaws?: InputMaybe<Scalars['String']>;
-  id: Scalars['ID'];
-  ideals?: InputMaybe<Scalars['String']>;
-  /** range 1-20, default 1 */
-  level?: InputMaybe<Scalars['Int']>;
-  name?: InputMaybe<Scalars['String']>;
-  raceId?: InputMaybe<Scalars['ID']>;
-  traits?: InputMaybe<Scalars['String']>;
-};
-
 export type User = {
   __typename?: 'User';
   email: Scalars['String'];
   id: Scalars['ID'];
 };
 
-export type CreateCharacterMutationVariables = Exact<{
-  input: CreateCharacterInput;
+export type CharacterDetailsFragment = { __typename?: 'Character', id: string, name: string, level: number, experience: number, inspiration: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> };
+
+export type RaceDetailsFragment = { __typename?: 'Race', id: string, name: string, description?: string | null | undefined, age?: string | null | undefined, alignment?: string | null | undefined, size?: string | null | undefined, speed?: string | null | undefined, languages?: string | null | undefined, traits: Array<{ __typename?: 'Trait', id: string, name: string, description?: string | null | undefined }>, abilityScoreIncreases: Array<{ __typename?: 'AbilityScoreIncrease', id: string, increase: number, ability: { __typename?: 'Ability', id: string, name: string } }> };
+
+export type CharacterCreateMutationVariables = Exact<{
+  input: CharacterCreateInput;
 }>;
 
 
-export type CreateCharacterMutation = { __typename?: 'Mutation', createCharacter: { __typename?: 'CreateCharacterPayload', character: { __typename?: 'Character', id: string, name: string } } };
+export type CharacterCreateMutation = { __typename?: 'Mutation', characterCreate: { __typename?: 'Character', id: string, name: string } };
+
+export type CharacterUpdateMutationVariables = Exact<{
+  input: CharacterUpdateInput;
+}>;
+
+
+export type CharacterUpdateMutation = { __typename?: 'Mutation', characterUpdate: { __typename?: 'Character', id: string, name: string, level: number, experience: number, inspiration: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
@@ -248,14 +253,7 @@ export type SignupMutationVariables = Exact<{
 }>;
 
 
-export type SignupMutation = { __typename?: 'Mutation', signup: boolean };
-
-export type UpdateCharacterDetailsMutationVariables = Exact<{
-  input: UpdateCharacterDetailsInput;
-}>;
-
-
-export type UpdateCharacterDetailsMutation = { __typename?: 'Mutation', updateCharacterDetails: { __typename?: 'Character', id: string, name: string, level: number, experience: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } };
+export type SignupMutation = { __typename?: 'Mutation', signup: { __typename?: 'SignupPayload', token: string, user: { __typename?: 'User', id: string, email: string } } };
 
 export type AlignmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -274,60 +272,153 @@ export type CharactersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CharactersQuery = { __typename?: 'Query', characters: Array<{ __typename?: 'Character', id: string, name: string }> };
 
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, email: string } | null | undefined };
-
 export type RaceQueryVariables = Exact<{
   id: Scalars['ID'];
 }>;
 
 
-export type RaceQuery = { __typename?: 'Query', race?: { __typename?: 'Race', id: string, name: string, description?: string | null | undefined, age?: string | null | undefined, alignment?: string | null | undefined, size?: string | null | undefined, speed?: string | null | undefined, languages?: string | null | undefined, abilityScoreIncreases: Array<{ __typename?: 'AbilityScoreIncrease', id: string, increase: number, ability: { __typename?: 'Ability', id: string, name: string } }>, traits: Array<{ __typename?: 'Trait', id: string, name: string, description?: string | null | undefined }> } | null | undefined };
+export type RaceQuery = { __typename?: 'Query', race?: { __typename?: 'Race', id: string, name: string, description?: string | null | undefined, age?: string | null | undefined, alignment?: string | null | undefined, size?: string | null | undefined, speed?: string | null | undefined, languages?: string | null | undefined, traits: Array<{ __typename?: 'Trait', id: string, name: string, description?: string | null | undefined }>, abilityScoreIncreases: Array<{ __typename?: 'AbilityScoreIncrease', id: string, increase: number, ability: { __typename?: 'Ability', id: string, name: string } }> } | null | undefined };
 
 export type RacesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RacesQuery = { __typename?: 'Query', races: Array<{ __typename?: 'Race', id: string, name: string }> };
 
+export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
-export const CreateCharacterDocument = gql`
-    mutation CreateCharacter($input: CreateCharacterInput!) {
-  createCharacter(input: $input) {
-    character {
+
+export type UserQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, email: string } | null | undefined };
+
+export const CharacterDetailsFragmentDoc = gql`
+    fragment CharacterDetails on Character {
+  id
+  name
+  level
+  experience
+  inspiration
+  background
+  alignment {
+    id
+    name
+  }
+  traits
+  ideals
+  bonds
+  flaws
+  race {
+    id
+    name
+  }
+  abilities {
+    id
+    name
+    score
+    modifier
+  }
+  skills {
+    id
+    name
+    modifier
+    isProficient
+    ability {
       id
       name
     }
   }
 }
     `;
-export type CreateCharacterMutationFn = Apollo.MutationFunction<CreateCharacterMutation, CreateCharacterMutationVariables>;
+export const RaceDetailsFragmentDoc = gql`
+    fragment RaceDetails on Race {
+  id
+  name
+  description
+  age
+  alignment
+  size
+  speed
+  languages
+  traits {
+    id
+    name
+    description
+  }
+  abilityScoreIncreases {
+    id
+    ability {
+      id
+      name
+    }
+    increase
+  }
+}
+    `;
+export const CharacterCreateDocument = gql`
+    mutation CharacterCreate($input: CharacterCreateInput!) {
+  characterCreate(input: $input) {
+    id
+    name
+  }
+}
+    `;
+export type CharacterCreateMutationFn = Apollo.MutationFunction<CharacterCreateMutation, CharacterCreateMutationVariables>;
 
 /**
- * __useCreateCharacterMutation__
+ * __useCharacterCreateMutation__
  *
- * To run a mutation, you first call `useCreateCharacterMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateCharacterMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useCharacterCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCharacterCreateMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [createCharacterMutation, { data, loading, error }] = useCreateCharacterMutation({
+ * const [characterCreateMutation, { data, loading, error }] = useCharacterCreateMutation({
  *   variables: {
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useCreateCharacterMutation(baseOptions?: Apollo.MutationHookOptions<CreateCharacterMutation, CreateCharacterMutationVariables>) {
+export function useCharacterCreateMutation(baseOptions?: Apollo.MutationHookOptions<CharacterCreateMutation, CharacterCreateMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateCharacterMutation, CreateCharacterMutationVariables>(CreateCharacterDocument, options);
+        return Apollo.useMutation<CharacterCreateMutation, CharacterCreateMutationVariables>(CharacterCreateDocument, options);
       }
-export type CreateCharacterMutationHookResult = ReturnType<typeof useCreateCharacterMutation>;
-export type CreateCharacterMutationResult = Apollo.MutationResult<CreateCharacterMutation>;
-export type CreateCharacterMutationOptions = Apollo.BaseMutationOptions<CreateCharacterMutation, CreateCharacterMutationVariables>;
+export type CharacterCreateMutationHookResult = ReturnType<typeof useCharacterCreateMutation>;
+export type CharacterCreateMutationResult = Apollo.MutationResult<CharacterCreateMutation>;
+export type CharacterCreateMutationOptions = Apollo.BaseMutationOptions<CharacterCreateMutation, CharacterCreateMutationVariables>;
+export const CharacterUpdateDocument = gql`
+    mutation CharacterUpdate($input: CharacterUpdateInput!) {
+  characterUpdate(input: $input) {
+    ...CharacterDetails
+  }
+}
+    ${CharacterDetailsFragmentDoc}`;
+export type CharacterUpdateMutationFn = Apollo.MutationFunction<CharacterUpdateMutation, CharacterUpdateMutationVariables>;
+
+/**
+ * __useCharacterUpdateMutation__
+ *
+ * To run a mutation, you first call `useCharacterUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCharacterUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [characterUpdateMutation, { data, loading, error }] = useCharacterUpdateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCharacterUpdateMutation(baseOptions?: Apollo.MutationHookOptions<CharacterUpdateMutation, CharacterUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CharacterUpdateMutation, CharacterUpdateMutationVariables>(CharacterUpdateDocument, options);
+      }
+export type CharacterUpdateMutationHookResult = ReturnType<typeof useCharacterUpdateMutation>;
+export type CharacterUpdateMutationResult = Apollo.MutationResult<CharacterUpdateMutation>;
+export type CharacterUpdateMutationOptions = Apollo.BaseMutationOptions<CharacterUpdateMutation, CharacterUpdateMutationVariables>;
 export const LoginDocument = gql`
     mutation Login($input: LoginInput!) {
   login(input: $input) {
@@ -367,7 +458,13 @@ export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const SignupDocument = gql`
     mutation Signup($input: SignupInput!) {
-  signup(input: $input)
+  signup(input: $input) {
+    token
+    user {
+      id
+      email
+    }
+  }
 }
     `;
 export type SignupMutationFn = Apollo.MutationFunction<SignupMutation, SignupMutationVariables>;
@@ -396,71 +493,6 @@ export function useSignupMutation(baseOptions?: Apollo.MutationHookOptions<Signu
 export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = Apollo.MutationResult<SignupMutation>;
 export type SignupMutationOptions = Apollo.BaseMutationOptions<SignupMutation, SignupMutationVariables>;
-export const UpdateCharacterDetailsDocument = gql`
-    mutation UpdateCharacterDetails($input: UpdateCharacterDetailsInput!) {
-  updateCharacterDetails(input: $input) {
-    id
-    name
-    level
-    experience
-    background
-    alignment {
-      id
-      name
-    }
-    traits
-    ideals
-    bonds
-    flaws
-    race {
-      id
-      name
-    }
-    abilities {
-      id
-      name
-      score
-      modifier
-    }
-    skills {
-      id
-      name
-      modifier
-      isProficient
-      ability {
-        id
-        name
-      }
-    }
-  }
-}
-    `;
-export type UpdateCharacterDetailsMutationFn = Apollo.MutationFunction<UpdateCharacterDetailsMutation, UpdateCharacterDetailsMutationVariables>;
-
-/**
- * __useUpdateCharacterDetailsMutation__
- *
- * To run a mutation, you first call `useUpdateCharacterDetailsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateCharacterDetailsMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateCharacterDetailsMutation, { data, loading, error }] = useUpdateCharacterDetailsMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useUpdateCharacterDetailsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCharacterDetailsMutation, UpdateCharacterDetailsMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateCharacterDetailsMutation, UpdateCharacterDetailsMutationVariables>(UpdateCharacterDetailsDocument, options);
-      }
-export type UpdateCharacterDetailsMutationHookResult = ReturnType<typeof useUpdateCharacterDetailsMutation>;
-export type UpdateCharacterDetailsMutationResult = Apollo.MutationResult<UpdateCharacterDetailsMutation>;
-export type UpdateCharacterDetailsMutationOptions = Apollo.BaseMutationOptions<UpdateCharacterDetailsMutation, UpdateCharacterDetailsMutationVariables>;
 export const AlignmentsDocument = gql`
     query Alignments {
   alignments {
@@ -499,43 +531,10 @@ export type AlignmentsQueryResult = Apollo.QueryResult<AlignmentsQuery, Alignmen
 export const CharacterDocument = gql`
     query Character($id: ID!) {
   character(id: $id) {
-    id
-    name
-    level
-    experience
-    inspiration
-    background
-    alignment {
-      id
-      name
-    }
-    traits
-    ideals
-    bonds
-    flaws
-    race {
-      id
-      name
-    }
-    abilities {
-      id
-      name
-      score
-      modifier
-    }
-    skills {
-      id
-      name
-      modifier
-      isProficient
-      ability {
-        id
-        name
-      }
-    }
+    ...CharacterDetails
   }
 }
-    `;
+    ${CharacterDetailsFragmentDoc}`;
 
 /**
  * __useCharacterQuery__
@@ -599,68 +598,13 @@ export function useCharactersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type CharactersQueryHookResult = ReturnType<typeof useCharactersQuery>;
 export type CharactersLazyQueryHookResult = ReturnType<typeof useCharactersLazyQuery>;
 export type CharactersQueryResult = Apollo.QueryResult<CharactersQuery, CharactersQueryVariables>;
-export const MeDocument = gql`
-    query Me {
-  me {
-    id
-    email
-  }
-}
-    `;
-
-/**
- * __useMeQuery__
- *
- * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMeQuery({
- *   variables: {
- *   },
- * });
- */
-export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-      }
-export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
-        }
-export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
-export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
-export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
 export const RaceDocument = gql`
     query Race($id: ID!) {
   race(id: $id) {
-    id
-    name
-    description
-    age
-    alignment
-    size
-    speed
-    languages
-    abilityScoreIncreases {
-      id
-      ability {
-        id
-        name
-      }
-      increase
-    }
-    traits {
-      id
-      name
-      description
-    }
+    ...RaceDetails
   }
 }
-    `;
+    ${RaceDetailsFragmentDoc}`;
 
 /**
  * __useRaceQuery__
@@ -724,3 +668,38 @@ export function useRacesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Race
 export type RacesQueryHookResult = ReturnType<typeof useRacesQuery>;
 export type RacesLazyQueryHookResult = ReturnType<typeof useRacesLazyQuery>;
 export type RacesQueryResult = Apollo.QueryResult<RacesQuery, RacesQueryVariables>;
+export const UserDocument = gql`
+    query User {
+  user {
+    id
+    email
+  }
+}
+    `;
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserQuery(baseOptions?: Apollo.QueryHookOptions<UserQuery, UserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+      }
+export function useUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserQuery, UserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserQuery, UserQueryVariables>(UserDocument, options);
+        }
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserQueryResult = Apollo.QueryResult<UserQuery, UserQueryVariables>;

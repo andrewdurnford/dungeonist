@@ -1,11 +1,19 @@
 import { createContext, useContext, useMemo, useState } from "react";
-import { LoginMutation, User } from "../utils/graphql";
+import { User } from "../utils/graphql";
+
+interface Login {
+  token: string;
+  user: {
+    id: string;
+    email: string;
+  };
+}
 
 interface AuthContextType {
   user?: User | null;
   token?: string | null;
   isLoggedIn: boolean;
-  login: (data: LoginMutation["login"]) => void;
+  login: (data: Login) => void;
   logout: () => void;
 }
 
@@ -19,7 +27,7 @@ export function AuthProvider({ children }: Props) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
 
-  function login({ token, user }: LoginMutation["login"]) {
+  function login({ token, user }: Login) {
     setUser(user);
     setToken(token);
     localStorage.setItem("token", token);

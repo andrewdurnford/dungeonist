@@ -4,7 +4,7 @@ import { IResolvers } from "../utils/graphql";
 
 export const resolvers: IResolvers = {
   Query: {
-    me: async (_, {}, ctx) => {
+    user: async (_, {}, ctx) => {
       return ctx.user || null;
     },
   },
@@ -26,7 +26,9 @@ export const resolvers: IResolvers = {
         },
       });
 
-      return true;
+      const token = jwt.sign({ sub: user.id }, "secret");
+
+      return { token, user };
     },
     login: async (_, { input: { email, password } }, ctx) => {
       const user = await ctx.prisma.user.findUnique({

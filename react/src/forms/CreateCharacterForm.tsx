@@ -7,17 +7,10 @@ import Container from "../components/Container";
 
 const schema = Yup.object().shape({
   name: Yup.string(),
-  level: Yup.number()
-    .typeError("Level must be between 1 and 20")
-    .integer("Level must be between 1 and 20")
-    .strict()
-    .min(1, "Level must be between 1 and 20")
-    .max(20, "Level must be between 1 and 20"),
 });
 
 type CreateCharacterInput = {
   name?: string;
-  level?: number;
 };
 
 interface CreateCharacterFormProps {
@@ -32,9 +25,6 @@ function CreateCharacterForm({ loading, onSubmit }: CreateCharacterFormProps) {
     formState: { errors },
   } = useForm<CreateCharacterInput>({
     mode: "onTouched",
-    defaultValues: {
-      level: 1,
-    },
     resolver: yupResolver(schema),
   });
 
@@ -47,12 +37,6 @@ function CreateCharacterForm({ loading, onSubmit }: CreateCharacterFormProps) {
           placeholder="Untitled"
           error={errors.name?.message}
           {...register("name")}
-        />
-        <Input
-          type="number"
-          label="Level"
-          error={errors.level?.message}
-          {...register("level", { valueAsNumber: true })}
         />
         <Button type="submit" loading={loading}>
           Create

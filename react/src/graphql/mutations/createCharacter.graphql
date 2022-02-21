@@ -1,8 +1,0 @@
-mutation CreateCharacter($input: CreateCharacterInput!) {
-  createCharacter(input: $input) {
-    character {
-      id
-      name
-    }
-  }
-}

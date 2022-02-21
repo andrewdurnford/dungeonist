@@ -8,7 +8,7 @@ import Text from "../components/Text";
 import CreateCharacterForm from "../forms/CreateCharacterForm";
 import {
   useCharactersQuery,
-  useCreateCharacterMutation,
+  useCharacterCreateMutation,
 } from "../utils/graphql";
 
 const List = styled.ul`
@@ -18,14 +18,14 @@ const List = styled.ul`
 function Characters() {
   const { data, loading, error } = useCharactersQuery();
   const [createCharacter, { loading: createLoading, error: createError }] =
-    useCreateCharacterMutation({
+    useCharacterCreateMutation({
       onError: (err) => console.error(err),
       update(cache, { data }) {
         cache.modify({
           fields: {
             characters(existingCharacters = []) {
               const newCharacterRef = cache.writeFragment({
-                data: data?.createCharacter.character,
+                data: data?.characterCreate,
                 fragment: gql`
                   fragment NewCharacter on Character {
                     id
@@ -56,10 +56,10 @@ function Characters() {
       {!import.meta.env.PROD && (
         <CreateCharacterForm
           loading={createLoading}
-          onSubmit={({ name, level }) =>
+          onSubmit={({ name }) =>
             createCharacter({
               variables: {
-                input: { name: name || undefined, level: level || undefined },
+                input: { name: name || undefined },
               },
             })
           }

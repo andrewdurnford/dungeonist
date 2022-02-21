@@ -19,7 +19,7 @@ function Login() {
     update(cache, { data }) {
       cache.modify({
         fields: {
-          me() {
+          user() {
             return data?.login.user;
           },
         },

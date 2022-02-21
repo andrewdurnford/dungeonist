@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import useAuth from "../hooks/useAuth";
-import { useMeQuery } from "../utils/graphql";
 import Button from "./Button";
 
 const Nav = styled.nav`
@@ -74,9 +73,6 @@ const NavButton = styled(Button).attrs({ variant: "secondary" })`
 function Navbar() {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
-  const { data, loading } = useMeQuery();
-
-  if (loading) return <p>Loading...</p>;
 
   return (
     <Nav>
