@@ -175,6 +175,9 @@ import{j as D,s as _,L as v,c as q,a as S,u as I,o as j,r as x,g as m,b as R,d a
 
   header {
     padding: 1rem 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
   }
 
   main {
