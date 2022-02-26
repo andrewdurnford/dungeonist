@@ -30,11 +30,10 @@ import { getResolvers } from "./utils/resolvers";
         const header = req.headers.authorization;
         const token = header.replace("Bearer ", "");
         const payload = jwt.verify(token, "secret") as any;
-        const id = payload.sub;
+        const userId = payload.sub;
 
-        const user = await prisma.user.findUnique({ where: { id } });
-
-        return { prisma, user };
+        // TODO: Use a lookup table of userIds to verify user exists
+        return { prisma, userId };
       } catch {
         return { prisma };
       }

@@ -4,22 +4,20 @@ import { IResolvers } from "../utils/graphql";
 export const resolvers: IResolvers = {
   Query: {
     character: async (_, { id }, ctx) => {
-      if (!ctx.user) throw new Error("Unauthenticated");
-
-      const userId = ctx.user.id;
+      if (!ctx.userId) throw new Error("Unauthenticated");
 
       const character = await ctx.prisma.character.findUnique({
         where: { id },
       });
 
-      if (character?.userId !== userId) return null;
+      if (character?.userId !== ctx.userId) return null;
 
       return character;
     },
     characters: async (_, {}, ctx) => {
-      if (!ctx.user) throw new Error("Unauthenticated");
+      if (!ctx.userId) throw new Error("Unauthenticated");
 
-      const userId = ctx.user.id;
+      const { userId } = ctx;
 
       return await ctx.prisma.character.findMany({
         where: { userId },
@@ -28,9 +26,9 @@ export const resolvers: IResolvers = {
   },
   Mutation: {
     characterCreate: async (_, { input }, ctx) => {
-      if (!ctx.user) throw new Error("Unauthenticated");
+      if (!ctx.userId) throw new Error("Unauthenticated");
 
-      const userId = ctx.user?.id;
+      const { userId } = ctx;
 
       const abilities = await ctx.prisma.ability.findMany();
       const skills = await ctx.prisma.skill.findMany();
@@ -57,9 +55,9 @@ export const resolvers: IResolvers = {
       return character;
     },
     characterUpdate: async (_, { input }, ctx) => {
-      if (!ctx.user) throw new Error("Unauthenticated");
+      if (!ctx.userId) throw new Error("Unauthenticated");
 
-      const userId = ctx.user?.id;
+      const { userId } = ctx;
 
       const {
         id,

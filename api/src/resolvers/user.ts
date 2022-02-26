@@ -5,7 +5,17 @@ import { IResolvers } from "../utils/graphql";
 export const resolvers: IResolvers = {
   Query: {
     user: async (_, {}, ctx) => {
-      return ctx.user || null;
+      if (!ctx.userId) throw new Error("Unauthenticated");
+
+      const user = await ctx.prisma.user.findUnique({
+        where: {
+          id: ctx.userId,
+        },
+      });
+
+      if (!user) throw new Error("Unauthenticated");
+
+      return user || null;
     },
   },
 
