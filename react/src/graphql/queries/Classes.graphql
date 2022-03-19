@@ -1,0 +1,6 @@
+query Classes {
+  classes {
+    id
+    name
+  }
+}

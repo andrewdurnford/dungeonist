@@ -12,6 +12,8 @@ type Query {
   alignments: [Alignment!]!
   character(id: ID!): Character
   characters: [Character!]!
+  classes: [Class!]!
+  class(id: ID!): Class
   races: [Race!]!
   race(id: ID!): Race
   skill(id: ID!): Skill
@@ -103,6 +105,7 @@ type Character {
   bonds: String
   flaws: String
   race: CharacterRace
+  classes: [CharacterClass!]!
   abilities: [CharacterAbility!]!
   skills: [CharacterSkill!]!
 }
@@ -113,6 +116,15 @@ type CharacterAbility {
   skills: [CharacterSkill!]!
   score: Int!
   modifier: Int!
+}
+
+type CharacterClass {
+  id: ID!
+  name: String!
+  """
+  Range of 1 - 20
+  """
+  level: String!
 }
 
 type CharacterRace {
@@ -126,6 +138,11 @@ type CharacterSkill {
   ability: CharacterAbility!
   modifier: Int!
   isProficient: Boolean!
+}
+
+type Class {
+  id: ID!
+  name: String!
 }
 
 type Race {

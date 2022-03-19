@@ -1,0 +1,6 @@
+query Class($id: ID!) {
+  class(id: $id) {
+    id
+    name
+  }
+}

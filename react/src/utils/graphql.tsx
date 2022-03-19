@@ -43,6 +43,7 @@ export type Character = {
   alignment?: Maybe<Alignment>;
   background?: Maybe<Scalars['String']>;
   bonds?: Maybe<Scalars['String']>;
+  classes: Array<CharacterClass>;
   /** Range of 0 - 355000 */
   experience: Scalars['Int'];
   flaws?: Maybe<Scalars['String']>;
@@ -64,6 +65,14 @@ export type CharacterAbility = {
   name: Scalars['String'];
   score: Scalars['Int'];
   skills: Array<CharacterSkill>;
+};
+
+export type CharacterClass = {
+  __typename?: 'CharacterClass';
+  id: Scalars['ID'];
+  /** Range of 1 - 20 */
+  level: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type CharacterCreateInput = {
@@ -97,6 +106,12 @@ export type CharacterUpdateInput = {
   name?: InputMaybe<Scalars['String']>;
   raceId?: InputMaybe<Scalars['ID']>;
   traits?: InputMaybe<Scalars['String']>;
+};
+
+export type Class = {
+  __typename?: 'Class';
+  id: Scalars['ID'];
+  name: Scalars['String'];
 };
 
 export type LoginInput = {
@@ -146,6 +161,8 @@ export type Query = {
   alignments: Array<Alignment>;
   character?: Maybe<Character>;
   characters: Array<Character>;
+  class?: Maybe<Class>;
+  classes: Array<Class>;
   race?: Maybe<Race>;
   races: Array<Race>;
   skill?: Maybe<Skill>;
@@ -165,6 +182,11 @@ export type QueryAlignmentArgs = {
 
 
 export type QueryCharacterArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type QueryClassArgs = {
   id: Scalars['ID'];
 };
 
@@ -223,7 +245,7 @@ export type User = {
   id: Scalars['ID'];
 };
 
-export type CharacterDetailsFragment = { __typename?: 'Character', id: string, name: string, level: number, experience: number, inspiration: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> };
+export type CharacterDetailsFragment = { __typename?: 'Character', id: string, name: string, level: number, experience: number, inspiration: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, classes: Array<{ __typename?: 'CharacterClass', id: string, name: string }>, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> };
 
 export type RaceDetailsFragment = { __typename?: 'Race', id: string, name: string, description?: string | null | undefined, age?: string | null | undefined, alignment?: string | null | undefined, size?: string | null | undefined, speed?: string | null | undefined, languages?: string | null | undefined, traits: Array<{ __typename?: 'Trait', id: string, name: string, description?: string | null | undefined }>, abilityScoreIncreases: Array<{ __typename?: 'AbilityScoreIncrease', id: string, increase: number, ability: { __typename?: 'Ability', id: string, name: string } }> };
 
@@ -239,7 +261,7 @@ export type CharacterUpdateMutationVariables = Exact<{
 }>;
 
 
-export type CharacterUpdateMutation = { __typename?: 'Mutation', characterUpdate: { __typename?: 'Character', id: string, name: string, level: number, experience: number, inspiration: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } };
+export type CharacterUpdateMutation = { __typename?: 'Mutation', characterUpdate: { __typename?: 'Character', id: string, name: string, level: number, experience: number, inspiration: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, classes: Array<{ __typename?: 'CharacterClass', id: string, name: string }>, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } };
 
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
@@ -265,12 +287,24 @@ export type CharacterQueryVariables = Exact<{
 }>;
 
 
-export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id: string, name: string, level: number, experience: number, inspiration: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } | null | undefined };
+export type CharacterQuery = { __typename?: 'Query', character?: { __typename?: 'Character', id: string, name: string, level: number, experience: number, inspiration: number, background?: string | null | undefined, traits?: string | null | undefined, ideals?: string | null | undefined, bonds?: string | null | undefined, flaws?: string | null | undefined, alignment?: { __typename?: 'Alignment', id: string, name: string } | null | undefined, race?: { __typename?: 'CharacterRace', id: string, name: string } | null | undefined, classes: Array<{ __typename?: 'CharacterClass', id: string, name: string }>, abilities: Array<{ __typename?: 'CharacterAbility', id: string, name: string, score: number, modifier: number }>, skills: Array<{ __typename?: 'CharacterSkill', id: string, name: string, modifier: number, isProficient: boolean, ability: { __typename?: 'CharacterAbility', id: string, name: string } }> } | null | undefined };
 
 export type CharactersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CharactersQuery = { __typename?: 'Query', characters: Array<{ __typename?: 'Character', id: string, name: string }> };
+
+export type ClassQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ClassQuery = { __typename?: 'Query', class?: { __typename?: 'Class', id: string, name: string } | null | undefined };
+
+export type ClassesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ClassesQuery = { __typename?: 'Query', classes: Array<{ __typename?: 'Class', id: string, name: string }> };
 
 export type RaceQueryVariables = Exact<{
   id: Scalars['ID'];
@@ -306,6 +340,10 @@ export const CharacterDetailsFragmentDoc = gql`
   bonds
   flaws
   race {
+    id
+    name
+  }
+  classes {
     id
     name
   }
@@ -598,6 +636,77 @@ export function useCharactersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type CharactersQueryHookResult = ReturnType<typeof useCharactersQuery>;
 export type CharactersLazyQueryHookResult = ReturnType<typeof useCharactersLazyQuery>;
 export type CharactersQueryResult = Apollo.QueryResult<CharactersQuery, CharactersQueryVariables>;
+export const ClassDocument = gql`
+    query Class($id: ID!) {
+  class(id: $id) {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useClassQuery__
+ *
+ * To run a query within a React component, call `useClassQuery` and pass it any options that fit your needs.
+ * When your component renders, `useClassQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useClassQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useClassQuery(baseOptions: Apollo.QueryHookOptions<ClassQuery, ClassQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ClassQuery, ClassQueryVariables>(ClassDocument, options);
+      }
+export function useClassLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ClassQuery, ClassQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ClassQuery, ClassQueryVariables>(ClassDocument, options);
+        }
+export type ClassQueryHookResult = ReturnType<typeof useClassQuery>;
+export type ClassLazyQueryHookResult = ReturnType<typeof useClassLazyQuery>;
+export type ClassQueryResult = Apollo.QueryResult<ClassQuery, ClassQueryVariables>;
+export const ClassesDocument = gql`
+    query Classes {
+  classes {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useClassesQuery__
+ *
+ * To run a query within a React component, call `useClassesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useClassesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useClassesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useClassesQuery(baseOptions?: Apollo.QueryHookOptions<ClassesQuery, ClassesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ClassesQuery, ClassesQueryVariables>(ClassesDocument, options);
+      }
+export function useClassesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ClassesQuery, ClassesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ClassesQuery, ClassesQueryVariables>(ClassesDocument, options);
+        }
+export type ClassesQueryHookResult = ReturnType<typeof useClassesQuery>;
+export type ClassesLazyQueryHookResult = ReturnType<typeof useClassesLazyQuery>;
+export type ClassesQueryResult = Apollo.QueryResult<ClassesQuery, ClassesQueryVariables>;
 export const RaceDocument = gql`
     query Race($id: ID!) {
   race(id: $id) {

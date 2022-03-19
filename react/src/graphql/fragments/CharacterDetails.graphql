@@ -17,6 +17,10 @@ fragment CharacterDetails on Character {
     id
     name
   }
+  classes {
+    id
+    name
+  }
   abilities {
     id
     name

@@ -264,6 +264,7 @@ export const handlers = [
             },
             background: "Jedi Master",
             race: { id: "4", name: "Human", __typename: "CharacterRace" },
+            classes: [{ id: "6", name: "Monk", __typename: "CharacterClass" }],
             traits: "",
             ideals: "",
             bonds: "",

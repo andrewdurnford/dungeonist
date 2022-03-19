@@ -1,30 +1,34 @@
-import { useNavigate } from "react-router-dom";
-import Container from "../components/Container";
-import Notification from "../components/Notification";
-import LoginForm from "../forms/LoginForm";
-import useAuth from "../hooks/useAuth";
-import { useLoginMutation } from "../utils/graphql";
+import { useNavigate } from 'react-router-dom'
+import Notification from '../components/Notification'
+import LoginForm from '../forms/LoginForm'
+import useAuth from '../hooks/useAuth'
+import { useLoginMutation } from '../utils/graphql'
+import * as React from 'react'
 
 function Login() {
-  const navigate = useNavigate();
-  const { login } = useAuth();
+  const navigate = useNavigate()
+  const { login } = useAuth()
 
   const [userLogin, { error }] = useLoginMutation({
-    onError: (err) => console.error(err),
+    onError: err => console.error(err),
     onCompleted: ({ login: data }) => {
-      login(data);
-      navigate("/");
+      login(data)
+      navigate('/')
     },
     update(cache, { data }) {
       cache.modify({
         fields: {
           user() {
-            return data?.login.user;
+            return data?.login.user
           },
         },
-      });
+      })
     },
-  });
+  })
+
+  if (!login) {
+    console.error(`${login}`)
+  }
 
   return (
     <main>
@@ -36,7 +40,7 @@ function Login() {
         }
       />
     </main>
-  );
+  )
 }
 
-export default Login;
+export default Login

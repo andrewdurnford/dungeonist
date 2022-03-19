@@ -10,8 +10,10 @@ generates:
         Alignment: .prisma/client#Alignment
         Character: .prisma/client#Character
         CharacterAbility: .prisma/client#CharacterAbility
+        CharacterClass: .prisma/client#CharacterClass
         CharacterRace: .prisma/client#CharacterRace
         CharacterSkill: .prisma/client#CharacterSkill
+        Class: .prisma/client#Class
         Race: .prisma/client#Race
         Trait: .prisma/client#Trait
         Skill: .prisma/client#Skill

@@ -32,7 +32,7 @@ export const resolvers: IResolvers = {
         where: {
           id: obj.abilityId,
         },
-      })!;
+      });
 
       if (!ability) throw Error("Not Found");
 
