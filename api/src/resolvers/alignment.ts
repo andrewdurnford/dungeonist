@@ -6,7 +6,7 @@ export const resolvers: IResolvers = {
       return await ctx.prisma.alignment.findUnique({ where: { id } });
     },
     alignments: async (_, {}, ctx) => {
-      return await ctx.prisma.alignment.findMany({ orderBy: { id: "asc" } });
+      return await ctx.prisma.alignment.findMany();
     },
   },
 };

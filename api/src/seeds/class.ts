@@ -54,14 +54,12 @@ const classesInput: Prisma.ClassCreateInput[] = [
 ];
 
 async function main() {
-  await Promise.all(
-    classesInput.map(async (cls) => {
-      const result = await prisma.class.create({
-        data: cls,
-      });
-      console.log(`Created { class: ${result.name} }`);
-    })
-  );
+  for (const cls of classesInput) {
+    const result = await prisma.class.create({
+      data: cls,
+    });
+    console.log(`Created { class: ${result.name} }`);
+  }
 }
 
 export { main };

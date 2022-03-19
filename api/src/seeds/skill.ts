@@ -96,14 +96,12 @@ const skillsInput: Prisma.SkillCreateInput[] = [
 ];
 
 async function main() {
-  await Promise.all(
-    skillsInput.map(async (skill) => {
-      const result = await prisma.skill.create({
-        data: skill,
-      });
-      console.log(`Created { skill: ${result.name} }`);
-    })
-  );
+  for (const skill of skillsInput) {
+    const result = await prisma.skill.create({
+      data: skill,
+    });
+    console.log(`Created { skill: ${result.name} }`);
+  }
 }
 
 export { main };

@@ -432,14 +432,12 @@ const racesInput: Prisma.RaceCreateInput[] = [
 ];
 
 async function main() {
-  await Promise.all(
-    racesInput.map(async (race) => {
-      const result = await prisma.race.create({
-        data: race,
-      });
-      console.log(`Created { race: ${result.name} }`);
-    })
-  );
+  for (const race of racesInput) {
+    const result = await prisma.race.create({
+      data: race,
+    });
+    console.log(`Created { race: ${result.name} }`);
+  }
 }
 
 export { main };

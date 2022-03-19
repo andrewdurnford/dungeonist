@@ -51,14 +51,12 @@ const alignmentsInput: Prisma.AlignmentCreateInput[] = [
 ];
 
 async function main() {
-  await Promise.all(
-    alignmentsInput.map(async (alignment) => {
-      const result = await prisma.alignment.create({
-        data: alignment,
-      });
-      console.log(`Created { alignment: ${result.name} }`);
-    })
-  );
+  for (const alignment of alignmentsInput) {
+    const result = await prisma.alignment.create({
+      data: alignment,
+    });
+    console.log(`Created { alignment: ${result.name} }`);
+  }
 }
 
 export { main };

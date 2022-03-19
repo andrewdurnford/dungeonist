@@ -6,7 +6,7 @@ export const resolvers: IResolvers = {
       return await ctx.prisma.ability.findUnique({ where: { id } });
     },
     abilities: async (_, {}, ctx) => {
-      return await ctx.prisma.ability.findMany({ orderBy: { id: "asc" } });
+      return await ctx.prisma.ability.findMany();
     },
   },
   Ability: {
@@ -14,7 +14,6 @@ export const resolvers: IResolvers = {
       const abilityId = id;
       return await ctx.prisma.skill.findMany({
         where: { abilityId },
-        orderBy: { name: "asc" },
       });
     },
   },

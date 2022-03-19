@@ -6,12 +6,11 @@ export const resolvers: IResolvers = {
       return await ctx.prisma.race.findUnique({ where: { id } });
     },
     races: async (_, {}, ctx) => {
-      return await ctx.prisma.race.findMany({ orderBy: { id: "asc" } });
+      return await ctx.prisma.race.findMany();
     },
   },
   Race: {
     abilityScoreIncreases: async (obj, {}, ctx) => {
-      // TODO: sort by abilityId?
       return await ctx.prisma.abilityScoreIncrease.findMany({
         where: {
           raceId: obj.id,

@@ -6,7 +6,6 @@ export const resolvers: IResolvers = {
       const characterId = id;
       return await ctx.prisma.characterAbility.findMany({
         where: { characterId },
-        orderBy: { abilityId: "asc" },
       });
     },
   },
@@ -29,15 +28,7 @@ export const resolvers: IResolvers = {
         where: { characterId, skillId: { in: skillIds } },
       });
 
-      // TODO: refactor to sort by name in sql query
-      return characterSkills.sort((a, b) => {
-        const skillA = skills.find((x) => x.id === a.skillId)?.name;
-        const skillB = skills.find((x) => x.id === b.skillId)?.name;
-
-        if (!skillA || !skillB) return 0;
-
-        return skillA > skillB ? 1 : -1;
-      });
+      return characterSkills;
     },
   },
 };

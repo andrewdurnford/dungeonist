@@ -30,14 +30,12 @@ const abilitiesInput: Prisma.AbilityCreateInput[] = [
 ];
 
 async function main() {
-  await Promise.all(
-    abilitiesInput.map(async (ability) => {
-      const result = await prisma.ability.create({
-        data: ability,
-      });
-      console.log(`Created { ability: ${result.name} }`);
-    })
-  );
+  for (const ability of abilitiesInput) {
+    const result = await prisma.ability.create({
+      data: ability,
+    });
+    console.log(`Created { ability: ${result.name} }`);
+  }
 }
 
 export { main };
