@@ -3,94 +3,166 @@ import { prisma } from "../utils/seed";
 
 const input: Prisma.SkillCreateInput[] = [
   {
-    id: "1",
     name: "Acrobatics",
-    ability: { connect: { id: "2" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Dexterity" },
+        create: { name: "Dexterity" },
+      },
+    },
   },
   {
-    id: "2",
     name: "Athletics",
-    ability: { connect: { id: "1" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Strength" },
+        create: { name: "Strength" },
+      },
+    },
   },
   {
-    id: "3",
     name: "Animal Handling",
-    ability: { connect: { id: "5" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Wisdom" },
+        create: { name: "Wisdom" },
+      },
+    },
   },
   {
-    id: "4",
     name: "Arcana",
-    ability: { connect: { id: "4" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Intelligence" },
+        create: { name: "Intelligence" },
+      },
+    },
   },
   {
-    id: "5",
     name: "Deception",
-    ability: { connect: { id: "6" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Charisma" },
+        create: { name: "Charisma" },
+      },
+    },
   },
   {
-    id: "6",
     name: "History",
-    ability: { connect: { id: "4" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Intelligence" },
+        create: { name: "Intelligence" },
+      },
+    },
   },
   {
-    id: "7",
     name: "Insight",
-    ability: { connect: { id: "5" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Wisdom" },
+        create: { name: "Wisdom" },
+      },
+    },
   },
   {
-    id: "8",
     name: "Intimidation",
-    ability: { connect: { id: "6" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Charisma" },
+        create: { name: "Charisma" },
+      },
+    },
   },
   {
-    id: "9",
     name: "Investigation",
-    ability: { connect: { id: "4" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Intelligence" },
+        create: { name: "Intelligence" },
+      },
+    },
   },
   {
-    id: "10",
     name: "Medicine",
-    ability: { connect: { id: "5" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Wisdom" },
+        create: { name: "Wisdom" },
+      },
+    },
   },
   {
-    id: "11",
     name: "Nature",
-    ability: { connect: { id: "4" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Intelligence" },
+        create: { name: "Intelligence" },
+      },
+    },
   },
   {
-    id: "12",
     name: "Perception",
-    ability: { connect: { id: "5" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Wisdom" },
+        create: { name: "Wisdom" },
+      },
+    },
   },
   {
-    id: "13",
     name: "Performance",
-    ability: { connect: { id: "6" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Charisma" },
+        create: { name: "Charisma" },
+      },
+    },
   },
   {
-    id: "14",
     name: "Persuasion",
-    ability: { connect: { id: "6" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Charisma" },
+        create: { name: "Charisma" },
+      },
+    },
   },
   {
-    id: "15",
     name: "Religion",
-    ability: { connect: { id: "4" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Intelligence" },
+        create: { name: "Intelligence" },
+      },
+    },
   },
   {
-    id: "16",
     name: "Sleight of Hand",
-    ability: { connect: { id: "2" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Dexterity" },
+        create: { name: "Dexterity" },
+      },
+    },
   },
   {
-    id: "17",
     name: "Stealth",
-    ability: { connect: { id: "2" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Dexterity" },
+        create: { name: "Dexterity" },
+      },
+    },
   },
   {
-    id: "18",
     name: "Survival",
-    ability: { connect: { id: "5" } },
+    ability: {
+      connectOrCreate: {
+        where: { name: "Wisdom" },
+        create: { name: "Wisdom" },
+      },
+    },
   },
 ];
 

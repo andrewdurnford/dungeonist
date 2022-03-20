@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Ability {
-  id     String  @id
-  name   String
+  id     String  @id @default(uuid())
+  name   String  @unique
   skills Skill[]
 
   // Relations
@@ -32,8 +32,8 @@ model AbilityScoreIncrease {
 }
 
 model Alignment {
-  id          String      @id
-  name        String
+  id          String      @id @default(uuid())
+  name        String      @unique
   description String
   characters  Character[]
 }
@@ -108,13 +108,13 @@ model CharacterSkill {
 }
 
 model Class {
-  id               String           @id
+  id               String           @id @default(uuid())
   name             String
   characterClasses CharacterClass[]
 }
 
 model Race {
-  id          String  @id
+  id          String  @id @default(uuid())
   name        String
   description String?
 
@@ -135,8 +135,8 @@ model Race {
 }
 
 model Skill {
-  id              String           @id
-  name            String
+  id              String           @id @default(uuid())
+  name            String           @unique
   abilityId       String
   ability         Ability          @relation(fields: [abilityId], references: [id])
   characterSkills CharacterSkill[]

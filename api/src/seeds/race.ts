@@ -3,7 +3,6 @@ import { prisma } from "../utils/seed";
 
 const input: Prisma.RaceCreateInput[] = [
   {
-    id: "1",
     name: "Dwarf",
     description:
       "Your dwarf character has an assortment of inborn abilities, part and parcel of dwarven nature.",
@@ -16,15 +15,17 @@ const input: Prisma.RaceCreateInput[] = [
     languages:
       "You can speak, read, and write Common and Dwarvish. Dwarvish is full of hard consonants and guttural sounds, and those characteristics spill over into whatever other language a dwarf might speak.",
     abilityScoreIncreases: {
-      createMany: {
-        data: [
-          // Constitution increases by 2
-          {
-            abilityId: "3",
-            increase: 2,
+      create: [
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Constitution" },
+              create: { name: "Constitution" },
+            },
           },
-        ],
-      },
+          increase: 2,
+        },
+      ],
     },
     traits: {
       createMany: {
@@ -58,7 +59,6 @@ const input: Prisma.RaceCreateInput[] = [
     },
   },
   {
-    id: "2",
     name: "Elf",
     description:
       "Your elf character has a variety of natural abilities, the result of thousands of years of elven refinement.",
@@ -70,15 +70,17 @@ const input: Prisma.RaceCreateInput[] = [
     languages:
       "You can speak, read, and write Common and Elvish. Elvish is fluid, with subtle intonations and intricate grammar. Elven literature is rich and varied, and their songs and poems are famous among other races. Many bards learn their language so they can add Elvish ballads to their repertoires.",
     abilityScoreIncreases: {
-      createMany: {
-        data: [
-          // Constitution increases by 2
-          {
-            abilityId: "2",
-            increase: 2,
+      create: [
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Constitution" },
+              create: { name: "Constitution" },
+            },
           },
-        ],
-      },
+          increase: 2,
+        },
+      ],
     },
     traits: {
       createMany: {
@@ -107,7 +109,6 @@ const input: Prisma.RaceCreateInput[] = [
     },
   },
   {
-    id: "3",
     name: "Halfling",
     description:
       "Your halfling character has a number of traits in common with all other halflings.",
@@ -119,15 +120,17 @@ const input: Prisma.RaceCreateInput[] = [
     languages:
       "You can speak, read, and write Common and Halfling. The Halfling language isn't secret, but halflings are ",
     abilityScoreIncreases: {
-      createMany: {
-        data: [
-          // Dexterity increases by 2
-          {
-            abilityId: "2",
-            increase: 2,
+      create: [
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Dexterity" },
+              create: { name: "Dexterity" },
+            },
           },
-        ],
-      },
+          increase: 2,
+        },
+      ],
     },
     traits: {
       createMany: {
@@ -152,7 +155,6 @@ const input: Prisma.RaceCreateInput[] = [
     },
   },
   {
-    id: "4",
     name: "Human",
     description:
       "It's hard to make generalizations about humans, but your human character has these traits.",
@@ -164,39 +166,65 @@ const input: Prisma.RaceCreateInput[] = [
     languages:
       "You can speak, read, and write Common and one extra language of your choice. Humans typically learn the languages of other peoples they deal with, including obscure dialects. They are fond of sprinkling their speech with words borrowed from other tongues: Orc curses, Elvish musical expressions, Dwarvish military phrases, and so on.",
     abilityScoreIncreases: {
-      createMany: {
-        data: [
-          // All abilities increase by 1
-          {
-            abilityId: "1",
-            increase: 1,
+      create: [
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Strength" },
+              create: { name: "Strength" },
+            },
           },
-          {
-            abilityId: "2",
-            increase: 1,
+          increase: 1,
+        },
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Dexterity" },
+              create: { name: "Dexterity" },
+            },
           },
-          {
-            abilityId: "3",
-            increase: 1,
+          increase: 1,
+        },
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Constitution" },
+              create: { name: "Constitution" },
+            },
           },
-          {
-            abilityId: "4",
-            increase: 1,
+          increase: 1,
+        },
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Intelligence" },
+              create: { name: "Intelligence" },
+            },
           },
-          {
-            abilityId: "5",
-            increase: 1,
+          increase: 1,
+        },
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Wisdom" },
+              create: { name: "Wisdom" },
+            },
           },
-          {
-            abilityId: "6",
-            increase: 1,
+          increase: 1,
+        },
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Charisma" },
+              create: { name: "Charisma" },
+            },
           },
-        ],
-      },
+          increase: 1,
+        },
+      ],
     },
   },
   {
-    id: "5",
     name: "Dragonborn",
     description:
       "Your draconic heritage manifests in a variety of traits you share with other dragonborn.",
@@ -208,20 +236,26 @@ const input: Prisma.RaceCreateInput[] = [
     languages:
       "You can speak, read, and write Common and Draconic. Draconic is thought to be one of the oldest languages and is often used in the study of magic. The language sounds harsh to most other creatures and includes numerous hard consonants and sibilants.",
     abilityScoreIncreases: {
-      createMany: {
-        data: [
-          // Strength increases by 2
-          {
-            abilityId: "1",
-            increase: 2,
+      create: [
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Strength" },
+              create: { name: "Strength" },
+            },
           },
-          // Charisma increases by 1
-          {
-            abilityId: "6",
-            increase: 1,
+          increase: 2,
+        },
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Charisma" },
+              create: { name: "1" },
+            },
           },
-        ],
-      },
+          increase: 1,
+        },
+      ],
     },
     traits: {
       createMany: {
@@ -242,7 +276,6 @@ const input: Prisma.RaceCreateInput[] = [
     },
   },
   {
-    id: "6",
     name: "Gnome",
     description:
       "Your gnome character has certain characteristics in common with all other gnomes.",
@@ -254,15 +287,17 @@ const input: Prisma.RaceCreateInput[] = [
     languages:
       "You can speak, read, and write Common and Gnomish. The Gnomish language, which uses the Dwarvish script, is renowned for its technical treatises and its catalogs of knowledge about the natural world.",
     abilityScoreIncreases: {
-      createMany: {
-        data: [
-          // Intelligence increases by 1
-          {
-            abilityId: "4",
-            increase: 1,
+      create: [
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Intelligence" },
+              create: { name: "Intelligence" },
+            },
           },
-        ],
-      },
+          increase: 1,
+        },
+      ],
     },
     traits: {
       createMany: {
@@ -282,7 +317,6 @@ const input: Prisma.RaceCreateInput[] = [
     },
   },
   {
-    id: "7",
     name: "Half-Elf",
     description:
       "Your half-elf character has some qualities in common with elves and some that are unique to half-elves.",
@@ -294,16 +328,18 @@ const input: Prisma.RaceCreateInput[] = [
     languages:
       "You can speak, read, and write Common, Elvish, and one extra language of your choice.",
     abilityScoreIncreases: {
-      createMany: {
-        data: [
-          // Charisma increases by 1
-          {
-            abilityId: "6",
-            increase: 1,
+      create: [
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Charisma" },
+              create: { name: "Charisma" },
+            },
           },
-          // TODO: choose 2 others to increase by 1
-        ],
-      },
+          increase: 1,
+        },
+        // TODO: choose 2 others to increase by 1
+      ],
     },
     traits: {
       createMany: {
@@ -327,7 +363,6 @@ const input: Prisma.RaceCreateInput[] = [
     },
   },
   {
-    id: "8",
     name: "Half-Orc",
     description:
       "Your half-orc character has certain traits deriving from your orc ancestry.",
@@ -339,20 +374,26 @@ const input: Prisma.RaceCreateInput[] = [
     languages:
       "You can speak, read, and write Common and Orc. Orc is a harsh, grating language with hard consonants. It has no script of its own but is written in the Dwarvish script.",
     abilityScoreIncreases: {
-      createMany: {
-        data: [
-          // Strength increases by 2
-          {
-            abilityId: "1",
-            increase: 2,
+      create: [
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Strength" },
+              create: { name: "Strength" },
+            },
           },
-          // Constitution increases by 1
-          {
-            abilityId: "2",
-            increase: 1,
+          increase: 2,
+        },
+        {
+          ability: {
+            connectOrCreate: {
+              where: { name: "Constitution" },
+              create: { name: "Constitution" },
+            },
           },
-        ],
-      },
+          increase: 1,
+        },
+      ],
     },
     traits: {
       createMany: {
@@ -381,7 +422,6 @@ const input: Prisma.RaceCreateInput[] = [
     },
   },
   {
-    id: "9",
     name: "Tiefling",
     description:
       "Tieflings share certain racial traits as a result of their infernal descent.",
@@ -392,20 +432,34 @@ const input: Prisma.RaceCreateInput[] = [
     speed: "Your base walking speed is 30 feet.",
     languages: "You can speak, read, and write Common and Infernal.",
     abilityScoreIncreases: {
-      createMany: {
-        data: [
-          // Intelligence increases by 1
-          {
-            abilityId: "4",
-            increase: 1,
+      create: [
+        {
+          ability: {
+            connectOrCreate: {
+              where: {
+                name: "Intelligence",
+              },
+              create: {
+                name: "Intelligence",
+              },
+            },
           },
-          // Charisma increases by 2
-          {
-            abilityId: "6",
-            increase: 2,
+          increase: 1,
+        },
+        {
+          ability: {
+            connectOrCreate: {
+              where: {
+                name: "Charisma",
+              },
+              create: {
+                name: "Charisma",
+              },
+            },
           },
-        ],
-      },
+          increase: 2,
+        },
+      ],
     },
     traits: {
       createMany: {
