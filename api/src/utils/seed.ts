@@ -5,7 +5,17 @@ import { main as classSeed } from "../seeds/class";
 import { main as raceSeed } from "../seeds/race";
 import { main as skillSeed } from "../seeds/skill";
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
+
+// middleware to log database seeds
+prisma.$use(async (params, next) => {
+  const result = await next(params);
+
+  // TODO: result <any> type
+  console.log(`${params.action} { ${params.model}: ${result?.name} }`);
+
+  return result;
+});
 
 // TODO: Update to use glob path '../seeds/*.ts
 // The following code successfully calls each seed function with a glob import,
@@ -25,9 +35,9 @@ const prisma = new PrismaClient();
 // ```
 
 async function main() {
+  await alignmentSeed();
   await abilitySeed();
   await skillSeed();
-  await alignmentSeed();
   await raceSeed();
   await classSeed();
 }

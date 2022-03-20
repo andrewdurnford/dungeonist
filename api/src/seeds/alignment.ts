@@ -1,8 +1,7 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../utils/seed";
 
-const prisma = new PrismaClient();
-
-const alignmentsInput: Prisma.AlignmentCreateInput[] = [
+const input: Prisma.AlignmentCreateInput[] = [
   {
     id: "1",
     name: "Lawful Good",
@@ -51,11 +50,8 @@ const alignmentsInput: Prisma.AlignmentCreateInput[] = [
 ];
 
 async function main() {
-  for (const alignment of alignmentsInput) {
-    const result = await prisma.alignment.create({
-      data: alignment,
-    });
-    console.log(`Created { alignment: ${result.name} }`);
+  for (const data of input) {
+    await prisma.alignment.create({ data });
   }
 }
 

@@ -1,8 +1,7 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../utils/seed";
 
-const prisma = new PrismaClient();
-
-const racesInput: Prisma.RaceCreateInput[] = [
+const input: Prisma.RaceCreateInput[] = [
   {
     id: "1",
     name: "Dwarf",
@@ -432,11 +431,8 @@ const racesInput: Prisma.RaceCreateInput[] = [
 ];
 
 async function main() {
-  for (const race of racesInput) {
-    const result = await prisma.race.create({
-      data: race,
-    });
-    console.log(`Created { race: ${result.name} }`);
+  for (const data of input) {
+    await prisma.race.create({ data });
   }
 }
 

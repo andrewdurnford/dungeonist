@@ -1,8 +1,7 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../utils/seed";
 
-const prisma = new PrismaClient();
-
-const classesInput: Prisma.ClassCreateInput[] = [
+const input: Prisma.ClassCreateInput[] = [
   {
     id: "1",
     name: "Barbarian",
@@ -54,11 +53,8 @@ const classesInput: Prisma.ClassCreateInput[] = [
 ];
 
 async function main() {
-  for (const cls of classesInput) {
-    const result = await prisma.class.create({
-      data: cls,
-    });
-    console.log(`Created { class: ${result.name} }`);
+  for (const data of input) {
+    await prisma.class.create({ data });
   }
 }
 

@@ -1,8 +1,7 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
+import { prisma } from "../utils/seed";
 
-const prisma = new PrismaClient();
-
-const skillsInput: Prisma.SkillCreateInput[] = [
+const input: Prisma.SkillCreateInput[] = [
   {
     id: "1",
     name: "Acrobatics",
@@ -96,11 +95,8 @@ const skillsInput: Prisma.SkillCreateInput[] = [
 ];
 
 async function main() {
-  for (const skill of skillsInput) {
-    const result = await prisma.skill.create({
-      data: skill,
-    });
-    console.log(`Created { skill: ${result.name} }`);
+  for (const data of input) {
+    await prisma.skill.create({ data });
   }
 }
 
