@@ -4,47 +4,39 @@ import * as cors from "cors";
 import * as express from "express";
 import * as jwt from "jsonwebtoken";
 import { typeDefs } from "./utils/typeDefs";
-import { getResolvers } from "./utils/resolvers";
+import { resolvers } from "./utils/resolvers";
 
-// TODO: Support top-level await to remove this wrapper function
-(async () => {
-  await getResolvers();
+const app = express();
 
-  const app = express();
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
-  app.use(
-    cors({
-      origin: "*",
-      credentials: true,
-    })
-  );
+const prisma = new PrismaClient();
 
-  const prisma = new PrismaClient();
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: async ({ req }) => {
+    try {
+      const header = req.headers.authorization;
+      const token = header.replace("Bearer ", "");
+      const payload = jwt.verify(token, "secret") as any;
+      const userId = payload.sub;
 
-  const server = new ApolloServer({
-    typeDefs,
-    // TODO: Return a 'resolvers' object from 'utils/resolvers'
-    resolvers: await getResolvers(),
-    context: async ({ req }) => {
-      try {
-        const header = req.headers.authorization;
-        const token = header.replace("Bearer ", "");
-        const payload = jwt.verify(token, "secret") as any;
-        const userId = payload.sub;
+      // TODO: Use a lookup table of userIds to verify user exists
+      return { prisma, userId };
+    } catch {
+      return { prisma };
+    }
+  },
+});
 
-        // TODO: Use a lookup table of userIds to verify user exists
-        return { prisma, userId };
-      } catch {
-        return { prisma };
-      }
-    },
-  });
+server.start().then(() => server.applyMiddleware({ app }));
 
-  server.start().then(() => server.applyMiddleware({ app }));
-
-  app.listen({ port: 4000 }, () => {
-    console.log(
-      `🚀  Server ready at http://localhost:4000${server.graphqlPath}`
-    );
-  });
-})();
+app.listen({ port: 4000 }, () => {
+  console.log(`🚀  Server ready at http://localhost:4000${server.graphqlPath}`);
+});
