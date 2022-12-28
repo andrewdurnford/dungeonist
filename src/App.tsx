@@ -6,7 +6,7 @@ const activeStyle = (isActive: boolean) => ({
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <nav className="mx-auto flex max-w-3xl gap-2 p-4">
         <NavLink to="/" style={({ isActive }) => activeStyle(isActive)}>
           Home
@@ -20,7 +20,7 @@ function App() {
         <Route path="character" element={<Character />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }
 
