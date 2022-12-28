@@ -8,12 +8,13 @@
     "start": "vite",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "pretty": "prettier --write **/*.{js,cjs,ts,tsx,json,css,md,yaml,yml,html}",
+    "pretty": "prettier --write **/*.{js,cjs,ts,tsx,json,css,md,yml,html}",
     "prepare": "husky install"
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.6.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -36,6 +37,6 @@
     "vitest": "^0.26.2"
   },
   "lint-staged": {
-    "**/*.{js,cjs,ts,tsx,json,css,md,yaml,yml,html}": "prettier --write"
+    "**/*.{js,cjs,ts,tsx,json,css,md,yml,html}": "prettier --write"
   }
 }
