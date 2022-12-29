@@ -1,13 +1,21 @@
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
+import { CharacterProvider } from "../../context"
 import App from "../App"
 
 test("should render character details page", () => {
   render(
     <MemoryRouter initialEntries={["/character"]}>
-      <App />
+      <CharacterProvider>
+        <App />
+      </CharacterProvider>
     </MemoryRouter>
   )
+
+  screen.getByText("Name:")
+  screen.getByText("Untitled")
+  screen.getByText("Level:")
+  screen.getByText("1")
 
   screen.getByRole("heading", { name: /abilities/i })
   screen.getAllByText("+0")
