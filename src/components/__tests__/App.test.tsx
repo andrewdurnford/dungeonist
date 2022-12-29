@@ -13,26 +13,6 @@ describe("App", () => {
     expect(character).toHaveAttribute("href", "/character")
   })
 
-  test("should render home page", () => {
-    render(
-      <MemoryRouter initialEntries={["/"]}>
-        <App />
-      </MemoryRouter>
-    )
-
-    screen.getByRole("heading", { name: /hello world/i })
-  })
-
-  test("should render character page", () => {
-    render(
-      <MemoryRouter initialEntries={["/character"]}>
-        <App />
-      </MemoryRouter>
-    )
-
-    screen.getByRole("heading", { name: /character/i })
-  })
-
   test("should render 404 page", () => {
     render(
       <MemoryRouter initialEntries={["/bad-route"]}>
