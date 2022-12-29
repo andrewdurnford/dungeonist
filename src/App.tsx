@@ -8,13 +8,18 @@ const activeStyle = (isActive: boolean) => ({
 function App() {
   return (
     <>
-      <nav className="mx-auto flex max-w-3xl gap-2 p-4">
-        <NavLink to="/" style={({ isActive }) => activeStyle(isActive)}>
-          Home
-        </NavLink>
-        <NavLink to="character" style={({ isActive }) => activeStyle(isActive)}>
-          Character
-        </NavLink>
+      <nav className="bg-gray-800 text-white">
+        <div className="mx-auto flex max-w-3xl gap-4 p-4">
+          <NavLink to="/" style={({ isActive }) => activeStyle(isActive)}>
+            Home
+          </NavLink>
+          <NavLink
+            to="character"
+            style={({ isActive }) => activeStyle(isActive)}
+          >
+            Character
+          </NavLink>
+        </div>
       </nav>
       <Routes>
         <Route index element={<Home />} />
@@ -35,7 +40,7 @@ function Home() {
 
 function Character() {
   return (
-    <main className="mx-auto max-w-lg p-8">
+    <main className="mx-auto max-w-lg p-4 sm:p-8">
       <h1 className="mb-4 text-3xl font-medium">Character</h1>
       <div className="flex gap-8">
         <section>
