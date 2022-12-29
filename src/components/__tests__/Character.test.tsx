@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
+import { races } from "../../api/race"
 import App, { CharacterRace } from "../App"
 
 test("should render character header", () => {
@@ -107,17 +108,7 @@ test("should render races page", () => {
 })
 
 describe("character race", () => {
-  test.each([
-    ["dwarf", "Dwarf"],
-    ["elf", "Elf"],
-    ["halfling", "Halfling"],
-    ["human", "Human"],
-    ["dragonborn", "Dragonborn"],
-    ["gnome", "Gnome"],
-    ["half-elf", "Half-Elf"],
-    ["half-orc", "Half-Orc"],
-    ["tiefling", "Tiefling"],
-  ])("should render %s page", (id, name) => {
+  test.each(races)("should render $id page", ({ id, name, description }) => {
     render(
       <MemoryRouter initialEntries={[`/character/race/${id}`]}>
         <App />
@@ -125,6 +116,7 @@ describe("character race", () => {
     )
 
     screen.getByRole("heading", { name })
+    screen.getByText(description)
   })
 
   test("should return error if raceId is not provided", () => {

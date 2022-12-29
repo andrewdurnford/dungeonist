@@ -160,7 +160,8 @@ export function CharacterRace() {
       <Link to=".." className="mb-4 inline-block text-blue-500 hover:underline">
         Back
       </Link>
-      <h2 className="mb-4 text-2xl font-medium">{race?.name}</h2>
+      <h2 className="mb-2 text-2xl font-medium">{race?.name}</h2>
+      <p className="mb-4">{race?.description}</p>
     </div>
   )
 }
