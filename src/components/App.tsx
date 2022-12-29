@@ -1,5 +1,13 @@
-import { NavLink, Outlet, Route, Routes } from "react-router-dom"
-import { abilities, skills } from "./api/ability"
+import {
+  Link,
+  NavLink,
+  Outlet,
+  Route,
+  Routes,
+  useParams,
+} from "react-router-dom"
+import { abilities, skills } from "../api/ability"
+import { races } from "../api/race"
 
 function App() {
   return (
@@ -28,7 +36,10 @@ function App() {
         <Route index element={<Home />} />
         <Route path="character" element={<Character />}>
           <Route index element={<CharacterDetails />} />
-          <Route path="race" element={<CharacterRace />} />
+          <Route path="race">
+            <Route index element={<Races />} />
+            <Route path=":raceId" element={<CharacterRace />} />
+          </Route>
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -112,10 +123,39 @@ function CharacterDetails() {
   )
 }
 
-function CharacterRace() {
+function Races() {
   return (
-    <div className="flex gap-8">
-      <h2 className="text-2xl font-medium">Race</h2>
+    <div>
+      <h2 className="mb-4 text-2xl font-medium">Race</h2>
+      <ul className="list-disc pl-5">
+        {races.map((race) => (
+          <li key={race.id}>
+            <Link
+              to={race.id}
+              className="mb-2 inline-block text-blue-500 hover:underline"
+            >
+              {race.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function CharacterRace() {
+  const { raceId } = useParams()
+  // if (!raceId) return null
+
+  const race = races.find((x) => x.id === raceId)
+  // if (!race) return null
+
+  return (
+    <div>
+      <Link to=".." className="mb-4 inline-block text-blue-500 hover:underline">
+        Back
+      </Link>
+      <h2 className="mb-4 text-2xl font-medium">{race?.name}</h2>
     </div>
   )
 }
