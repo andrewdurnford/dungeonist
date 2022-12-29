@@ -143,12 +143,17 @@ function Races() {
   )
 }
 
-function CharacterRace() {
+export function CharacterRace() {
   const { raceId } = useParams()
-  // if (!raceId) return null
+  if (!raceId) return <p className="mb-4 text-red-500">raceId not found</p>
 
   const race = races.find((x) => x.id === raceId)
-  // if (!race) return null
+  if (!race)
+    return (
+      <p className="mb-4 rounded-lg border border-red-400 bg-red-50 p-2 text-red-700">
+        Error: race not found
+      </p>
+    )
 
   return (
     <div>

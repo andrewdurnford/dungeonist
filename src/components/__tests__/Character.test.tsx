@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
-import App from "../App"
+import App, { CharacterRace } from "../App"
 
 test("should render character header", () => {
   render(
@@ -106,12 +106,44 @@ test("should render races page", () => {
   )
 })
 
-test("should render character race page", () => {
-  render(
-    <MemoryRouter initialEntries={["/character/race/dwarf"]}>
-      <App />
-    </MemoryRouter>
-  )
+describe("character race", () => {
+  test.each([
+    ["dwarf", "Dwarf"],
+    ["elf", "Elf"],
+    ["halfling", "Halfling"],
+    ["human", "Human"],
+    ["dragonborn", "Dragonborn"],
+    ["gnome", "Gnome"],
+    ["half-elf", "Half-Elf"],
+    ["half-orc", "Half-Orc"],
+    ["tiefling", "Tiefling"],
+  ])("should render %s page", (id, name) => {
+    render(
+      <MemoryRouter initialEntries={[`/character/race/${id}`]}>
+        <App />
+      </MemoryRouter>
+    )
 
-  screen.getByRole("heading", { name: "Dwarf" })
+    screen.getByRole("heading", { name })
+  })
+
+  test("should return error if raceId is not provided", () => {
+    render(
+      <MemoryRouter initialEntries={["/character/race/dwarf"]}>
+        <CharacterRace />
+      </MemoryRouter>
+    )
+
+    screen.getByText("raceId not found")
+  })
+
+  test("should return error if race does not exist", () => {
+    render(
+      <MemoryRouter initialEntries={["/character/race/bad-id"]}>
+        <App />
+      </MemoryRouter>
+    )
+
+    screen.getByText("Error: race not found")
+  })
 })
