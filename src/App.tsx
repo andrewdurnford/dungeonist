@@ -42,9 +42,13 @@ function Character() {
   return (
     <main className="mx-auto max-w-lg p-4 sm:p-8">
       <h1 className="mb-4 text-3xl font-medium">Character</h1>
+      <nav className="mb-6 flex gap-4">
+        <span>Details</span>
+        <span>Race</span>
+      </nav>
       <div className="flex gap-8">
         <section>
-          <h2 className="uppsercase mb-2 text-center text-sm font-medium">
+          <h2 className="mb-2 text-center text-sm font-medium uppercase">
             Abilities
           </h2>
           <div className="rounded-lg bg-gray-200 p-2 pb-5">
@@ -67,7 +71,7 @@ function Character() {
           </div>
         </section>
         <section>
-          <h2 className="uppsercase mb-2 text-center text-sm font-medium">
+          <h2 className="mb-2 text-center text-sm font-medium uppercase">
             Skills
           </h2>
           <ul className="flex flex-col gap-1 leading-6">
