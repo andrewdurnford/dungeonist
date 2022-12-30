@@ -28,19 +28,6 @@ export const reducer = (state: Character, action: Action): Character => {
     return {
       ...state,
       race: action.payload.race,
-      abilities: state.abilities.map((ability) => {
-        const increase =
-          race.abilityScoreIncrease.find((x) => x.ability === ability.id)
-            ?.increase ?? 0
-
-        return {
-          ...ability,
-          // TODO: remove existing increases when changing race
-          // score: ability.score + increase,
-          score: 10 + increase,
-          modifier: Math.floor((10 + increase - 10) / 2),
-        }
-      }),
     }
   }
 

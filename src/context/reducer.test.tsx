@@ -5,10 +5,7 @@ const initialState: Character = {
   name: "Untitled",
   level: 1,
   race: null,
-  abilities: [
-    { id: "strength", name: "Strength", score: 10 },
-    { id: "constitution", name: "Constitution", score: 10 },
-  ],
+  abilities: [],
 }
 
 test("should set name", () => {
@@ -51,14 +48,5 @@ test("should set race", () => {
   expect(state).toStrictEqual({
     ...initialState,
     race: "dwarf",
-    abilities: [
-      { id: "strength", name: "Strength", score: 10, modifier: 0 },
-      {
-        id: "constitution",
-        name: "Constitution",
-        score: 12,
-        modifier: 1,
-      },
-    ],
   })
 })
