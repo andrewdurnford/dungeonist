@@ -34,8 +34,8 @@ export const races: Race[] = [
       "Your halfling character has a number of traits in common with all other halflings.",
     abilityScoreIncrease: [
       {
-        ability: "charisma",
-        increase: 1,
+        ability: "dexterity",
+        increase: 2,
       },
     ],
   },

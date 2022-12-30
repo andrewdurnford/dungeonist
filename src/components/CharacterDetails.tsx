@@ -1,4 +1,4 @@
-import { abilities, skills } from "../api/ability"
+import { skills } from "../api/ability"
 import { races } from "../api/race"
 import { useCharacter } from "../context"
 
