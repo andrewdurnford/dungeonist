@@ -4,6 +4,6 @@ import { TestingLibraryMatchers } from "@testing-library/jest-dom/matchers"
 
 declare global {
   namespace Vi {
-    interface Assertion<T = any> extends TestingLibraryMatchers<T, void> {}
+    type Assertion<T = unknown> = TestingLibraryMatchers<T, void>
   }
 }

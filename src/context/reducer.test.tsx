@@ -5,6 +5,7 @@ const initialState: Character = {
   name: "Untitled",
   level: 1,
   race: null,
+  class: null,
   abilities: [],
 }
 
@@ -26,6 +27,7 @@ test("should set level", () => {
 
 test("should return initial state for invalid type", () => {
   const state = reducer(initialState, {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     type: "non-existant",
   })

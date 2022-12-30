@@ -8,7 +8,8 @@
     "start": "vite",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "pretty": "prettier --write **/*.{js,cjs,ts,tsx,json,css,md,yml,html}",
+    "pretty": "prettier --write \"**/*.{ts,tsx,js,cjs,json,css,md,yml,html}\"",
+    "lint": "eslint --fix \"**/*.{ts,tsx,js}\"",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -22,9 +23,13 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "@vitest/coverage-c8": "^0.26.2",
     "autoprefixer": "^10.4.13",
+    "eslint": "^8.30.0",
+    "eslint-plugin-react": "^7.31.11",
     "husky": "^8.0.0",
     "jsdom": "^20.0.3",
     "lint-staged": "^13.1.0",
@@ -37,6 +42,11 @@
     "vitest": "^0.26.2"
   },
   "lint-staged": {
-    "**/*.{js,cjs,ts,tsx,json,css,md,yml,html}": "prettier --write"
+    "**/*.{ts,tsx,js}": [
+      "eslint --fix"
+    ],
+    "**/*.{ts,tsx,js,cjs,json,css,md,yml,html}": [
+      "prettier --write"
+    ]
   }
 }
