@@ -50,3 +50,22 @@ test("should set race", () => {
     race: "dwarf",
   })
 })
+
+test("should return initial state for invalid class", () => {
+  const state = reducer(initialState, {
+    type: "setClass",
+    payload: { class: "bad-race" },
+  })
+  expect(state).toStrictEqual(initialState)
+})
+
+test("should set class", () => {
+  const state = reducer(initialState, {
+    type: "setClass",
+    payload: { class: "barbarian" },
+  })
+  expect(state).toStrictEqual({
+    ...initialState,
+    class: "barbarian",
+  })
+})

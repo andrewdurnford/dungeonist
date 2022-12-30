@@ -31,7 +31,7 @@ test.each(races)(
 
 test("should return error if raceId is not provided", () => {
   render(
-    <MemoryRouter initialEntries={["/character/race/dwarf"]}>
+    <MemoryRouter>
       <CharacterRace />
     </MemoryRouter>,
     { wrapper: CharacterProvider }

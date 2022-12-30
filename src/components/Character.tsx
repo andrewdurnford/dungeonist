@@ -18,6 +18,12 @@ function Character() {
         >
           Race
         </NavLink>
+        <NavLink
+          to="class"
+          style={({ isActive }) => (isActive ? { fontWeight: 500 } : undefined)}
+        >
+          Class
+        </NavLink>
       </nav>
       <hr className="mb-6 mt-2" />
       <Outlet />

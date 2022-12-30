@@ -20,4 +20,8 @@ test("should render character header", () => {
     "href",
     "/character/race"
   )
+  expect(screen.getByRole("link", { name: /class/i })).toHaveAttribute(
+    "href",
+    "/character/class"
+  )
 })

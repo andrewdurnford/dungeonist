@@ -1,4 +1,5 @@
 import { skills } from "../api/ability"
+import { classes } from "../api/class"
 import { races } from "../api/race"
 import { useCharacter } from "../context"
 
@@ -17,6 +18,12 @@ function CharacterDetails() {
         <p className="mb-4">
           <strong>Race:</strong>{" "}
           {races.find((x) => x.id === character.race)?.name ?? ""}
+        </p>
+      )}
+      {character.class && (
+        <p className="mb-4">
+          <strong>Class:</strong>{" "}
+          {classes.find((x) => x.id === character.class)?.name ?? ""}
         </p>
       )}
       <div className="flex gap-8">

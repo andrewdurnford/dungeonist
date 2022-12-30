@@ -13,6 +13,7 @@ export type Character = {
   name: string
   level: number
   race: string | null
+  class: string | null
   abilities: Array<{
     id: string
     name: string
@@ -25,6 +26,7 @@ const initialState: Character = {
   name: "Untitled",
   level: 1,
   race: null,
+  class: null,
   abilities: abilities.map((ability) => ({
     id: ability.id,
     name: ability.name,
