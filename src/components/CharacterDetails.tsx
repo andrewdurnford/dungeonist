@@ -1,8 +1,9 @@
 import { abilities, skills } from "../api/ability"
+import { races } from "../api/race"
 import { useCharacter } from "../context"
 
 function CharacterDetails() {
-  const character = useCharacter()
+  const { character } = useCharacter()
 
   return (
     <div>
@@ -12,6 +13,12 @@ function CharacterDetails() {
       <p className="mb-4">
         <strong>Level:</strong> {character.level}
       </p>
+      {character.race && (
+        <p className="mb-4">
+          <strong>Race:</strong>{" "}
+          {races.find((x) => x.id === character.race)?.name ?? ""}
+        </p>
+      )}
       <div className="flex gap-8">
         <section>
           <h2 className="mb-2 text-center text-sm font-medium uppercase">

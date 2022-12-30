@@ -1,12 +1,14 @@
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
+import { CharacterProvider } from "../../context"
 import App from "../App"
 
 test("should render character header", () => {
   render(
     <MemoryRouter initialEntries={["/character"]}>
       <App />
-    </MemoryRouter>
+    </MemoryRouter>,
+    { wrapper: CharacterProvider }
   )
 
   screen.getByRole("heading", { name: /character/i })

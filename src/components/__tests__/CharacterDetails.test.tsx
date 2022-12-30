@@ -6,10 +6,9 @@ import App from "../App"
 test("should render character details page", () => {
   render(
     <MemoryRouter initialEntries={["/character"]}>
-      <CharacterProvider>
-        <App />
-      </CharacterProvider>
-    </MemoryRouter>
+      <App />
+    </MemoryRouter>,
+    { wrapper: CharacterProvider }
   )
 
   screen.getByText("Name:")
