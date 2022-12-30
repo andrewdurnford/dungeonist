@@ -1,3 +1,11 @@
+export type Ability =
+  | "strength"
+  | "dexterity"
+  | "constitution"
+  | "intelligence"
+  | "wisdom"
+  | "charisma"
+
 export const abilities = [
   { id: "strength", name: "Strength" },
   { id: "dexterity", name: "Dexterity" },

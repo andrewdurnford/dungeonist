@@ -5,18 +5,31 @@ import React, {
   useReducer,
   PropsWithChildren,
 } from "react"
+import { abilities } from "../api/ability"
 import { Action, reducer } from "./reducer"
 
 export type Character = {
   name: string
   level: number
   race: string | null
+  abilities: Array<{
+    id: string
+    name: string
+    score: number
+    modifier: number
+  }>
 }
 
 const initialState: Character = {
   name: "Untitled",
   level: 1,
   race: null,
+  abilities: abilities.map((ability) => ({
+    id: ability.id,
+    name: ability.name,
+    score: 10,
+    modifier: 0,
+  })),
 }
 
 type CharacterContextType = {

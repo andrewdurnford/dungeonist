@@ -26,7 +26,7 @@ function CharacterDetails() {
           </h2>
           <div className="rounded-lg bg-gray-200 p-2 pb-5">
             <ul className="flex flex-col gap-5">
-              {abilities.map((ability) => (
+              {character.abilities.map((ability) => (
                 <li
                   key={ability.id}
                   className="flex flex-col items-center rounded-lg border border-black bg-white py-1 px-3"
@@ -34,9 +34,9 @@ function CharacterDetails() {
                   <span className="text-xs font-medium uppercase">
                     {ability.name.substring(0, 3)}
                   </span>
-                  <span className="text-xl">+0</span>
+                  <span className="text-xl">+{ability.modifier}</span>
                   <span className="mb-[-1.125rem] mt-1 rounded-lg border border-black bg-white px-1">
-                    10
+                    {ability.score}
                   </span>
                 </li>
               ))}
