@@ -26,8 +26,9 @@ function Character() {
             </button>
             <button type="button" onClick={() => setModal("class")}>
               {character.class
-                ? classes.find((x) => x.id === character.class)?.name ??
-                  "Class*"
+                ? classes.find((x) => x.id === character.class)?.name
+                  ? `${classes.find((x) => x.id === character.class)?.name}(1)`
+                  : "Class*"
                 : "Class*"}
             </button>
           </div>
