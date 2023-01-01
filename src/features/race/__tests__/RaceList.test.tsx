@@ -5,8 +5,6 @@ import RaceList from "../RaceList"
 test("should render races page", () => {
   render(<RaceList setRaceId={vi.fn()} />, { wrapper: CharacterProvider })
 
-  screen.getByRole("heading", { name: /race/i })
-
   screen.getByRole("button", { name: "Dwarf" })
   screen.getByRole("button", { name: "Elf" })
   screen.getByRole("button", { name: "Halfling" })

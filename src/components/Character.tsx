@@ -36,7 +36,7 @@ function Character() {
         <Outlet />
       </main>
       {modal && (
-        <Modal onClose={() => setModal(false)}>
+        <Modal name="Race" onClose={() => setModal(false)}>
           <CharacterRace />
         </Modal>
       )}

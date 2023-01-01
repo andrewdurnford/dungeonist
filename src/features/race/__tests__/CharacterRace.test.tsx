@@ -12,8 +12,6 @@ test("should set raceId", async () => {
     { wrapper: CharacterProvider }
   )
 
-  screen.getByText("Race")
-
   userEvent.click(screen.getByRole("button", { name: "Dwarf" }))
 
   await screen.findByText("Dwarf Traits")
