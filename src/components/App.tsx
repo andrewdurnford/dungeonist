@@ -33,7 +33,6 @@ function App() {
         <Route index element={<Home />} />
         <Route path="character" element={<Character />}>
           <Route index element={<CharacterDetails />} />
-          <Route path="race" element={<CharacterRace />} />
           <Route path="class">
             <Route index element={<Classes />} />
             <Route path=":classId" element={<CharacterClass />} />
