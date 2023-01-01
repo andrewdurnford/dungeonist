@@ -1,3 +1,4 @@
+import React from "react"
 import { useForm } from "react-hook-form"
 import { races } from "../../api/race"
 import { useCharacter } from "../../context"
@@ -58,6 +59,22 @@ function RaceForm({ defaultValues, setRaceId }: RaceFormProps) {
       </div>
       <h1 className="mb-2 text-2xl font-medium">{race.name} Traits</h1>
       <p className="mb-4">{race.description}</p>
+      <p className="mb-4">
+        <strong>Ability Score Increase.</strong>{" "}
+        {race.details.abilityScoreIncrease}
+      </p>
+      <p className="mb-4">
+        <strong>Age.</strong> {race.details.age}
+      </p>
+      <p className="mb-4">
+        <strong>Alignment.</strong> {race.details.alignment}
+      </p>
+      <p className="mb-4">
+        <strong>Size.</strong> {race.details.size}
+      </p>
+      <p className="mb-4">
+        <strong>Speed.</strong> {race.details.speed}
+      </p>
     </form>
   )
 }

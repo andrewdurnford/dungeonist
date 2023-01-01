@@ -6,13 +6,30 @@ import RaceForm from "../RaceForm"
 
 test.each(races)(
   "should render $id page",
-  async ({ id, name, description }) => {
+  async ({
+    id,
+    name,
+    description,
+    details: { abilityScoreIncrease, age, alignment, size, speed },
+  }) => {
     render(<RaceForm setRaceId={vi.fn()} defaultValues={{ id }} />, {
       wrapper: CharacterProvider,
     })
 
     screen.getByRole("heading", { name })
     screen.getByText(description)
+
+    screen.getByText("Ability Score Increase.")
+    screen.getByText(abilityScoreIncrease)
+    screen.getByText("Age.")
+    screen.getByText(age)
+    screen.getByText("Alignment.")
+    screen.getByText(alignment)
+    screen.getByText("Size.")
+    screen.getByText(size)
+    screen.getByText("Speed.")
+    screen.getByText(speed)
+
     screen.getByRole("button", { name: "Back" })
     screen.getByRole("button", { name: "Save" })
 

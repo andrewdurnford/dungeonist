@@ -58,6 +58,9 @@ export function ClassForm({ defaultValues, setClassId }: ClassFormProps) {
         </div>
       </div>
       <h1 className="mb-2 text-2xl font-medium">{cls.name} Features</h1>
+      <p className="mb-4">
+        As a {cls.name}, you gain the following class features.
+      </p>
     </form>
   )
 }
