@@ -1,12 +1,14 @@
 import { render, screen } from "@testing-library/react"
 import { MemoryRouter } from "react-router-dom"
+import { CharacterProvider } from "../../context"
 import App from "../App"
 
-test("should render races page", () => {
+test("should render classes page", () => {
   render(
     <MemoryRouter initialEntries={["/character/class"]}>
       <App />
-    </MemoryRouter>
+    </MemoryRouter>,
+    { wrapper: CharacterProvider }
   )
 
   screen.getByRole("heading", { name: /class/i })

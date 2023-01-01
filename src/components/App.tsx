@@ -2,10 +2,9 @@ import { NavLink, Route, Routes } from "react-router-dom"
 import Character from "./Character"
 import CharacterClass from "./CharacterClass"
 import CharacterDetails from "./CharacterDetails"
-import CharacterRace from "./CharacterRace"
 import Classes from "./Classes"
 import Home from "./Home"
-import Races from "./Races"
+import CharacterRace from "../features/race/CharacterRace"
 
 function App() {
   return (
@@ -34,10 +33,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="character" element={<Character />}>
           <Route index element={<CharacterDetails />} />
-          <Route path="race">
-            <Route index element={<Races />} />
-            <Route path=":raceId" element={<CharacterRace />} />
-          </Route>
+          <Route path="race" element={<CharacterRace />} />
           <Route path="class">
             <Route index element={<Classes />} />
             <Route path=":classId" element={<CharacterClass />} />

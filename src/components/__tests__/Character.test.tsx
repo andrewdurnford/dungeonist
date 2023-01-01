@@ -11,8 +11,7 @@ test("should render character header", () => {
     { wrapper: CharacterProvider }
   )
 
-  screen.getByRole("heading", { name: /character/i })
-  expect(screen.getByRole("link", { name: /details/i })).toHaveAttribute(
+  expect(screen.getByRole("link", { name: /Untitled/i })).toHaveAttribute(
     "href",
     "/character"
   )
@@ -25,3 +24,5 @@ test("should render character header", () => {
     "/character/class"
   )
 })
+
+// TODO: should display race name when selected

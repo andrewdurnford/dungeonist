@@ -11,11 +11,6 @@ test("should render character details page", () => {
     { wrapper: CharacterProvider }
   )
 
-  screen.getByText("Name:")
-  screen.getByText("Untitled")
-  screen.getByText("Level:")
-  screen.getByText("1")
-
   screen.getByRole("heading", { name: /abilities/i })
   screen.getAllByText("+0")
   screen.getAllByText("10")

@@ -1,6 +1,4 @@
 import { skills } from "../api/ability"
-import { classes } from "../api/class"
-import { races } from "../api/race"
 import { useCharacter } from "../context"
 
 function CharacterDetails() {
@@ -8,24 +6,6 @@ function CharacterDetails() {
 
   return (
     <div>
-      <p className="mb-4">
-        <strong>Name:</strong> {character.name}
-      </p>
-      <p className="mb-4">
-        <strong>Level:</strong> {character.level}
-      </p>
-      {character.race && (
-        <p className="mb-4">
-          <strong>Race:</strong>{" "}
-          {races.find((x) => x.id === character.race)?.name ?? ""}
-        </p>
-      )}
-      {character.class && (
-        <p className="mb-4">
-          <strong>Class:</strong>{" "}
-          {classes.find((x) => x.id === character.class)?.name ?? ""}
-        </p>
-      )}
       <div className="flex gap-8">
         <section>
           <h2 className="mb-2 text-center text-sm font-medium uppercase">
