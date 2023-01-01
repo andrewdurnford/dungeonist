@@ -16,3 +16,5 @@ test("should set raceId", async () => {
 
   await screen.findByText("Dwarf Traits")
 })
+
+// TODO: test race is set

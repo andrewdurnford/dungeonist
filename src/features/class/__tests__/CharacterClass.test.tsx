@@ -16,3 +16,5 @@ test("should set classId", async () => {
 
   await screen.findByText("Barbarian Features")
 })
+
+// TODO: test race is set
