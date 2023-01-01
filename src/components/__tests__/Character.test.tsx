@@ -15,11 +15,9 @@ test("should render character header", () => {
     "href",
     "/character"
   )
-  expect(screen.getByRole("link", { name: /class/i })).toHaveAttribute(
-    "href",
-    "/character/class"
-  )
 })
 
 // TODO: should display race name when selected
 // TODO: should open race modal
+// TODO: should display class name when selected
+// TODO: should open class modal
