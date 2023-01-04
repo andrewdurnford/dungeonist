@@ -43,7 +43,11 @@ function CharacterDetails() {
             ))}
           </ul>
         </section>
-        <section>
+        <section className="flex items-start gap-2">
+          <div className="flex flex-col items-center rounded-lg border border-black p-2">
+            <div className="text-xl">{character.armorClass}</div>
+            <h2 className="text-sm">AC</h2>
+          </div>
           <div className="flex flex-col items-center rounded-lg border border-black p-2">
             <div className="text-xl">{character.hitPoints}</div>
             <h2 className="text-sm">HP</h2>

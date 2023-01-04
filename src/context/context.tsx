@@ -6,6 +6,7 @@ import React, {
   PropsWithChildren,
 } from "react"
 import { abilities } from "../api/ability"
+import { classes } from "../api/class"
 import { races } from "../api/race"
 import { Action, reducer } from "./reducer"
 
@@ -14,6 +15,7 @@ export type Character = {
   level: number
   race: string | null
   class: string | null
+  armorClass: number
   hitPoints: number
   abilities: Array<{
     id: string
@@ -26,6 +28,7 @@ export type Character = {
 const initialState: Character = {
   name: "Untitled",
   level: 1,
+  armorClass: 0,
   hitPoints: 0,
   race: null,
   class: null,
@@ -44,6 +47,25 @@ type CharacterContextType = {
 
 const CharacterContext = createContext({} as CharacterContextType)
 
+function getAbilityScores(character: Character) {
+  return abilities.map((ability) => {
+    const increase =
+      races
+        .find((x) => x.id === character.race)
+        ?.abilityScoreIncrease.find((x) => x.ability === ability.id)
+        ?.increase ?? 0
+    const score = 10 + increase
+    const modifier = Math.floor((score - 10) / 2)
+
+    return {
+      id: ability.name,
+      name: ability.name,
+      score,
+      modifier,
+    }
+  })
+}
+
 export function CharacterProvider({ children }: PropsWithChildren) {
   const [character, dispatch] = useReducer(reducer, initialState)
 
@@ -51,6 +73,7 @@ export function CharacterProvider({ children }: PropsWithChildren) {
     () => ({
       character: {
         ...character,
+        armorClass: 10 + getAbilityScores(character)[1].modifier ?? 0,
         hitPoints: classes.find((x) => x.id === character.class)?.hitDice ?? 0,
         abilities: abilities.map((ability) => {
           const increase =
