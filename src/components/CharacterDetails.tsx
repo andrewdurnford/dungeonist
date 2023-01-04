@@ -6,7 +6,7 @@ function CharacterDetails() {
 
   return (
     <div>
-      <div className="flex gap-8">
+      <div className="flex gap-4 sm:gap-8">
         <section>
           <h2 className="mb-2 text-center text-sm font-medium uppercase">
             Abilities
