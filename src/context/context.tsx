@@ -14,6 +14,7 @@ export type Character = {
   level: number
   race: string | null
   class: string | null
+  hitPoints: number
   abilities: Array<{
     id: string
     name: string
@@ -25,6 +26,7 @@ export type Character = {
 const initialState: Character = {
   name: "Untitled",
   level: 1,
+  hitPoints: 0,
   race: null,
   class: null,
   abilities: abilities.map((ability) => ({
@@ -49,6 +51,7 @@ export function CharacterProvider({ children }: PropsWithChildren) {
     () => ({
       character: {
         ...character,
+        hitPoints: classes.find((x) => x.id === character.class)?.hitDice ?? 0,
         abilities: abilities.map((ability) => {
           const increase =
             races

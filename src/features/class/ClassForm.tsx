@@ -61,6 +61,20 @@ export function ClassForm({ defaultValues, setClassId }: ClassFormProps) {
       <p className="mb-4">
         As a {cls.name}, you gain the following class features.
       </p>
+      <h2 className="mb-2 text-xl font-medium">Hit Points</h2>
+      <p>
+        <strong>Hit Dice:</strong> 1d{cls.hitDice} per {cls.name.toLowerCase()}{" "}
+        level.
+      </p>
+      <p>
+        <strong>Hit Points at 1st Level:</strong> {cls.hitDice} + your
+        Consitution modifier.
+      </p>
+      <p>
+        <strong>Hit Points at Higher Levels:</strong> 1d{cls.hitDice} (or{" "}
+        {cls.hitDice / 2 + 1}) + your Consitution modifier per{" "}
+        {cls.name.toLowerCase()} level after first.
+      </p>
     </form>
   )
 }

@@ -43,6 +43,12 @@ function CharacterDetails() {
             ))}
           </ul>
         </section>
+        <section>
+          <div className="flex flex-col items-center rounded-lg border border-black p-2">
+            <div className="text-xl">{character.hitPoints}</div>
+            <h2 className="text-sm">HP</h2>
+          </div>
+        </section>
       </div>
     </div>
   )
