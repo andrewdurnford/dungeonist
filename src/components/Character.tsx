@@ -5,6 +5,7 @@ import { races } from "../api/race"
 import { useCharacter } from "../context"
 import CharacterClass from "../features/class/CharacterClass"
 import CharacterRace from "../features/race/CharacterRace"
+import CharacterDetails from "./CharacterDetails"
 import Modal from "./Modal"
 
 function Character() {
@@ -36,7 +37,8 @@ function Character() {
         <hr className="mt-2 mb-4" />
       </nav>
       <main className="mx-auto max-w-lg px-4 pb-4 sm:px-8 sm:pb-8">
-        <Outlet />
+        {/* <Outlet /> */}
+        <CharacterDetails />
       </main>
       {modal === "race" && (
         <Modal name="Race" onClose={() => setModal(null)}>

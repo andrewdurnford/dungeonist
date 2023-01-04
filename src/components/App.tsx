@@ -6,31 +6,32 @@ import Home from "./Home"
 function App() {
   return (
     <>
-      <nav className="bg-gray-800 text-white">
-        <div className="mx-auto flex max-w-3xl gap-4 p-4">
-          <NavLink
-            to="/"
-            style={({ isActive }) =>
-              isActive ? { textDecoration: "underline" } : undefined
-            }
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="character"
-            style={({ isActive }) =>
-              isActive ? { textDecoration: "underline" } : undefined
-            }
-          >
-            Character
-          </NavLink>
-        </div>
-      </nav>
+      {/* <nav className="bg-gray-800 text-white"> */}
+      {/*   <div className="mx-auto flex max-w-3xl gap-4 p-4"> */}
+      {/*     <NavLink */}
+      {/*       to="/" */}
+      {/*       style={({ isActive }) => */}
+      {/*         isActive ? { textDecoration: "underline" } : undefined */}
+      {/*       } */}
+      {/*     > */}
+      {/*       Home */}
+      {/*     </NavLink> */}
+      {/*     <NavLink */}
+      {/*       to="character" */}
+      {/*       style={({ isActive }) => */}
+      {/*         isActive ? { textDecoration: "underline" } : undefined */}
+      {/*       } */}
+      {/*     > */}
+      {/*       Character */}
+      {/*     </NavLink> */}
+      {/*   </div> */}
+      {/* </nav> */}
       <Routes>
-        <Route index element={<Home />} />
-        <Route path="character" element={<Character />}>
-          <Route index element={<CharacterDetails />} />
-        </Route>
+        {/* <Route index element={<Home />} /> */}
+        {/* <Route path="character" element={<Character />}> */}
+        {/*   <Route index element={<CharacterDetails />} /> */}
+        {/* </Route> */}
+        <Route index element={<Character />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
