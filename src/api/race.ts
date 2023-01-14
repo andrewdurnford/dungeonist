@@ -5,6 +5,7 @@ type Race = {
   name: string
   description: string
   abilityScoreIncrease: Array<{ ability: Ability; increase: number }>
+  speed: number
   details: {
     abilityScoreIncrease: string
     age: string
@@ -26,6 +27,7 @@ export const races: Race[] = [
         increase: 2,
       },
     ],
+    speed: 25,
     details: {
       abilityScoreIncrease: "Your Constitution score increases by 2.",
       age: "Dwarves mature at the same rate as humans, but they’re considered young until they reach the age of 50. On average, they live about 350 years.",
@@ -42,6 +44,7 @@ export const races: Race[] = [
     description:
       "Your elf character has a variety of natural abilities, the result of thousands of years of elven refinement.",
     abilityScoreIncrease: [{ ability: "dexterity", increase: 2 }],
+    speed: 25,
     details: {
       abilityScoreIncrease: "Your Dexterity score increases by 2.",
       age: "Although elves reach physical maturity at about the same age as humans, the elven understanding of adulthood goes beyond physical growth to encompass worldly experience. An elf typically claims adulthood and an adult name around the age of 100 and can live to be 750 years old.",
@@ -62,6 +65,7 @@ export const races: Race[] = [
         increase: 2,
       },
     ],
+    speed: 25,
     details: {
       abilityScoreIncrease: "Your Dexterity score increases by 2.",
       age: "A halfling reaches adulthood at the age of 20 and generally lives into the middle of his or her second century.",
@@ -84,6 +88,7 @@ export const races: Race[] = [
       { ability: "wisdom", increase: 1 },
       { ability: "charisma", increase: 1 },
     ],
+    speed: 30,
     details: {
       abilityScoreIncrease: "Your ability scores each increase by 1.",
       age: "Humans reach adulthood in their late teens and live less than a century.",
@@ -102,6 +107,7 @@ export const races: Race[] = [
       { ability: "strength", increase: 2 },
       { ability: "charisma", increase: 1 },
     ],
+    speed: 30,
     details: {
       abilityScoreIncrease:
         "Your Strength score increases by 2, and your Charisma score increases by 1.",
@@ -118,6 +124,7 @@ export const races: Race[] = [
     description:
       "Your gnome character has certain characteristics in common with all other gnomes.",
     abilityScoreIncrease: [{ ability: "intelligence", increase: 2 }],
+    speed: 25,
     details: {
       abilityScoreIncrease: "Your Intelligence score increases by 2.",
       age: "Gnomes mature at the same rate humans do, and most are expected to settle down into an adult life by around age 40. They can live 350 to almost 500 years.",
@@ -133,6 +140,7 @@ export const races: Race[] = [
     description:
       "Your half-elf character has some qualities in common with elves and some that are unique to half-elves.",
     abilityScoreIncrease: [{ ability: "charisma", increase: 2 }],
+    speed: 30,
     details: {
       abilityScoreIncrease:
         "Your Charisma score increases by 2, and two other ability scores of your choice increase by 1.",
@@ -152,6 +160,7 @@ export const races: Race[] = [
       { ability: "strength", increase: 2 },
       { ability: "constitution", increase: 1 },
     ],
+    speed: 30,
     details: {
       abilityScoreIncrease:
         "Your Strength score increases by 2, and your Constitution score increases by 1.",
@@ -171,6 +180,7 @@ export const races: Race[] = [
       { ability: "intelligence", increase: 2 },
       { ability: "charisma", increase: 1 },
     ],
+    speed: 30,
     details: {
       abilityScoreIncrease:
         "Your Intelligence score increases by 1, and your Charisma score increases by 2.",

@@ -5,7 +5,16 @@ import { Character } from "./context"
 export type Action =
   | { type: "setName"; payload: { name: string } }
   | { type: "setLevel"; payload: { level: number } }
-  | { type: "setRace"; payload: { race: string } }
+  | {
+      type: "setRace"
+      payload: {
+        race: string
+        age: number
+        alignment: string
+        height: { feet: number; inches: number }
+        weight: number
+      }
+    }
   | { type: "setClass"; payload: { class: string } }
 
 export const reducer = (state: Character, action: Action): Character => {
@@ -30,6 +39,10 @@ export const reducer = (state: Character, action: Action): Character => {
     return {
       ...state,
       race: action.payload.race,
+      alignment: action.payload.alignment,
+      age: action.payload.age,
+      height: action.payload.height,
+      weight: action.payload.weight,
     }
   }
 

@@ -23,6 +23,13 @@ export type Character = {
     score: number
     modifier: number
   }>
+  alignment: string
+  age: number
+  height: {
+    feet: number
+    inches: number
+  }
+  weight: number
 }
 
 const initialState: Character = {
@@ -38,6 +45,13 @@ const initialState: Character = {
     score: 10,
     modifier: 0,
   })),
+  alignment: "",
+  age: 0,
+  height: {
+    feet: 0,
+    inches: 0,
+  },
+  weight: 0,
 }
 
 type CharacterContextType = {
